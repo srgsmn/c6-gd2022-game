@@ -5,8 +5,10 @@ using UnityEngine;
 public class MarshController : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
+    [SerializeField] private float jumpForce = 5.0f;
 
-    private Rigidbody myRB;
+
+    private Rigidbody rigidBody;
     [SerializeField] private bool isJumping;
 
     // Start is called before the first frame update
@@ -19,8 +21,8 @@ public class MarshController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        myRB = GetComponent<Rigidbody>();
-        myRB.isKinematic = false;
+        rigidBody = GetComponent<Rigidbody>();
+        rigidBody.isKinematic = false;
 
         float hInput = Input.GetAxis("Horizontal");
         float vInput = Input.GetAxis("Vertical");
@@ -57,29 +59,12 @@ public class MarshController : MonoBehaviour
         }
         */
 
-        if (Input.GetButtonDown("Jump") && !isJumping)
-        {
-            Debug.Log("\tPreparing to jump");
-            transform.localScale += new Vector3(0f, -.25f, 0f);
-        }
-
         if (Input.GetButtonUp("Jump") && !isJumping)
         {
-            isJumping = true;
-            Debug.Log("\tNow jumping!!!");
-            transform.localScale += new Vector3(0f, .25f, 0f);
-            myRB.isKinematic = true;
-            transform.position += new Vector3(0f, 2f, 0f);
-            myRB.isKinematic = false;
+            
+            Jump();
 
-            if (myRB.velocity.y == 0)
-                isJumping = false;
         }
-
-        /*while (myRB.velocity.y != 0)
-            isJumping = true;
-        */
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -87,7 +72,13 @@ public class MarshController : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy Head"))
         {
             Destroy(collision.transform.parent.gameObject);
+            Jump();
         }
+    }
+
+    private void Jump()
+    {
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpForce, rigidBody.velocity.z);
     }
 
     private void OnDestroy()

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2554702880595520974}
   - component: {fileID: 6026861379614902786}
   - component: {fileID: 4072446140743911603}
+  - component: {fileID: 3419378122715565582}
   m_Layer: 0
   m_Name: EnemyDemo
-  m_TagString: Untagged
+  m_TagString: Enemy Body
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +99,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3419378122715565582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6852002566553278170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b22315c0a00c04d4b82a30d983a8e88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxReward: 3
+  ccPrefab: {fileID: 2552817891359091743, guid: 3ec6fefddc6dd4962a518fc3d2434844, type: 3}
+  slPrefab: {fileID: 1155691197889513300, guid: 4d42b3e5a21b84a168c8e20a5cfedbe9, type: 3}
 --- !u!1 &9164219090708757192
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +127,7 @@ GameObject:
   - component: {fileID: 2532416603164568593}
   m_Layer: 0
   m_Name: EnemyDemo_Head
-  m_TagString: Untagged
+  m_TagString: Enemy Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,8 +140,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9164219090708757192}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.526, z: 0}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.55, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.1, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3206266963209061139}

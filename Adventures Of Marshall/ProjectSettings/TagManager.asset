@@ -6,6 +6,8 @@ TagManager:
   tags:
   - SugarLump
   - ChocoChip
+  - Enemy Head
+  - Enemy Body
   layers:
   - Default
   - TransparentFX

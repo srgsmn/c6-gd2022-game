@@ -26,7 +26,14 @@ public class PlayerLife : MonoBehaviour
 
     void Die(string msg)
     {
-        GetComponent<MeshRenderer>().enabled = false;                   //TODO: far sparire gli occhietti (non così importante se già nel modello finale
+        Component[] meshRenderers;
+
+        GetComponent<MeshRenderer>().enabled = false;                           //TODO: far sparire gli occhietti (non così importante se già nel modello finale
+        meshRenderers = GetComponentsInChildren<MeshRenderer>();
+
+        foreach (Component mr in meshRenderers)
+            enabled = false;
+
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<MarshController>().enabled = false;
         Invoke(nameof(ReloadLevel), 1.3f);
