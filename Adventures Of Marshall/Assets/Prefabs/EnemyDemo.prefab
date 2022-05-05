@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6026861379614902786}
   - component: {fileID: 4072446140743911603}
   - component: {fileID: 3419378122715565582}
+  - component: {fileID: 2497405555268417194}
   m_Layer: 0
   m_Name: EnemyDemo
   m_TagString: Enemy Body
@@ -111,9 +112,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b22315c0a00c04d4b82a30d983a8e88d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxReward: 3
-  ccPrefab: {fileID: 2552817891359091743, guid: 3ec6fefddc6dd4962a518fc3d2434844, type: 3}
-  slPrefab: {fileID: 1155691197889513300, guid: 4d42b3e5a21b84a168c8e20a5cfedbe9, type: 3}
+  initialHealth: 100
+  initialMaximumHealth: 100
+  onDie:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2497405555268417194}
+        m_TargetAssemblyTypeName: CoinRewarder, Assembly-CSharp
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2497405555268417194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6852002566553278170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405238a648ded405399b4a3e46f2b80d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxReward: 5
+  prefab2spawn:
+  - {fileID: 577396667661013716, guid: 4d42b3e5a21b84a168c8e20a5cfedbe9, type: 3}
+  - {fileID: 5588124513073939876, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
 --- !u!1 &9164219090708757192
 GameObject:
   m_ObjectHideFlags: 0

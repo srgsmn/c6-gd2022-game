@@ -5,7 +5,7 @@ using UnityEngine;
 public class MarshController : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
-    [SerializeField] private float jumpForce = 5.0f;
+    [SerializeField] private float jumpForce = 1f;
 
 
     private Rigidbody rigidBody;
@@ -69,10 +69,22 @@ public class MarshController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy Head"))
+        Debug.Log("COLLISION DETECTED (w/ name: " + collision.gameObject.name + "; tag: " + collision.gameObject.tag + ")");
+
+        if (collision.gameObject.CompareTag("Enemy Head"))
         {
-            Destroy(collision.transform.parent.gameObject);
-            Jump();
+            Debug.Log("You collided with " + collision.gameObject.tag);
+
+            var killable = collision.transform.parent.gameObject.GetComponent<IKillable>();
+
+            if (killable != null)
+            {
+                Debug.Log("KILLING THE ENEMY BY JUMPING ON HIS HEAD (OR SORTA)");
+                killable.Kill();
+                //Destroy(collision.transform.gameObject);
+            }
+            
+            Jump();//TODO must refine!!
         }
     }
 

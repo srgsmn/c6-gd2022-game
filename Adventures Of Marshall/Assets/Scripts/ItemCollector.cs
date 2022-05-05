@@ -9,22 +9,24 @@ public class ItemCollector : MonoBehaviour
     [SerializeField] private int sl_count = 0;
     [SerializeField] Text cc_text;
     [SerializeField] Text sl_text;
-    private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider obj)
     {
-        switch (other.gameObject.tag)
+        switch (obj.gameObject.tag)
         {
             case "ChocoChip":
                 cc_count++;
                 cc_text.text = "ChocoChips: " + cc_count;
-                Debug.Log("CC Collected (TOT=" + cc_count + ")");
-                Destroy(other.gameObject);
+                Debug.Log("CC Collected");
+                Destroy(obj.transform.parent.gameObject);
                 break;
 
             case "SugarLump":
                 sl_count++;
                 sl_text.text = "SugarLumps: " + sl_count;
-                Debug.Log("SL Collected (TOT=" + sl_count + ")");
-                Destroy(other.gameObject);
+                Debug.Log("SL Collected");
+                //Destroy(obj.gameObject);
+                Destroy(obj.transform.parent.gameObject);
                 break;
         }
 

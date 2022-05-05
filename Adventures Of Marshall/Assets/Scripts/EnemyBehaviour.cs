@@ -1,35 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour, IDamagable, IKillable
 {
-    [SerializeField] private int maxReward = 3;
-    [SerializeField] private GameObject ccPrefab, slPrefab;
+    [SerializeField] private int initialHealth = 100;
+    [SerializeField] private int initialMaximumHealth = 100;
+    [SerializeField] private UnityEvent onDie;
 
+    private int health;
+    private int maximumHealth;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (onDie == null)
+            onDie = new UnityEvent();
+
+        health = initialHealth;
+        maximumHealth = initialMaximumHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(int damage, Object instigator)
     {
-        
-    }
+        int preDamage = health;
+        health -= damage;
 
-    private void OnDestroy()
-    {
-        int count = Random.Range(0, maxReward);
-        for(int s=0; s<count; s++)
+        Debug.Log("DAMAGE INFLICTED: -" + damage + " [From " + preDamage + " to " + health + "]");
+
+        if (health <= 0)
         {
-            Instantiate(slPrefab, transform.position, Quaternion.identity);
+            Debug.Log(transform.name + "'s health below 0: DEATH TIME");
+            Die();
         }
-        for (int c = 0; c < maxReward-count; c++)
+    }
+
+    public void Kill()
+    {
+        Debug.Log("KILLING " + transform.name);
+        Die();
+    }
+
+    private void Die()
+    {
+        Debug.Log("DIE PROCESS BEGUN for " + transform.name);
+        if (onDie != null)
         {
-            Instantiate(ccPrefab, transform.position, Quaternion.identity);
+            Debug.Log("INVOKE CALL (Should spawn coins)");
+            onDie.Invoke();
+
+            Debug.Log("DESTROYING GAME OBJECT (" + transform.name + ")");
+            Destroy(this.gameObject);
         }
     }
 }
