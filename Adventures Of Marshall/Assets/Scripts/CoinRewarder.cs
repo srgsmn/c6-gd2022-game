@@ -1,7 +1,9 @@
-//CoinSpawner.cs
-/* This script spawns coins (ChocoChips and SugarLumps) when something is destroyed.
+//CoinRewarder.cs
+/* Spawns coins (ChocoChips and SugarLumps) when something is destroyed.
  * TODO: Can be extended to spawn everything with an interface maybe
  * TODO: Update with random instantiation when maxReward<go2spawn.Length
+ * 
+ * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  */
 
 using System.Collections;
@@ -62,6 +64,3 @@ public class CoinRewarder : MonoBehaviour
         */
     }
 }
-
-
-// Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam

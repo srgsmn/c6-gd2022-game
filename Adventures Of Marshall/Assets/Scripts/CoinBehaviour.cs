@@ -1,3 +1,9 @@
+//CoinBehaviour.cs
+/* Manages the behaviour and animation of coin-like objects such as spinning and translating bypassing anim animations.
+ * 
+ * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

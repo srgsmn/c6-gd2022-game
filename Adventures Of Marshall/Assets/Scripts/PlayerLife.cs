@@ -1,3 +1,9 @@
+//PlayerLife.cs
+/* Manages player's life and event that can affect its health.
+ * 
+ * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

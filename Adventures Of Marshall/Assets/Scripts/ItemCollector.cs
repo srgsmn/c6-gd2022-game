@@ -1,4 +1,10 @@
- using System.Collections;
+//ItemCollector.cs
+/* Manages the collection of a character.
+ * 
+ * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

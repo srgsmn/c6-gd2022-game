@@ -1,3 +1,8 @@
+//EnemyBehaviour.cs
+/* Manages health and behaviours of enemy-like objects.
+ * 
+ * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +17,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable, IKillable
     private int health;
     private int maximumHealth;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (onDie == null)
@@ -22,6 +26,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable, IKillable
         maximumHealth = initialMaximumHealth;
     }
 
+    // Evaluating and managing damage
     public void TakeDamage(int damage, Object instigator)
     {
         int preDamage = health;
