@@ -10,6 +10,7 @@ public class MarshController : MonoBehaviour
 
     private Rigidbody rigidBody;
     [SerializeField] private bool isJumping;
+    [SerializeField] AudioSource jumpSound;
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +92,7 @@ public class MarshController : MonoBehaviour
     private void Jump()
     {
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpForce, rigidBody.velocity.z);
+        jumpSound.Play();
     }
 
     private void OnDestroy()

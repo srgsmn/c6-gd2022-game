@@ -5,13 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+    [SerializeField] AudioSource fallingSound;
+    [SerializeField] AudioSource enemyCollisionSound;
+    [SerializeField] AudioSource drowningSound;
+    [SerializeField] AudioSource restartSound;
+
     private bool dead = false;
+
+    enum deathType
+    {
+        CliffFall,
+        EnemyCollision,
+        Drowning
+    }
 
     void Update()
     {
         if (transform.position.y <= -3.5f && !dead)
         {
-            Die("Falling from the ground");
+            Die(deathType.CliffFall, "Falling from the ground");
+            fallingSound.Play();
         }
     }
 
@@ -19,12 +32,17 @@ public class PlayerLife : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy Body"))       //Collision with enemy manager
         {
-            Die("Collision with enemy");
+            Die(deathType.EnemyCollision, "Collision with enemy");
+        }
+
+        if(collision.gameObject.layer == 4)                     //Collision with water layer
+        {
+            Die(deathType.Drowning, "Collision with water: you CAN'T swim at the moment");
         }
 
     }
 
-    void Die(string msg)
+    void Die(deathType dType, string msg)
     {
         Component[] meshRenderers;
 
@@ -36,17 +54,35 @@ public class PlayerLife : MonoBehaviour
 
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<MarshController>().enabled = false;
-        Invoke(nameof(ReloadLevel), 1.3f);
-
-        dead = true;
 
         Debug.Log("Player is dead: " + msg + "");
-        
+        dead = true;
+
+        switch (dType)
+        {
+            case deathType.CliffFall:
+                fallingSound.Play();
+                break;
+
+            case deathType.EnemyCollision:
+                enemyCollisionSound.Play();
+                break;
+
+            case deathType.Drowning:
+                drowningSound.Play();
+                break;
+
+            default:
+                break;
+        }
+
+        Invoke(nameof(ReloadLevel), 1f);
     }
 
     void ReloadLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        restartSound.Play();
     }
     
 

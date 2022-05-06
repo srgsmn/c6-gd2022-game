@@ -10,6 +10,10 @@ public class ItemCollector : MonoBehaviour
     [SerializeField] Text cc_text;
     [SerializeField] Text sl_text;
 
+    [SerializeField] AudioSource slSound;
+    [SerializeField] AudioSource ccSound;
+
+
     private void OnTriggerEnter(Collider obj)
     {
         switch (obj.gameObject.tag)
@@ -19,6 +23,7 @@ public class ItemCollector : MonoBehaviour
                 cc_text.text = "ChocoChips: " + cc_count;
                 Debug.Log("CC Collected");
                 Destroy(obj.transform.parent.gameObject);
+                ccSound.Play();
                 break;
 
             case "SugarLump":
@@ -27,6 +32,7 @@ public class ItemCollector : MonoBehaviour
                 Debug.Log("SL Collected");
                 //Destroy(obj.gameObject);
                 Destroy(obj.transform.parent.gameObject);
+                slSound.Play();
                 break;
         }
 

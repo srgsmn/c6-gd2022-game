@@ -13,23 +13,38 @@ public class CoinRewarder : MonoBehaviour
     [SerializeField] private int maxReward = 3;
     [SerializeField] private GameObject[] prefab2spawn;                         //The order of game object's prefabs matters: the first has more chances to appear
 
+    [SerializeField] private GameObject collectablesContainer;
+
     public void Spawn()
     {
                 
         for (int i=0; i < prefab2spawn.Length && maxReward>0; i++)
         {
-            int count;
+            int count, tot=0;
 
             if (i < prefab2spawn.Length - 1)
                 count = Random.Range(0, maxReward);
             else
                 count = maxReward;
 
-            for (int j=0; j<count; j++)
+            for (int j=0; j<count; j++, tot++)
             {
+                /*
+                 * var newInstance = Instantiate(
+                                        prefab2spawn[i].GetComponent<Rigidbody>(),
+                                        transform.position + new Vector3(0,1,0),
+                                        Quaternion.Euler(Random.Range(0,90), tot*360/maxReward, Random.Range(0,90)) /*transform.rotation);
+
+                newInstance.transform.parent = collectablesContainer.transform;
+
+                Rigidbody rbInstance = newInstance as Rigidbody;
+
+                rbInstance.AddForce(transform.up * 150f);       //Use AddExplosionForce instead??
+                */
+
                 Rigidbody rewardInstance = Instantiate(prefab2spawn[i].GetComponent<Rigidbody>(), transform.position, transform.rotation) as Rigidbody;
 
-                rewardInstance.AddForce(transform.up * 350f);
+                rewardInstance.AddForce(transform.up * 350f); 
             }
 
             maxReward -= count;
