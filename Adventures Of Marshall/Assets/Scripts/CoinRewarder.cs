@@ -15,11 +15,11 @@ public class CoinRewarder : MonoBehaviour
     [SerializeField] private int maxReward = 3;
     [SerializeField] private GameObject[] prefab2spawn;                         //The order of game object's prefabs matters: the first has more chances to appear
 
-    [SerializeField] private GameObject collectablesContainer;
+    //[SerializeField] private GameObject collectablesContainer;
 
     public void Spawn()
     {
-                
+
         for (int i=0; i < prefab2spawn.Length && maxReward>0; i++)
         {
             int count, tot=0;

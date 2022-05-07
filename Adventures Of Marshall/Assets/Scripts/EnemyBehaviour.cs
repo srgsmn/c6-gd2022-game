@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemyBehaviour : MonoBehaviour, IDamagable, IKillable
+public class EnemyBehaviour : MonoBehaviour, IDamageable, IKillable
 {
     [SerializeField] private int initialHealth = 100;
     [SerializeField] private int initialMaximumHealth = 100;

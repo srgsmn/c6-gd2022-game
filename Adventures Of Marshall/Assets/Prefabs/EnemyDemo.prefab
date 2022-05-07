@@ -145,6 +145,8 @@ MonoBehaviour:
   prefab2spawn:
   - {fileID: 577396667661013716, guid: 4d42b3e5a21b84a168c8e20a5cfedbe9, type: 3}
   - {fileID: 5588124513073939876, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+  collectablesContainer: {fileID: 0}
+  spawnSound: {fileID: 0}
 --- !u!1 &9164219090708757192
 GameObject:
   m_ObjectHideFlags: 0

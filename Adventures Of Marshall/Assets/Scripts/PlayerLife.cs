@@ -36,12 +36,12 @@ public class PlayerLife : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy Body"))       //Collision with enemy manager
+        if(collision.gameObject.CompareTag("Enemy Body"))                       //Collision with enemy
         {
             Die(deathType.EnemyCollision, "Collision with enemy");
         }
 
-        if(collision.gameObject.layer == 4)                     //Collision with water layer
+        if(collision.gameObject.layer == 4)                                     //Collision with water layer
         {
             Die(deathType.Drowning, "Collision with water: you CAN'T swim at the moment");
         }
@@ -50,16 +50,8 @@ public class PlayerLife : MonoBehaviour
 
     void Die(deathType dType, string msg)
     {
-        Component[] meshRenderers;
-
-        GetComponent<MeshRenderer>().enabled = false;                           //TODO: far sparire gli occhietti (non così importante se già nel modello finale
-        meshRenderers = GetComponentsInChildren<MeshRenderer>();
-
-        foreach (Component mr in meshRenderers)
-            enabled = false;
-
-        GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<MarshController>().enabled = false;
+        GetComponentInChildren<MeshRenderer>().enabled = false;                           //TODO: far sparire gli occhietti (non così importante se già nel modello finale
+        GetComponent<PlayerController>().enabled = false;
 
         Debug.Log("Player is dead: " + msg + "");
         dead = true;
@@ -82,7 +74,7 @@ public class PlayerLife : MonoBehaviour
                 break;
         }
 
-        Invoke(nameof(ReloadLevel), 1f);
+        Invoke(nameof(ReloadLevel), 1.5f);
     }
 
     void ReloadLevel()
@@ -90,22 +82,4 @@ public class PlayerLife : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         restartSound.Play();
     }
-    
-
-
-
-
-    //##########################################################################
-    /*// Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    */
 }

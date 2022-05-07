@@ -6,11 +6,17 @@ public class MarshController : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float jumpForce = 1f;
+    [SerializeField] private float turnSmoothTime = .1f;
+
+    private float turnSmoothVelocity;
 
 
     private Rigidbody rigidBody;
     [SerializeField] private bool isJumping;
     [SerializeField] AudioSource jumpSound;
+
+    [SerializeField] private CharacterController controller;
+    [SerializeField] private Transform cam;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +34,19 @@ public class MarshController : MonoBehaviour
         float hInput = Input.GetAxis("Horizontal");
         float vInput = Input.GetAxis("Vertical");
 
+        Vector3 direction = new Vector3(hInput, 0f, vInput).normalized;
+
         transform.position += new Vector3(speed * hInput * Time.deltaTime, 0f, speed * vInput * Time.deltaTime);
 
+        if(direction.magnitude >= .1f) //TODO: implementare controller. Vedi [11:20] circa di https://www.youtube.com/watch?v=4HpC--2iowE
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            //controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
         /*
         //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         if (Input.GetKey("up"))

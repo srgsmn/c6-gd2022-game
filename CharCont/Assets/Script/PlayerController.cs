@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
     [SerializeField] private float speed = 5.0f;
-    [SerializeField] private float jumpForce = 7.5f;
+    [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float turnSmoothTime = .1f;
     [SerializeField] private float gravity = Physics.gravity.y;
     [SerializeField] private Transform cam;
-    [SerializeField] AudioSource jumpSound;
 
     private float turnSmoothVelocity;
     private float verticalVelocity;
     private CharacterController controller;
     private Vector3 moveVector;
 
-
-    //[SerializeField] AudioSource jumpSound;
 
     void Start()
     {
@@ -31,9 +27,9 @@ public class PlayerController : MonoBehaviour
         moveVector.x = Input.GetAxis("Horizontal") * speed;
         moveVector.z = Input.GetAxis("Vertical") * speed;
 
-
-        // DIRECTION MANAGER
         Vector3 direction = new Vector3(moveVector.x, 0f, moveVector.z).normalized;
+
+        //transform.position += new Vector3(speed * moveVector.x * Time.deltaTime, 0f, speed * moveVector.z * Time.deltaTime);
 
         if (direction.magnitude >= .1f)
         {
@@ -45,52 +41,22 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
 
-        // JUMP ACTION MANAGER
         if (controller.isGrounded)
         {
             verticalVelocity = gravity * Time.deltaTime;
             if (Input.GetButton("Jump"))
             {
-                Jump();
+                verticalVelocity = jumpForce;
             }
         }
         else
         {
             verticalVelocity += gravity * Time.deltaTime;
+            moveVector.x = 0;
+            moveVector.z = 0;
         }
-
-        // DO MOVE
         moveVector.y = verticalVelocity;
 
         controller.Move(moveVector * Time.deltaTime);
-    }
-
-    
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("COLLISION DETECTED (w/ name: " + collision.gameObject.name + "; tag: " + collision.gameObject.tag + ")");
-
-        if (collision.gameObject.CompareTag("Enemy Head"))
-        {
-            Debug.Log("You collided with " + collision.gameObject.tag);
-
-            var killable = collision.transform.parent.gameObject.GetComponent<IKillable>();
-
-            if (killable != null)
-            {
-                Debug.Log("KILLING THE ENEMY BY JUMPING ON HIS HEAD (OR SORTA)");
-                killable.Kill();
-                //Destroy(collision.transform.gameObject);
-            }
-
-            Jump();
-        }
-    }
-
-    
-    private void Jump()
-    {
-        verticalVelocity = jumpForce;
-        jumpSound.Play();
     }
 }
