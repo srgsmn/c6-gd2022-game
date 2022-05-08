@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        Debug.Log("Player controller in now on");
+        Debug.Log("Player controller is now on");
     }
 
     void Update()
