@@ -12,6 +12,7 @@ using Cinemachine;
 /* REF: 
  * https://www.youtube.com/watch?v=ACf1I27I6Tk
  * https://answers.unity.com/questions/1506945/cinemachine-freelook-camera-shake.html
+ * https://www.youtube.com/watch?v=wvPbSRTaH1I
  */
 
 public class CinemachineShake : MonoBehaviour
