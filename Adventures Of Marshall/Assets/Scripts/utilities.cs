@@ -19,3 +19,9 @@ public interface IKillable
 {
     void Kill();
 }
+
+public interface IBarManageable
+{
+    void SetValue(float value);
+    void SetMaxValue(float maxValue);
+}

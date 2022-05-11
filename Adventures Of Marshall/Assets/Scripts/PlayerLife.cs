@@ -17,10 +17,14 @@ public class PlayerLife : MonoBehaviour, IDamageable
     [SerializeField] AudioSource restartSound;
 
     [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float currentHealth;
+    [SerializeField] private float currentHealth;   //TODO: must hide then
     [SerializeField] private HealthBarManager healthBar;
+    [SerializeField] private float maxArmor = 0f;
+    [SerializeField] private float currentArmor;    //TODO; must hide then
+    [SerializeField] private ArmorBarManager armorBar;
 
     private bool dead = false;
+    private bool hasArmor = false;
     //private CharacterController controller;
 
     enum deathType
@@ -35,16 +39,26 @@ public class PlayerLife : MonoBehaviour, IDamageable
     {
         //controller = GetComponent<CharacterController>();
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetMaxValue(maxHealth);
+        hasArmor = false;
     }
 
     void Update()
     {
+        //DEBUG TODO
+        if (Input.GetKey(KeyCode.B))
+        {
+            BuildArmor(80f);
+        }
+
         if (transform.position.y <= -3.5f && !dead)
         {
             Die(deathType.CliffFall, "Falling from the ground");
             fallingSound.Play();
         }
+
+        if (hasArmor && currentArmor <= 0f)
+            hasArmor = false;
     }
 
     void LateUpdate()
@@ -53,6 +67,15 @@ public class PlayerLife : MonoBehaviour, IDamageable
         {
             Die(deathType.Generic, "You have run out of your health bar");
         }
+    }
+
+    private void BuildArmor(float maxValue)
+    {
+        hasArmor = true;
+        currentArmor = maxValue;
+        maxArmor = maxValue;
+        armorBar.SetMaxValue(maxValue);
+        armorBar.SetValue(maxValue);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -120,13 +143,27 @@ public class PlayerLife : MonoBehaviour, IDamageable
     {
         currentHealth -= damage;
 
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetValue(currentHealth);
     }
     
     public void TakeDamage(int damage)
     {
-        currentHealth -= (float) damage;
+        if (!hasArmor)
+        {
+            currentHealth -= (float)damage;
 
-        healthBar.SetHealth(currentHealth);
+            healthBar.SetValue(currentHealth);
+        }
+        else
+        {
+            currentArmor -= damage / 2.5f;
+            armorBar.SetValue(currentArmor);
+
+            if (currentHealth >= currentArmor)
+            {
+                currentHealth -= damage / 5f;
+                healthBar.SetValue(currentHealth);
+            }
+        }
     }
 }

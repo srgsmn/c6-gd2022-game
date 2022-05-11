@@ -1,5 +1,5 @@
-//HealthBarManager.cs
-/* Manages a health bar.
+//ArmorBarManager.cs
+/* Manages a armor bar.
  * 
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  */
@@ -8,7 +8,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarManager : MonoBehaviour, IBarManageable
+public class ArmorBarManager : MonoBehaviour, IBarManageable
 {
     [SerializeField] private Slider slider;
 
