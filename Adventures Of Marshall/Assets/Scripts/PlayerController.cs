@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private float verticalVelocity;
     private CharacterController controller;
     private Vector3 moveVector;
+    private bool isMoving = false;
 
 
     //[SerializeField] AudioSource jumpSound;
@@ -31,7 +32,6 @@ public class PlayerController : MonoBehaviour
         moveVector.x = Input.GetAxis("Horizontal") * speed;
         moveVector.z = Input.GetAxis("Vertical") * speed;
 
-
         // DIRECTION MANAGER
         Vector3 direction = new Vector3(moveVector.x, 0f, moveVector.z).normalized;
 
@@ -43,6 +43,16 @@ public class PlayerController : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
+
+
+        if (moveVector != Vector3.zero)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
         }
 
         // JUMP ACTION MANAGER
@@ -86,11 +96,12 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
     }
-
     
     private void Jump()
     {
         verticalVelocity = jumpForce;
         jumpSound.Play();
+
+        
     }
 }

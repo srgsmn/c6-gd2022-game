@@ -8,6 +8,7 @@ TagManager:
   - ChocoChip
   - Enemy Head
   - Enemy Body
+  - player_eye
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Jelly
   - 
   - 
   - 

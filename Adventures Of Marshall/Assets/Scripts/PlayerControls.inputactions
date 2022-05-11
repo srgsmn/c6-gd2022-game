@@ -138,7 +138,7 @@
                 {
                     "name": "",
                     "id": "fb1e6aca-d2f4-43fc-8504-2f8f98fd4495",
-                    "path": "<Gamepad>/leftStick",
+                    "path": "<HID::Unknown Joy-Con (L)>/hat",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -154,6 +154,45 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "New action map",
+            "id": "9a7c144c-8c5d-468b-96a6-4d0149100783",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Value",
+                    "id": "46f5da18-74ca-47ef-8a2f-958093ee77dc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3efb0868-a07a-4888-9133-a4801a7619f8",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8c882c45-6deb-4dd8-9a8c-080a392256e1",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
