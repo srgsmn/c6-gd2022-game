@@ -3,8 +3,7 @@
  * 
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +27,20 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable, IKillable
 
     // Evaluating and managing damage
     public void TakeDamage(int damage, Object instigator)
+    {
+        int preDamage = health;
+        health -= damage;
+
+        Debug.Log("DAMAGE INFLICTED: -" + damage + " [From " + preDamage + " to " + health + "]");
+
+        if (health <= 0)
+        {
+            Debug.Log(transform.name + "'s health below 0: DEATH TIME");
+            Die();
+        }
+    }
+
+    public void TakeDamage(int damage)
     {
         int preDamage = health;
         health -= damage;

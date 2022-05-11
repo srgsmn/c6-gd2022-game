@@ -1,8 +1,18 @@
+//CinemachineShake.cs
+/* Manages camera shaking on jelly materials
+ * 
+ * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ * TODO: still under developement
+ */
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
 
 //per chiamarlo da logica player: CinemachineShake.Instance.ShakeCamera(5f,.1f) TODO modificare al caso nostro
+/* REF: 
+ * https://www.youtube.com/watch?v=ACf1I27I6Tk
+ * https://answers.unity.com/questions/1506945/cinemachine-freelook-camera-shake.html
+ */
 
 public class CinemachineShake : MonoBehaviour
 {

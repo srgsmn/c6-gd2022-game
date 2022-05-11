@@ -1,3 +1,9 @@
+//PlayerController.cs
+/* Manages player's movement in the environment.
+ * 
+ * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -100,8 +106,6 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         verticalVelocity = jumpForce;
-        jumpSound.Play();
-
-        
+        jumpSound.Play();  
     }
 }

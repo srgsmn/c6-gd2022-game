@@ -9,18 +9,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerLife : MonoBehaviour
+public class PlayerLife : MonoBehaviour, IDamageable
 {
     [SerializeField] AudioSource fallingSound;
     [SerializeField] AudioSource enemyCollisionSound;
     [SerializeField] AudioSource drowningSound;
     [SerializeField] AudioSource restartSound;
 
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float currentHealth;
+    [SerializeField] private HealthBarManager healthBar;
+
     private bool dead = false;
     //private CharacterController controller;
 
     enum deathType
     {
+        Generic,
         CliffFall,
         EnemyCollision,
         Drowning
@@ -29,6 +34,8 @@ public class PlayerLife : MonoBehaviour
     private void Start()
     {
         //controller = GetComponent<CharacterController>();
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
@@ -40,6 +47,14 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        if (currentHealth <= 0f)
+        {
+            Die(deathType.Generic, "You have run out of your health bar");
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("OnCollisionEnter Call: elaborating the collided object");
@@ -47,7 +62,8 @@ public class PlayerLife : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy Body"))                       //Collision with enemy
         {
             Debug.Log("OnCollisionEnter Call: you collided with Enemy Body");
-            Die(deathType.EnemyCollision, "Collision with enemy");
+            TakeDamage(25);
+            //Die(deathType.EnemyCollision, "Collision with enemy");
         }
 
         if(collision.gameObject.layer == 4)                                     //Collision with water layer
@@ -98,5 +114,19 @@ public class PlayerLife : MonoBehaviour
         Debug.Log("ReloadLevel execution");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         restartSound.Play();
+    }
+    
+    public void TakeDamage(int damage, Object instigator)
+    {
+        currentHealth -= damage;
+
+        healthBar.SetHealth(currentHealth);
+    }
+    
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= (float) damage;
+
+        healthBar.SetHealth(currentHealth);
     }
 }
