@@ -69,13 +69,22 @@ public class PlayerLife : MonoBehaviour, IDamageable
         }
     }
 
-    private void BuildArmor(float maxValue)
+    public void BuildArmor(float maxValue)
     {
         hasArmor = true;
         currentArmor = maxValue;
         maxArmor = maxValue;
         armorBar.SetMaxValue(maxValue);
         armorBar.SetValue(maxValue);
+    }
+
+    public void AddHealth(float value)
+    {
+        currentHealth += value;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        healthBar.SetValue(currentHealth);
     }
 
     private void OnCollisionEnter(Collision collision)

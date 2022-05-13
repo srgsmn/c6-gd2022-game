@@ -56,4 +56,10 @@ public class ItemCollector : MonoBehaviour
         }
         */
     }
+
+    public int GetCC() { return cc_count; }
+    public void SetCC(int value) { cc_count = value; }
+    public int GetSL() { return sl_count; }
+    public void SetSL(int value) { sl_count = value; }
+
 }

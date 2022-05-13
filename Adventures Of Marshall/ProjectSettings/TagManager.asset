@@ -9,6 +9,7 @@ TagManager:
   - Enemy Head
   - Enemy Body
   - player_eye
+  - Shop
   layers:
   - Default
   - TransparentFX

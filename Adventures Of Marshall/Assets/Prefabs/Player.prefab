@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 7104724079636147536}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -313,6 +313,12 @@ MonoBehaviour:
   enemyCollisionSound: {fileID: 4800712982926617461}
   drowningSound: {fileID: 8835162465402517241}
   restartSound: {fileID: 7463629622050108076}
+  maxHealth: 100
+  currentHealth: 0
+  healthBar: {fileID: 0}
+  maxArmor: 0
+  currentArmor: 0
+  armorBar: {fileID: 0}
 --- !u!82 &845861986683544773
 AudioSource:
   m_ObjectHideFlags: 0
