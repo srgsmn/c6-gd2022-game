@@ -39,24 +39,32 @@ public class MenuActions : MonoBehaviour
     //public void Bake(string action, int cost,  float value)
     public void Bake(GameObject title)
     {
-        int availability;
-        string product = title.GetComponent<Text>().text;
-        /*
+        int availability, cost;
+        float value;
+        string product = title.GetComponent<Text>().text.ToLower();
+
         switch (product)
         {
-            case "SUGAR SYRUP":
+            case "sugarsyrup":
                 availability = player.GetComponent<ItemCollector>().GetSL();
-                if (availability >= )
+                cost = Globals.GetCostSL(product);
+                value = Globals.GetValue(product);
+
+                if (availability >= Globals.GetCostSL(product))
                 {
                     player.GetComponent<PlayerLife>().AddHealth(value);
-                    player.GetComponent<ItemCollector>().SetSL(availability-cost);
+                    player.GetComponent<ItemCollector>().SetSL(availability - cost);
                 }
                 
                 break;
 
-            case "CHOCO LAYER":
+            case "choco layer":
+                Debug.Log("From shop menu: Baking a ChocoLayer");
                 availability = player.GetComponent<ItemCollector>().GetCC();
-                if (availability >= cost)
+                cost = Globals.GetCostCC(product);
+                value = Globals.GetValue(product);
+
+                if (availability >= Globals.GetCostCC(product))
                 {
                     player.GetComponent<PlayerLife>().BuildArmor(value);
                     player.GetComponent<ItemCollector>().SetCC(availability - cost);
@@ -64,11 +72,11 @@ public class MenuActions : MonoBehaviour
 
                 break;
 
-            case "SUGAR ICING":
+            case "sugaricing":
                 //player.BuildIcing(100f);      TODO
                 break;
         }
-        */
+        
         
     }
 

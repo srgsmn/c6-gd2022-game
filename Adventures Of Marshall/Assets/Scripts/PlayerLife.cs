@@ -71,6 +71,7 @@ public class PlayerLife : MonoBehaviour, IDamageable
 
     public void BuildArmor(float maxValue)
     {
+        Debug.Log("Building the armor");
         hasArmor = true;
         currentArmor = maxValue;
         maxArmor = maxValue;
