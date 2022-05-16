@@ -2,6 +2,9 @@
 /* Manages player's movement in the environment.
  * 
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ * 
+ * Ref:
+ *  https://www.youtube.com/watch?v=4HpC--2iowE
  */
 
 using System.Collections;
@@ -21,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private float turnSmoothVelocity;
     private float verticalVelocity;
     private CharacterController controller;
-    private Vector3 moveVector;
+    //private Vector3 moveVector;
     private bool isMoving = false;
 
 
@@ -35,24 +38,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        moveVector.x = Input.GetAxis("Horizontal") * speed;
-        moveVector.z = Input.GetAxis("Vertical") * speed;
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector3 moveDir = Vector3.zero;
 
         // DIRECTION MANAGER
-        Vector3 direction = new Vector3(moveVector.x, 0f, moveVector.z).normalized;
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (direction.magnitude >= .1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
 
-
-        if (moveVector != Vector3.zero)
+        /*
+        if (moveDir != Vector3.zero)
         {
             isMoving = true;
         }
@@ -79,6 +84,7 @@ public class PlayerController : MonoBehaviour
         moveVector.y = verticalVelocity;
 
         controller.Move(moveVector * Time.deltaTime);
+        */
     }
 
     

@@ -3,6 +3,8 @@
  * 
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  * 
+ * TODO:
+ *  - Togliere magic numbers del negozio e mettere tutti i dati in un Globals o JSON (implementare serializzazione), al momento Globals non ha funzionato
  * Ref:
  * 
  */
@@ -47,12 +49,16 @@ public class MenuActions : MonoBehaviour
         {
             case "sugarsyrup":
                 availability = player.GetComponent<ItemCollector>().GetSL();
-                cost = Globals.GetCostSL(product);
-                value = Globals.GetValue(product);
 
-                if (availability >= Globals.GetCostSL(product))
+                cost = 5;
+                value = 20f;
+
+                if (availability >= cost)
                 {
-                    player.GetComponent<PlayerLife>().AddHealth(value);
+                    bool done = player.GetComponent<PlayerLife>().AddHealth(value);
+                    if (!done)
+                        break;
+
                     player.GetComponent<ItemCollector>().SetSL(availability - cost);
                 }
                 
@@ -61,13 +67,21 @@ public class MenuActions : MonoBehaviour
             case "choco layer":
                 Debug.Log("From shop menu: Baking a ChocoLayer");
                 availability = player.GetComponent<ItemCollector>().GetCC();
-                cost = Globals.GetCostCC(product);
-                value = Globals.GetValue(product);
+                Debug.Log("Checking availability: " + availability + " CCs");
+                cost = 5;
+                Debug.Log("Retriving cost: " + cost + " CCs");
+                value = 80f;
+                Debug.Log("Retriving how much it'll power up: " + value + " points");
 
-                if (availability >= Globals.GetCostCC(product))
+                if (availability >= cost)
                 {
-                    player.GetComponent<PlayerLife>().BuildArmor(value);
+                    Debug.Log("You collected enough CCs, now going to build the armor");
+                    bool done = player.GetComponent<PlayerLife>().BuildArmor(value);
+                    if (!done)
+                        break;
+
                     player.GetComponent<ItemCollector>().SetCC(availability - cost);
+                    
                 }
 
                 break;

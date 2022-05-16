@@ -50,6 +50,10 @@ public class PlayerLife : MonoBehaviour, IDamageable
         {
             BuildArmor(80f);
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            TakeDamage(25);
+        }
 
         if (transform.position.y <= -3.5f && !dead)
         {
@@ -69,23 +73,37 @@ public class PlayerLife : MonoBehaviour, IDamageable
         }
     }
 
-    public void BuildArmor(float maxValue)
+    public bool BuildArmor(float maxValue)
     {
         Debug.Log("Building the armor");
+        if (hasArmor && currentArmor == maxArmor)
+            return false;
+
         hasArmor = true;
         currentArmor = maxValue;
         maxArmor = maxValue;
         armorBar.SetMaxValue(maxValue);
         armorBar.SetValue(maxValue);
+
+        return true;
     }
 
-    public void AddHealth(float value)
+    public bool AddHealth(float value)
     {
+        if (currentHealth >= maxHealth)
+        {
+            return false;
+        }
+
         currentHealth += value;
         if (currentHealth > maxHealth)
+        {
             currentHealth = maxHealth;
+        }
 
         healthBar.SetValue(currentHealth);
+
+        return true;
     }
 
     private void OnCollisionEnter(Collision collision)

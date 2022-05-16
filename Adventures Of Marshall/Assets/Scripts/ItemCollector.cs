@@ -19,6 +19,11 @@ public class ItemCollector : MonoBehaviour
     [SerializeField] AudioSource slSound;
     [SerializeField] AudioSource ccSound;
 
+    private enum collectableItem
+    {
+        SL,
+        CC
+    };
 
     private void OnTriggerEnter(Collider obj)
     {
@@ -26,16 +31,16 @@ public class ItemCollector : MonoBehaviour
         {
             case "ChocoChip":
                 cc_count++;
-                cc_text.text = "ChocoChips: " + cc_count;
-                Debug.Log("CC Collected");
+                UpdateUI(collectableItem.CC, cc_count);
+
                 Destroy(obj.transform.parent.gameObject);
                 ccSound.Play();
                 break;
 
             case "SugarLump":
                 sl_count++;
-                sl_text.text = "SugarLumps: " + sl_count;
-                Debug.Log("SL Collected");
+                UpdateUI(collectableItem.SL, sl_count);
+
                 //Destroy(obj.gameObject);
                 Destroy(obj.transform.parent.gameObject);
                 slSound.Play();
@@ -58,8 +63,34 @@ public class ItemCollector : MonoBehaviour
     }
 
     public int GetCC() { return cc_count; }
-    public void SetCC(int value) { cc_count = value; }
+    public void SetCC(int value) {
+        cc_count = value;
+        UpdateUI(collectableItem.CC, cc_count);
+    }
     public int GetSL() { return sl_count; }
-    public void SetSL(int value) { sl_count = value; }
+    public void SetSL(int value) {
+        sl_count = value;
+        UpdateUI(collectableItem.SL, sl_count);
+    }
 
+    private void UpdateUI(collectableItem item, int quantity)
+    {
+        switch(item)
+        {
+            case collectableItem.SL:
+                sl_text.text = "SugarLumps: " + quantity;
+                Debug.Log("Changed UI: SL count");
+
+                break;
+
+            case collectableItem.CC:
+                cc_text.text = "ChocoChips: " + quantity;
+                Debug.Log("Changed UI: CC count");
+
+                break;
+
+            default:
+                break;
+        }
+    }
 }
