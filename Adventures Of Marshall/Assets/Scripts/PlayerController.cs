@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float turnSmoothTime = .1f;
     [SerializeField] private float gravity = Physics.gravity.y;
     [SerializeField] private Transform cam;
+
+    [Header("SFX:")]
     [SerializeField] AudioSource jumpSound;
 
     private float turnSmoothVelocity;
@@ -27,8 +29,6 @@ public class PlayerController : MonoBehaviour
     //private Vector3 moveVector;
     private bool isMoving = false;
 
-
-    //[SerializeField] AudioSource jumpSound;
 
     void Start()
     {
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
 
-        /*
+        
         if (moveDir != Vector3.zero)
         {
             isMoving = true;
@@ -81,10 +81,10 @@ public class PlayerController : MonoBehaviour
         }
 
         // DO MOVE
-        moveVector.y = verticalVelocity;
+        //moveVector.y = verticalVelocity;
 
-        controller.Move(moveVector * Time.deltaTime);
-        */
+        //controller.Move(moveVector * Time.deltaTime);
+        
     }
 
     

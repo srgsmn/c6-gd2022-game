@@ -11,17 +11,20 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour, IDamageable
 {
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float currentHealth;   //TODO: must hide then
+    [SerializeField] private float maxArmor = 0f;
+    [SerializeField] private float currentArmor;    //TODO; must hide then
+
+    [Header("GUI managers:")]
+    [SerializeField] private HealthBarManager healthBar;
+    [SerializeField] private ArmorBarManager armorBar;
+
+    [Header("SFX:")]
     [SerializeField] AudioSource fallingSound;
     [SerializeField] AudioSource enemyCollisionSound;
     [SerializeField] AudioSource drowningSound;
     [SerializeField] AudioSource restartSound;
-
-    [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float currentHealth;   //TODO: must hide then
-    [SerializeField] private HealthBarManager healthBar;
-    [SerializeField] private float maxArmor = 0f;
-    [SerializeField] private float currentArmor;    //TODO; must hide then
-    [SerializeField] private ArmorBarManager armorBar;
 
     private bool dead = false;
     private bool hasArmor = false;
