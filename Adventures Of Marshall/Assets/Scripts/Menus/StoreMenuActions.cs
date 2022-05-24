@@ -1,24 +1,10 @@
-//MenuActions.cs
-/* Collection of actions executable from menus
- * 
- * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
- * 
- * TODO:
- *  - Togliere magic numbers del negozio e mettere tutti i dati in un Globals o JSON (implementare serializzazione), al momento Globals non ha funzionato
- * Ref:
- * 
- */
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuActions : MonoBehaviour
+public class StoreMenuActions : MenuActions
 {
-    [SerializeField] private GameObject player;
-
     enum bakeType
     {
         SugarSyrup,
@@ -26,18 +12,8 @@ public class MenuActions : MonoBehaviour
         SugarIcing
     }
 
-    //MAIN MENU
-    public void StartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
+    [SerializeField] private GameObject player;
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
-    //IN GAME MENU ACTIONS
     //public void Bake(string action, int cost,  float value)
     public void Bake(GameObject title)
     {
@@ -61,7 +37,7 @@ public class MenuActions : MonoBehaviour
 
                     player.GetComponent<ItemCollector>().SetSL(availability - cost);
                 }
-                
+
                 break;
 
             case "choco layer":
@@ -81,7 +57,7 @@ public class MenuActions : MonoBehaviour
                         break;
 
                     player.GetComponent<ItemCollector>().SetCC(availability - cost);
-                    
+
                 }
 
                 break;
@@ -90,12 +66,7 @@ public class MenuActions : MonoBehaviour
                 //player.BuildIcing(100f);      TODO
                 break;
         }
-        
-        
-    }
 
-    public void Close(GameObject window)
-    {
-        window.SetActive(false);
+
     }
 }

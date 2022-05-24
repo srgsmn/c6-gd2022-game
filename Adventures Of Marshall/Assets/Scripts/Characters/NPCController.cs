@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealtComponent : MonoBehaviour//, IDamagable
+public class NPCController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

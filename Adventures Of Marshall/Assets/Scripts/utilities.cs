@@ -11,8 +11,8 @@ using UnityEngine;
 // INTERFACES
 public interface IDamageable
 {
-    void TakeDamage(int damage, Object instigator);
-    void TakeDamage(int damage);
+    void TakeDamage(float damage, Object instigator);
+    void TakeDamage(float damage);
 }
 
 public interface IKillable
@@ -26,3 +26,11 @@ public interface IBarManageable
     void SetMaxValue(float maxValue);
 }
 
+// ENUM
+enum DeathType
+{
+    Generic,
+    CliffFall,
+    EnemyCollision,
+    Drowning
+}

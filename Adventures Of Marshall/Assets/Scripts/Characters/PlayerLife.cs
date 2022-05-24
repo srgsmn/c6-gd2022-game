@@ -2,23 +2,41 @@
 /* Manages player's life and event that can affect its health.
  * 
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ * 
+ * TODO:
+ *  - Implementare isPlayable (non serve solo nella schermata iniziale, ma anche quando sono aperti i menu)
+ *  - Unificare ArmorBarManager con HealthBarManager (magari tutto in questo script)?
+ * 
+ * REF:
+ *  - https://answers.unity.com/questions/225213/c-countdown-timer.html per modificare la morte dopo la caduta da un luogo
  */
 
 using System.Collections;
 using System.Collections.Generic;
+//using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour, IDamageable
 {
+    
+    [SerializeField] [Tooltip("This field is true when the player can directly control the character, but false when it shouldn't be controlled as while consulting a menu etc.")]
+    private bool isPlayable = true;
+    
+
+    [Header("Health values:")]
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;   //TODO: must hide then
     [SerializeField] private float maxArmor = 0f;
     [SerializeField] private float currentArmor;    //TODO; must hide then
 
     [Header("GUI managers:")]
-    [SerializeField] private HealthBarManager healthBar;
-    [SerializeField] private ArmorBarManager armorBar;
+    [SerializeField][Tooltip("Enables the GUI")]
+    private bool enableGUI = true;
+    [SerializeField][Tooltip("Script that manages the health bar")]
+    private HealthBarManager healthBar;
+    [SerializeField] [Tooltip("Script that manages the armor bar")]
+    private ArmorBarManager armorBar;
 
     [Header("SFX:")]
     [SerializeField] AudioSource fallingSound;
@@ -40,10 +58,13 @@ public class PlayerLife : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        //controller = GetComponent<CharacterController>();
-        currentHealth = maxHealth;
-        healthBar.SetMaxValue(maxHealth);
-        hasArmor = false;
+        if (!enableGUI || !isPlayable)
+        {
+            //controller = GetComponent<CharacterController>();
+            currentHealth = maxHealth;
+            healthBar.SetMaxValue(maxHealth);
+            hasArmor = false;
+        }
     }
 
     void Update()
@@ -170,18 +191,18 @@ public class PlayerLife : MonoBehaviour, IDamageable
         restartSound.Play();
     }
     
-    public void TakeDamage(int damage, Object instigator)
+    public void TakeDamage(float damage, Object instigator)
     {
         currentHealth -= damage;
 
         healthBar.SetValue(currentHealth);
     }
     
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (!hasArmor)
         {
-            currentHealth -= (float)damage;
+            currentHealth -= damage;
 
             healthBar.SetValue(currentHealth);
         }

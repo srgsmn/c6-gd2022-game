@@ -4,7 +4,7 @@
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  * 
  * TODO:
- *  - rimuovere [SerializedField ai contatori]
+ *  - rimuovere [SerializedField] ai contatori
  */
 
 using System.Collections;
@@ -20,7 +20,7 @@ public class ItemCollector : MonoBehaviour
 
     [Header("GUI:")]
     [SerializeField][Tooltip("GUI element for CC count")] Text chocoChipsText;
-    [SerializeField][Tooltip("GUI element for SL count")] Text SugarLumpsText;
+    [SerializeField][Tooltip("GUI element for SL count")] Text sl_text;
 
     [Header("SFX:")]
     [SerializeField] AudioSource slSound;
@@ -85,7 +85,7 @@ public class ItemCollector : MonoBehaviour
         switch(item)
         {
             case collectableItem.SL:
-                SugarLumpsText.text = "SugarLumps: " + quantity;
+                sl_text.text = "SugarLumps: " + quantity;
                 Debug.Log("Changed UI: SL count");
 
                 break;

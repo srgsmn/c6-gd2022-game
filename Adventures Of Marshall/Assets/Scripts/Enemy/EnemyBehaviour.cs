@@ -13,8 +13,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable, IKillable
     [SerializeField] private int initialMaximumHealth = 100;
     [SerializeField] private UnityEvent onDie;
 
-    private int health;
-    private int maximumHealth;
+    private float health;
+    private float maximumHealth;
 
     void Start()
     {
@@ -28,7 +28,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable, IKillable
     // Evaluating and managing damage
     public void TakeDamage(int damage, Object instigator)
     {
-        int preDamage = health;
+        float preDamage = health;
         health -= damage;
 
         Debug.Log("DAMAGE INFLICTED: -" + damage + " [From " + preDamage + " to " + health + "]");
@@ -40,9 +40,9 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable, IKillable
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        int preDamage = health;
+        float preDamage = health;
         health -= damage;
 
         Debug.Log("DAMAGE INFLICTED: -" + damage + " [From " + preDamage + " to " + health + "]");
@@ -71,5 +71,10 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable, IKillable
             Debug.Log("DESTROYING GAME OBJECT (" + transform.name + ")");
             Destroy(this.gameObject);
         }
+    }
+
+    public void TakeDamage(float damage, Object instigator)
+    {
+        TakeDamage(damage);
     }
 }
