@@ -24,7 +24,7 @@ public class StoreMenuActions : MenuActions
         switch (product)
         {
             case "sugarsyrup":
-                availability = player.GetComponent<ItemCollector>().GetSL();
+                availability = player.GetComponent<CollectablesManager>().GetSL();
 
                 cost = 5;
                 value = 20f;
@@ -35,14 +35,14 @@ public class StoreMenuActions : MenuActions
                     if (!done)
                         break;
 
-                    player.GetComponent<ItemCollector>().SetSL(availability - cost);
+                    player.GetComponent<CollectablesManager>().SetSL(availability - cost);
                 }
 
                 break;
 
             case "choco layer":
                 Debug.Log("From shop menu: Baking a ChocoLayer");
-                availability = player.GetComponent<ItemCollector>().GetCC();
+                availability = player.GetComponent<CollectablesManager>().GetCC();
                 Debug.Log("Checking availability: " + availability + " CCs");
                 cost = 5;
                 Debug.Log("Retriving cost: " + cost + " CCs");
@@ -56,7 +56,7 @@ public class StoreMenuActions : MenuActions
                     if (!done)
                         break;
 
-                    player.GetComponent<ItemCollector>().SetCC(availability - cost);
+                    player.GetComponent<CollectablesManager>().SetCC(availability - cost);
 
                 }
 

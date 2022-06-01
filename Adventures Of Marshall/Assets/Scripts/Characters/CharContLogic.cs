@@ -4,7 +4,10 @@
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  * 
  * TODO:
- *  - 
+ *  - deve sostituire PlayerController.cs
+ *  
+ * FIXME:
+ *  - Not working
  * 
  * REF:
  *  - https://medium.com/ironequal/unity-character-controller-vs-rigidbody-a1e243591483

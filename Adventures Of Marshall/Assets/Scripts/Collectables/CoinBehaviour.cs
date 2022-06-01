@@ -18,6 +18,7 @@ public class CoinBehaviour : MonoBehaviour
     private void Start()
     {
         positionOnStart = transform.localPosition;
+        
         //transform.rotation = Quaternion.Euler(new Vector3(Random.Range(-90f, +90f), Random.Range(-90f, +90f), Random.Range(-90f, +90f)));
     }
 

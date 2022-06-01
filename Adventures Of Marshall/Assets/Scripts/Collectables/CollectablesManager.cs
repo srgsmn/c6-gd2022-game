@@ -4,7 +4,7 @@
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  * 
  * TODO:
- *  - 
+ *  - Va a sostituire ItemCollector.cs
  *  
  * REF:
  *  - 
@@ -19,34 +19,17 @@ using UnityEngine;
 
 public class CollectablesManager : MonoBehaviour
 {
+    //FIELDS
     [SerializeField] private CollectablesManagerGUI collectablesGUI;
 
-    /*
-    private class Item
-    {
-        public string Name { get; }
-        public int Count { set; get; }
+    private Dictionary<string, int> items = new Dictionary<string, int>();
 
-        public Item(string name)
-        {
-            this.Name = name;
-            Count = 0;
-        }
 
-        public string getItem()
-        {
-            return "(" + Name + ", " + Count + ")";
-        }
-    }
-    */
-
-    //private List<Item> items = new List<Item>();
-    Dictionary<string, int> items = new Dictionary<string, int>();
-
+    //METHODS
     private void Start()
     {
-        items.Add("SugarLumps", 0);
-        items.Add("ChocoChips", 0);
+        items.Add("SL", 0);
+        items.Add("CC", 0);
 
         Debug.Log("CollectablesManager | Collectable items:");
         foreach (var item in items)
@@ -55,7 +38,7 @@ public class CollectablesManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Update()   //FIXME Debugging method
     {
         DebugInputs();
     }
@@ -64,30 +47,44 @@ public class CollectablesManager : MonoBehaviour
     {
         switch (collider.gameObject.tag)
         {
-            case "SugarLumps":
-                items["SugarLumps"]++;
-                collectablesGUI.UpdateSL(items["SugarLumps"]);
+            case "SugarLump":
+                Debug.Log("CollectablesManager | Collision detected w/ SL. Incrementing the counter");
+                items["SL"]++;
+                Debug.Log("CollectablesManager | Communicating with the GUI to update the SL counter");
+                //collectablesGUI.UpdateSL(items["SL"]);
+                collectablesGUI.UpdateCounter(CollectablesManagerGUI.IndicatorType.SL, items["SL"]);
                 break;
 
-            case "ChocoChips":
-                items["ChocoChips"]++;
-                collectablesGUI.UpdateCC(items["ChocoChips"]);
+            case "ChocoChip":
+                Debug.Log("CollectablesManager | Collision detected w/ CC. Incrementing the counter");
+                items["CC"]++;
+                Debug.Log("CollectablesManager | Communicating with the GUI to update the CC counter");
+                //collectablesGUI.UpdateCC(items["CC"]);
+                collectablesGUI.UpdateCounter(CollectablesManagerGUI.IndicatorType.CC, items["CC"]);
                 break;
         }
+
+        Destroy(collider.transform.parent.gameObject);
     }
 
     private void DebugInputs()  //FIXME Debugging method
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            items["SugarLumps"]++;
-            collectablesGUI.UpdateSL(items["SugarLumps"]);
+            items["SL"]++;
+            collectablesGUI.UpdateSL(items["SL"]);
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            items["ChocoChips"]++;
-            collectablesGUI.UpdateCC(items["ChocoChips"]);
+            items["CC"]++;
+            collectablesGUI.UpdateCC(items["CC"]);
         }
     }
+
+    public void SetSL(int value){ items["SL"] = value; }
+    public int GetSL() { return items["SL"]; }
+
+    public void SetCC(int value) { items["CC"] = value; }
+    public int GetCC() { return items["CC"]; }
 }
