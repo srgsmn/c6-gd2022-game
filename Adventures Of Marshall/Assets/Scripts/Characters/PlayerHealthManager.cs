@@ -13,12 +13,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerHealth : HealthManager
+public class PlayerHealthManager : HealthManager
 {
     [SerializeField] private PlayerHealthGUI statusBars;
 
-    public string DeathType { get; private set; }
+    //public string DeathType { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,12 @@ public class PlayerHealth : HealthManager
         {
             Debug.Log("PlayerHealth | Armor is active but its current level is <=0: deactivating armor");
             hasArmor = false;
+        }
+
+        if (!isAlive)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            isAlive = true;
         }
     }
 
@@ -95,6 +102,11 @@ public class PlayerHealth : HealthManager
             AddHealth(25f);
         if (Input.GetKey(KeyCode.V))
             AddArmor(25f);
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Die();
+        }
     }
 }
 

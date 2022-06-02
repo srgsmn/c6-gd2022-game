@@ -24,11 +24,22 @@ public class HealthManager : MonoBehaviour, IDamageable
     [SerializeField] private protected float maxArmor = 0f;
     [SerializeField] private protected float currArmor;    //FIXME; must hide then
 
-    private protected bool isAlive = false;
+    private protected bool _isAlive;
     private protected bool hasArmor = false;
 
-    public bool IsAlive() { return isAlive; }
+    public bool isAlive
+    {
+        get { return _isAlive; }
+        set { _isAlive = value; }
+    }
     public bool HasArmor() { return hasArmor; }
+    public float GetHealth() { return currHealth; }
+    public float GetArmor() { return currArmor; }
+
+    private void Awake()
+    {
+        isAlive = true;
+    }
 
     public virtual void BuildArmor(float maxValue)
     {
@@ -79,6 +90,7 @@ public class HealthManager : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
+        isAlive = false;
         Destroy(gameObject);
     }
 }

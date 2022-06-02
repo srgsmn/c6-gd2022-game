@@ -14,14 +14,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerHealth))]
+[RequireComponent(typeof(PlayerHealthManager))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(AudioSource))]
 public class PlayerSFX : MonoBehaviour
 {
-    private PlayerHealth healthInfo;
+    private PlayerHealthManager healthInfo;
 
     [SerializeField] AudioSource fallingSound;
     [SerializeField] AudioSource enemyCollisionSound;

@@ -5,6 +5,7 @@
  * 
  * TODO:
  *  - Va a sostituire ItemCollector.cs
+ *  - Forse è meglio fare un CollisionManager che gestisca tutte le collisioni globali e richiami i vari moduli
  *  
  * REF:
  *  - 
@@ -53,6 +54,8 @@ public class CollectablesManager : MonoBehaviour
                 Debug.Log("CollectablesManager | Communicating with the GUI to update the SL counter");
                 //collectablesGUI.UpdateSL(items["SL"]);
                 collectablesGUI.UpdateCounter(CollectablesManagerGUI.IndicatorType.SL, items["SL"]);
+
+                DestroyCollectable(collider);
                 break;
 
             case "ChocoChip":
@@ -61,9 +64,14 @@ public class CollectablesManager : MonoBehaviour
                 Debug.Log("CollectablesManager | Communicating with the GUI to update the CC counter");
                 //collectablesGUI.UpdateCC(items["CC"]);
                 collectablesGUI.UpdateCounter(CollectablesManagerGUI.IndicatorType.CC, items["CC"]);
+
+                DestroyCollectable(collider);
                 break;
         }
+    }
 
+    private void DestroyCollectable(Collider collider)
+    {
         Destroy(collider.transform.parent.gameObject);
     }
 
@@ -87,4 +95,17 @@ public class CollectablesManager : MonoBehaviour
 
     public void SetCC(int value) { items["CC"] = value; }
     public int GetCC() { return items["CC"]; }
+
+    public int Get(Globals.CollectableType cType)
+    {
+        switch (cType)
+        {
+            case Globals.CollectableType.CC:
+                return GetCC();
+            case Globals.CollectableType.SL:
+                return GetSL();
+            default:
+                return 0;
+        }
+    }
 }

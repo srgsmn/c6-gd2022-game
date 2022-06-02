@@ -13,6 +13,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,17 +27,41 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     private CharacterController controller;
 
+    private PlayerHealthManager healthManager;
+
     [Header("SFX:")]
     [SerializeField] AudioSource jumpSound;
+
+    //CHECKPOINT TODO: To refine
+    private GameMaster gameMaster;
+    private Player player;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         Debug.Log("Player controller is now on");
+
+        healthManager = GetComponent<PlayerHealthManager>();
+
+        //LOAD CHECKPOINT
+        
+        gameMaster = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
+        transform.position = gameMaster.lastPosition;
+        
+
+        //LOAD GAME     FIXME
+        //player = GetComponent<Player>();
     }
 
     void Update()
     {
+        //IS ALIVE
+        if (!healthManager.isAlive)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            healthManager.isAlive=true;
+        }
+
         //MOVEMENT
         Vector3 input = new(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 

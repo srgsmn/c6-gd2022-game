@@ -140,6 +140,7 @@ public class CollectablesManagerGUI : MonoBehaviour
             {
                 Debug.Log("CollectablesManagerGUI | Time out, hiding text...");
                 HideText(indicator.indicatorType);
+                break;
             }
         }
     }
