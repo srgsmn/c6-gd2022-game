@@ -7,7 +7,8 @@
  *  - Perfezionare movimenti in accordo con la camera
  *  
  * Ref:
- *  https://www.youtube.com/watch?v=4HpC--2iowE
+ *  - https://www.youtube.com/watch?v=4HpC--2iowE
+ *  - (Checkpoints) https://www.youtube.com/watch?v=ofCLJsSUom0
  */
 
 using System.Collections;
@@ -55,13 +56,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //IS ALIVE
-        if (!healthManager.isAlive)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            healthManager.isAlive=true;
-        }
-
         //MOVEMENT
         Vector3 input = new(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 

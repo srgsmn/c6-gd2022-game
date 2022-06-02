@@ -15,17 +15,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class MenuActions : MonoBehaviour
 {
     
     [SerializeField] private Canvas canvas;
-
-    private void OnApplicationQuit()
-    {
-        Debug.Log("Quitting...");
-    }
 
     public void Open(GameObject window)
     {
@@ -44,5 +37,15 @@ public class MenuActions : MonoBehaviour
         Debug.Log("Closing " + transform.name + " panel");
         transform.parent.gameObject.SetActive(false);
     }
-    
+
+    public void Quit()
+    {
+        Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
+
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Quitting...");
+    }
 }

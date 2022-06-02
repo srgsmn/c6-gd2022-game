@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenuActions : MenuActions
+public class StartMenu : MenuActions
 {
     public void StartGame()
     {
@@ -36,9 +36,10 @@ public class StartMenuActions : MenuActions
         //TODO
     }
 
+    
     public void QuitGame()
     {
-        Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false;
+        //mettere "you sure?"
+        Quit();
     }
 }
