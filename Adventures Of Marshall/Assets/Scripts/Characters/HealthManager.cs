@@ -35,6 +35,9 @@ public class HealthManager : MonoBehaviour, IDamageable
     public bool HasArmor() { return hasArmor; }
     public float GetHealth() { return currHealth; }
     public float GetArmor() { return currArmor; }
+    public void SetHeatlth(float health) { currHealth = health; }
+    public void SetArmor(float armor) { currArmor = armor; }
+    
 
     private void Awake()
     {

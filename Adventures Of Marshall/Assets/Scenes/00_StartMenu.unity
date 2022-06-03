@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 2032101560}
+  player: {fileID: 0}
 --- !u!1 &44305981
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,6 +742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &512974765
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,7 +758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &512974766
 RectTransform:
   m_ObjectHideFlags: 0
@@ -793,7 +795,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &518993982
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1099,6 +1101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &833297083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,13 +1182,13 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 833297087}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 833297089}
-        m_TargetAssemblyTypeName: StartMenuActions, Assembly-CSharp
+        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
         m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
@@ -1247,6 +1250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &957012000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1769,6 +1773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &1629591563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2446,6 +2451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8568d4fb2e2634f28aa9d6a261c7c253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 2032101560}
+  player: {fileID: 2057199474}
   isFirstStart: 1
   firstStartMenu: {fileID: 512974765}
   subsequentStartMenu: {fileID: 518993981}
@@ -2609,3 +2616,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf8de30b54364bdbba9e46525dec813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2057199488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057199474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66166e6f328cb47929a5e8657691cd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 0
+  health: 0
+  armor: 0
+  SLCount: 0
+  CCCount: 0
+  position: {x: 0, y: 0, z: 0}

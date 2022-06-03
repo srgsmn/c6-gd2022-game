@@ -3,53 +3,78 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
 
 public static class SaveSystem
 {
-    /*
-    private static string path = Application.persistentDataPath + "/player.save";
+    private static string savePath
+    {
+        get { return Application.persistentDataPath + "/player.save"; }
+    }
+
+    public static bool isSaved
+    {
+        get { return File.Exists(savePath); }
+    }
 
     public static void SavePlayer(Player player)
     {
+        Debug.Log("SaveSystem.cs | Creating the binary formatter");
         BinaryFormatter formatter = new BinaryFormatter();
 
-        FileStream stream = new FileStream(path, FileMode.Create);
+        Debug.Log("SaveSystem.cs | Creating the filestream (in "+savePath+")");
+        FileStream stream = new FileStream(savePath, FileMode.Create);
 
+        Debug.Log("SaveSystem.cs | Retrieving player's data");
         PlayerData data = new PlayerData(player);
+        Debug.Log("StartMenu.cs | Data to be saved is: " + data.ToString());
 
+        Debug.Log("SaveSystem.cs | Serializing the data");
         formatter.Serialize(stream, data);
-        stream.Close();
-    }
 
-    public static void SavePlayer(GameManager game)
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
-
-        FileStream stream = new FileStream(path, FileMode.Create);
-
-        GameManager data = new GameManager(game);
-
-        formatter.Serialize(stream, data);
+        Debug.Log("SaveSystem.cs | Closing the stream");
         stream.Close();
     }
 
     public static PlayerData LoadPlayer()
     {
-        if (File.Exists(path))
+        if (File.Exists(savePath))
         {
+            Debug.Log("SaveSystem.cs | The file exists, opening the formatter");
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
 
+            Debug.Log("SaveSystem.cs | Creating the stream");
+            FileStream stream = new FileStream(savePath, FileMode.Open);
+
+            Debug.Log("SaveSystem.cs | Deserializing data");
             PlayerData data = formatter.Deserialize(stream) as PlayerData;
+
+            Debug.Log("SaveSystem.cs | Closing the stream");
             stream.Close();
 
             return data;
         }
         else
         {
-            Debug.LogError("Save file not found in " + path);
+            Debug.LogError("Save file not found in " + savePath);
             return null;
         }
     }
-    */
+
+    public static void DeleteSaved()
+    {
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+        }
+
+        //OR
+        /*
+        try { File.Delete(savePath); }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+        }
+        */
+    }
 }

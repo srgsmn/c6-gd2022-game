@@ -19,21 +19,37 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MenuActions
 {
+    [SerializeField] private GameObject player;
+
     public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         //SceneManager.LoadScene(SceneManager.GetSceneByName("Level01").buildIndex);
         //SceneManager.LoadScene("Level01");
+
+        
+    }
+
+    private void Awake()
+    {
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
     public void RestartGame()   //TODO vedi sopra
     {
+        SaveSystem.DeleteSaved();
         StartGame();
     }
 
     public void LoadGame()
     {
-        //TODO
+        Debug.Log("StartMenu.cs | Loading the last game");
+        SaveSystem.LoadPlayer();
+        Debug.Log("StartMenu.cs | Loading the last game scene");
+        SceneManager.LoadScene(player.GetComponent<Player>().level);
     }
 
     

@@ -10,16 +10,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheckPoint : MonoBehaviour
 {
+    [SerializeField] private Player player;
+
     private GameMaster gameMaster;
     //private Player player;
 
     private void Start()
     {
         gameMaster = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
-        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +30,9 @@ public class CheckPoint : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameMaster.lastPosition = transform.position;
+            player.position = transform.position;
+            player.level = SceneManager.GetActiveScene().buildIndex;
+            player.SavePlayer();
             //player.SavePlayer();
             //GameManager.SaveGame();
         }

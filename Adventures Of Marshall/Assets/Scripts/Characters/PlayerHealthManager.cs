@@ -43,7 +43,17 @@ public class PlayerHealthManager : HealthManager
 
         if (!isAlive)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Player player = GetComponent<Player>();
+            player.LoadPlayer();
+            if (!SaveSystem.isSaved)    //FIXME to refine with file try-catch
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            else
+            {
+                SceneManager.LoadScene(player.level);
+            }
+            
             isAlive = true;
         }
     }
@@ -107,6 +117,12 @@ public class PlayerHealthManager : HealthManager
         {
             Die();
         }
+    }
+
+    public void LoadHealth(float health, float armor)
+    {
+        SetHeatlth(health);
+        SetArmor(armor);
     }
 }
 

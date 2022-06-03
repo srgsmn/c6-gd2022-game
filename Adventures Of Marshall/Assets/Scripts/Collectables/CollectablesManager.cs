@@ -108,4 +108,10 @@ public class CollectablesManager : MonoBehaviour
                 return 0;
         }
     }
+
+    public void LoadCollectables(int sl, int cc)
+    {
+        SetSL(sl);
+        SetCC(cc);
+    }
 }
