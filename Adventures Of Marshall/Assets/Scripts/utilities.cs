@@ -6,6 +6,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 // INTERFACES
@@ -26,11 +27,10 @@ public interface IBarManageable
     void SetMaxValue(float maxValue);
 }
 
-// ENUM
-enum DeathType
-{
-    Generic,
-    CliffFall,
-    EnemyCollision,
-    Drowning
-}
+public enum DeathType
+    {
+        Generic,
+        CliffFall,
+        EnemyCollision,
+        Drowning
+    }

@@ -1,5 +1,6 @@
-//MenuActions.cs
-/* Collection of actions executable from menus
+/* MenuActions.cs
+ * --------------
+ * Basic menu actions
  * 
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  * 
@@ -14,28 +15,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuActions : MonoBehaviour
 {
     
     [SerializeField] private Canvas canvas;
 
+    public static bool isAlertOpen { get; set; }
+
+    private GameObject activeWindow = null;
+
     public void Open(GameObject window)
     {
-        Debug.Log("Opening \"" + window.transform.name + "\" panel");
+        activeWindow = window;
+        DEB("Opening \"" + window.transform.name + "\" panel");
         window.SetActive(true);
     }
 
     public void Close(GameObject window)
     {
-        Debug.Log("Closing \"" + window.transform.name + "\" panel");
+        DEB("Closing \"" + window.transform.name + "\" panel");
         window.SetActive(false);
+        activeWindow = null;
     }
-    
+
     public void Close()
     {
-        Debug.Log("Closing " + transform.name + " panel");
-        transform.parent.gameObject.SetActive(false);
+        DEB("Closing \"" + activeWindow.transform.name + "\" panel");
+
+        activeWindow.SetActive(false);
+        activeWindow = null;
     }
 
     public void Quit()
@@ -44,8 +54,19 @@ public class MenuActions : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
     }
 
+    public void LoadMenu()
+    {
+        DEB("Trying to open the menu");
+        SceneManager.LoadScene(0);
+    }
+
     private void OnApplicationQuit()
     {
-        Debug.Log("Quitting...");
+        DEB("Quitting...");
+    }
+
+    private void DEB(string msg)    //DEBUG
+    {
+        Debug.Log(this.GetType().Name + " | " + msg);
     }
 }

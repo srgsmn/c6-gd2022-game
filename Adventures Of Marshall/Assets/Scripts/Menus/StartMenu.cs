@@ -1,15 +1,13 @@
-/*  StartMenuActions.cs
- * Collection of actions executable from start menu
+//LoadStartMenu.cs
+/* Checks if there are already saved games and basing on that it shows a starting menù intead of another
  * 
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
  * 
  * TODO:
- *  - Implementare RestartGame() con reset dei salvataggi.
- *  - Implementare LoadGame()
+ *  -
  *  
  * Ref:
- *  -
- * 
+ *  - 
  */
 
 using System.Collections;
@@ -19,16 +17,27 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MenuActions
 {
-    [SerializeField] private GameObject player;
+    #region DEBUG FIELDS
+    [SerializeField]
+    [Tooltip("(DEBUG ONLY) Checkbox for enabling one screen or another")]
+    private bool isFirstStart = true;
+    #endregion
 
-    public void StartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        //SceneManager.LoadScene(SceneManager.GetSceneByName("Level01").buildIndex);
-        //SceneManager.LoadScene("Level01");
+    [Header("Menu elements")]
+    [SerializeField]
+    [Tooltip("Menu that appears on first start, when there isn't any game saved")]
+    private GameObject firstGamePanel;
 
-        
-    }
+    [SerializeField]
+    [Tooltip("Menu that appears when there is alreary a game saved")]
+    private GameObject existingGamePanel;
+
+    [SerializeField]
+    [Tooltip("Alert that appears when clicking on quit button")]
+    private GameObject quitAlertPanel;
+
+    private GameObject player;
+
 
     private void Awake()
     {
@@ -36,9 +45,43 @@ public class StartMenu : MenuActions
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
+
+        if (SaveSystem.isSaved)
+        {
+            EnableExistingGamePanel();
+            //isFirstStart = false;
+        }
+        else
+        {
+            EnableFirstGamePanel();
+            //isFirstStart = true;
+        }
     }
 
-    public void RestartGame()   //TODO vedi sopra
+    private void Update()
+    {
+        //if (isFirstStart)   EnableFirstGamePanel();
+        //else                EnableExistingGamePanel();
+    }
+
+    private void EnableFirstGamePanel()
+    {
+        firstGamePanel.SetActive(true);
+        existingGamePanel.SetActive(false);
+    }
+
+    private void EnableExistingGamePanel()
+    {
+        firstGamePanel.SetActive(false);
+        existingGamePanel.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void RestartGame()
     {
         SaveSystem.DeleteSaved();
         StartGame();
@@ -50,12 +93,5 @@ public class StartMenu : MenuActions
         SaveSystem.LoadPlayer();
         Debug.Log("StartMenu.cs | Loading the last game scene");
         SceneManager.LoadScene(player.GetComponent<Player>().level);
-    }
-
-    
-    public void QuitGame()
-    {
-        //mettere "you sure?"
-        Quit();
     }
 }
