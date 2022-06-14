@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource jumpSound;
 
     //CHECKPOINT TODO: To refine
-    private GameMaster gameMaster;
+    private GameManager gameManager;
     private Player player;
 
     void Start()
@@ -44,10 +44,10 @@ public class PlayerController : MonoBehaviour
 
         healthManager = GetComponent<PlayerHealthManager>();
 
-        //LOAD CHECKPOINT
+        //LOAD CHECKPOINT FIXME!!!
         
-        gameMaster = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
-        transform.position = gameMaster.lastPosition;
+        //gameManager = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
+        //transform.position = gameManager.lastPosition;
         
 
         //LOAD GAME     FIXME

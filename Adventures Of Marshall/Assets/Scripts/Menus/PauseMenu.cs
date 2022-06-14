@@ -41,6 +41,8 @@ public class PauseMenu : MenuActions
 
     private void Update()
     {
+        // old version, directly done from here
+        /*
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             DEB("ESC's been pressed");
@@ -53,6 +55,20 @@ public class PauseMenu : MenuActions
             {
                 Pause();
             }
+        }
+        */
+
+        switch (GameManager.Instance.GetState())
+        {
+            case GameManager.GameState.Play:
+                Pause();
+
+                break;
+
+            case GameManager.GameState.Pause:
+                Resume();
+
+                break;
         }
     }
 

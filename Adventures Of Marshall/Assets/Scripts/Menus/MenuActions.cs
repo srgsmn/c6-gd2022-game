@@ -57,7 +57,7 @@ public class MenuActions : MonoBehaviour
     public void LoadMenu()
     {
         DEB("Trying to open the menu");
-        SceneManager.LoadScene(0);
+        GameManager.Instance.UpdateGameState(GameManager.GameState.MainMenu);
     }
 
     private void OnApplicationQuit()

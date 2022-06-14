@@ -67,6 +67,7 @@ public static class StoreData
         public string GetDescription() { return description; }
         public int GetPriceSL() { return price.sl; }
         public int GetPriceCC() { return price.cc; }
+        public int GetAvailability() { return availability; }
 
         public override string ToString()
         {
@@ -88,7 +89,7 @@ public static class StoreData
                 "A chocolate armor that reduces enemy damages of 10%",
                 5,20,20,0,0,0,1),
             new Item(3,
-                "Darker Choco Armor",
+                "Dark Choco Armor",
                 "A darker chocolate armor that reduces enemy damages of 25%",
                 10,50,20,0,0,0,3),
             new Item(4,
@@ -98,7 +99,7 @@ public static class StoreData
             new Item(5,
                 "Rainbow Armor",
                 "description here",
-                0,0,0,0,0,0,0)
+                0,0,0,0,0,0,10)
         };
 
     public static string ItemsToString()

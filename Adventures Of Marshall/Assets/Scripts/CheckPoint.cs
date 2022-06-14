@@ -16,12 +16,13 @@ public class CheckPoint : MonoBehaviour
 {
     [SerializeField] private Player player;
 
-    private GameMaster gameMaster;
+    private GameManager gameManager;
     //private Player player;
 
     private void Start()
     {
-        gameMaster = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
+        //FIXME
+        //gameManager = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
@@ -29,7 +30,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameMaster.lastPosition = transform.position;
+            //gameManager.lastPosition = transform.position;
             player.position = transform.position;
             player.level = SceneManager.GetActiveScene().buildIndex;
             player.SavePlayer();

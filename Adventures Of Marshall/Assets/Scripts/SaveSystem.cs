@@ -9,7 +9,7 @@ public static class SaveSystem
 {
     private static string savePath
     {
-        get { return Application.persistentDataPath + "/player.save"; }
+        get { return Application.persistentDataPath + "/.save"; }
     }
 
     public static bool isSaved

@@ -27,6 +27,17 @@ public interface IBarManageable
     void SetMaxValue(float maxValue);
 }
 
+public class Currency
+{
+    int sl; //SugarLumps
+    int cc; //ChocoChips
+
+    public void SetSL(int value) { sl = value; }
+    public int GetSL() { return sl; }
+    public void SetCC(int value) { cc = value; }
+    public int GetCC() { return cc; }
+}
+
 public enum DeathType
     {
         Generic,

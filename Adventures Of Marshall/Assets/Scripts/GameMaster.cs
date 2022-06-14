@@ -13,6 +13,7 @@ using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
+    /*
     public static GameMaster instance;
 
     private Vector3 _lastPosition;
