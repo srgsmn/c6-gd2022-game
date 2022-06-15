@@ -17,17 +17,20 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealthManager : HealthManager
 {
+    [Header("Status Bars:")]
     [SerializeField] private PlayerHealthGUI statusBars;
 
     //public string DeathType { get; private set; }
 
-    // Start is called before the first frame update
     void Start()
     {
         Debug.Log("PlayerHealth | Starting PlayerHealth component");
         currHealth = maxHealth;
         statusBars.gameObject.SetActive(true);
-        statusBars.SetMaxHealthValue(maxHealth);
+        //statusBars.SetMaxHealthValue(maxHealth);
+        statusBars.SetMaxValue(PlayerHealthGUI.BarType.health, maxHealth);
+        //statusBars.SetHealthValue(currHealth);
+        statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
     }
 
     // Update is called once per frame
@@ -60,26 +63,34 @@ public class PlayerHealthManager : HealthManager
 
     public override void BuildArmor(float maxValue)
     {
-        Debug.Log("PlayerHealth | Building the armor");
+        DEB("Building the armor ("+maxValue+")");
         base.BuildArmor(maxValue);
+        DEB("Armor built to "+currArmor);
 
-        statusBars.SetMaxArmorValue(maxValue, maxValue);
+        DEB("Updating armor bar (maxValue and current Value)");
+        //statusBars.SetMaxArmorValue(maxValue, maxValue);
+        statusBars.SetMaxValue(PlayerHealthGUI.BarType.armor, maxValue);
+        statusBars.SetValue(PlayerHealthGUI.BarType.armor, maxValue);
     }
 
     public override void AddHealth(float value)
     {
-        Debug.Log("PlayerHealth | Adding health");
+        DEB("Adding health");
         base.AddHealth(value);
 
-        statusBars.SetHealthValue(currHealth);
+        DEB("Updating health bar (incrementing)");
+        //statusBars.SetHealthValue(currHealth);
+        statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
     }
 
     public override void AddArmor(float value)
     {
-        Debug.Log("PlayerHealth | Adding armor");
+        DEB("Adding armor");
         base.AddArmor(value);
 
-        statusBars.SetArmorValue(currArmor);
+        //statusBars.SetArmorValue(currArmor);
+        DEB("Updating armor bar (incrementing)");
+        statusBars.SetValue(PlayerHealthGUI.BarType.armor, currArmor);
     }
 
     public override void TakeDamage(float damage, Object instigator)
@@ -90,10 +101,14 @@ public class PlayerHealthManager : HealthManager
 
     public override void TakeDamage(float damage)
     {
-        Debug.Log("PlayerHealth | Taking damage");
+        DEB("Taking damage");
         base.TakeDamage(damage);
-        statusBars.SetHealthValue(currHealth);
-        statusBars.SetArmorValue(currArmor);
+
+        DEB("Updating health and armor bars (decrementing)");
+        //statusBars.SetHealthValue(currHealth);
+        //statusBars.SetArmorValue(currArmor);
+        statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
+        statusBars.SetValue(PlayerHealthGUI.BarType.armor, currArmor);
     }
 
     public override void Die()
@@ -104,17 +119,29 @@ public class PlayerHealthManager : HealthManager
 
     private void DebugInputs()  //FIXME Debugging method
     {
-        if (Input.GetKey(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            DEB("Building Armor");
             BuildArmor(100f);
+        }
         if (Input.GetKeyDown(KeyCode.X))
+        {
+            DEB("Taking damage");
             TakeDamage(25f);
-        if (Input.GetKey(KeyCode.C))
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            DEB("Adding health");
             AddHealth(25f);
-        if (Input.GetKey(KeyCode.V))
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            DEB("Adding armor");
             AddArmor(25f);
-
+        }
         if (Input.GetKeyDown(KeyCode.T))
         {
+            DEB("OH NO! DEATH IS COMING");
             Die();
         }
     }
@@ -123,6 +150,11 @@ public class PlayerHealthManager : HealthManager
     {
         SetHeatlth(health);
         SetArmor(armor);
+    }
+
+    private void DEB(string msg)    //DEBUG
+    {
+        Debug.Log(this.GetType().Name + " | " + msg);
     }
 }
 

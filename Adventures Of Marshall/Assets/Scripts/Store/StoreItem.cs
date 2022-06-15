@@ -37,11 +37,6 @@ public class StoreItem : MonoBehaviour
         ccTxtComponent = transform.Find("SecondColumn").transform.Find("CC").GetComponent<TextMeshProUGUI>();
     }
 
-    private void Update()
-    {
-
-    }
-
     public void SetID(int id)
     {
         itemID = id;
@@ -59,12 +54,14 @@ public class StoreItem : MonoBehaviour
 
     public void SetSL(int sl)
     {
-        slTxtComponent.text = "SL: " + sl;
+        //slTxtComponent.text = "SL: " + sl;    //without sprite
+        slTxtComponent.text = sl.ToString();    //with sprite
     }
 
     public void SetCC(int cc)
     {
-        ccTxtComponent.text = "CC: " + cc;
+        //ccTxtComponent.text = "CC: " + cc;    //without sprite
+        ccTxtComponent.text = cc.ToString();    //with sprite
     }
 
     public void SetValues(string name, string description, int sl, int cc)

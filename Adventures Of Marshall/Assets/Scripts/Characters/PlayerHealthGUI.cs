@@ -23,6 +23,37 @@ public class PlayerHealthGUI : MonoBehaviour    //FIXME
     [SerializeField] private Slider healthSlider;
     [SerializeField] private bool hasArmor = false;
     [SerializeField] private Slider armorSlider;
+    [SerializeField] private Sprite[] endpoints;
+
+    public enum BarType
+    {
+        health, armor
+    }
+
+    private class Bar
+    {
+        public Slider slider;
+        public Image endpoint;
+
+        public Bar(Slider slider, Image endpoint)
+        {
+            this.slider = slider;
+            this.endpoint = endpoint;
+        }
+    }
+
+    private Image biteImg;
+
+    private Dictionary<BarType, Bar> bars = new Dictionary<BarType, Bar>();
+
+    private void Awake()
+    {
+        DEB("Awaking: adding sliders to dictionary");
+        bars.Add(BarType.health,
+                new Bar(healthSlider, healthSlider.transform.Find("Handle Slide Area").transform.Find("Handle").GetComponent<Image>()));
+        bars.Add(BarType.armor,
+            new Bar(armorSlider, armorSlider.transform.Find("Handle Slide Area").transform.Find("Handle").GetComponent<Image>()));
+    }
 
     private void Start()
     {
@@ -39,19 +70,70 @@ public class PlayerHealthGUI : MonoBehaviour    //FIXME
             armorSlider = transform.GetChild(1);
         }
         */
+        DEB("Setting hasArmor flag to FALSE");
         if (hasArmor == false)
         {
             Debug.Log("PlayerHealthGUI | Starting w/ no harmor: setting its slider value to 0");
             armorSlider.value = 0;
             armorSlider.maxValue = 0;
         }
+
+        DEB("Checking both sliders");
+        CheckEndpoint(BarType.health);
+        CheckEndpoint(BarType.armor);
     }
 
-    private void Update()
+    public bool SetMaxValue(BarType type, float maxValue)
     {
-        //TODO
+        DEB("SETTING MAX VALUE ("+type.ToString()+")");
+
+        bars[type].slider.maxValue = maxValue;
+
+
+        if (type == BarType.armor && hasArmor == false)
+        {
+            DEB("Is type armor: setting hasArmor flag to TRUE");
+            hasArmor = true;
+        }
+
+        DEB("Checking endpoint");
+        CheckEndpoint(type);
+
+        if (bars[type].slider.maxValue < 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
+    public bool SetValue(BarType type, float value)
+    {
+        bars[type].slider.value = value;
+
+        if (type == BarType.armor && hasArmor == true && bars[type].slider.value == 0)
+        {
+            DEB("Is type armor: hasArmor = TRUE and value = 0 => disabling slider gameobject");
+            bars[type].slider.gameObject.SetActive(false);
+            hasArmor = false;
+        }
+        else if (type == BarType.armor && hasArmor == true && bars[type].slider.value != 0 && !bars[type].slider.gameObject.activeSelf)
+        {
+            DEB("Is type armor: hasArmor = TRUE and value > 0 ad activeSelf = false => activating ");
+            bars[type].slider.gameObject.SetActive(true);
+        }
+
+        CheckEndpoint(type);
+
+        if (bars[type].slider.value < 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /*
     public bool SetMaxHealthValue(float maxValue, float value)
     {
         Debug.Log("PlayerHealthGUI | Setting max health value ("+maxValue+") and current value ("+value+")");
@@ -112,11 +194,11 @@ public class PlayerHealthGUI : MonoBehaviour    //FIXME
         return true;
     }
 
-
     public bool SetHealthValue(float value)
     {
         Debug.Log("PlayerHealthGUI | Setting health value to "+ value);
         healthSlider.value = value;
+        UpdateBite();
 
         if (healthSlider.value < 0)
             return false;
@@ -136,5 +218,35 @@ public class PlayerHealthGUI : MonoBehaviour    //FIXME
             return false;
 
         return true;
+    }
+
+    */
+
+    private void CheckEndpoint(BarType type) {
+
+        Debug.Log("Value: "+ bars[type].slider.value+" | Max Value: "+ bars[type].slider.maxValue);
+
+        if (type == BarType.health && bars[type].slider.value == 0)
+            return;
+
+        if (bars[type].slider.value == bars[type].slider.maxValue ||
+            (type == BarType.armor && bars[type].slider.value == 0))
+        {
+            Debug.Log("Max reached, bite should disappear");
+            bars[type].endpoint.gameObject.SetActive(false);
+        }
+        else
+        {
+            bars[type].endpoint.gameObject.SetActive(true);
+            bars[type].endpoint.sprite = endpoints[Random.Range(0, endpoints.Length)];
+        }
+
+        //if (type == BarType.armor && hasArmor == true && armorSlider.value == 0)
+        //    armorSlider.gameObject.SetActive(false);
+    }
+
+    private void DEB(string msg)    //DEBUG
+    {
+        Debug.Log(this.GetType().Name + " | " + msg);
     }
 }

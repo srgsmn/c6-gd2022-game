@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class CollectablesManagerGUI : MonoBehaviour
 {
@@ -102,9 +103,9 @@ public class CollectablesManagerGUI : MonoBehaviour
         */
     }
 
-    [SerializeField] private Text SLText;
-    [SerializeField] private Text CCText;
-    private Dictionary<IndicatorType, Text> items = new Dictionary<IndicatorType, Text>();
+    [SerializeField] private GameObject SLCounter;
+    [SerializeField] private GameObject CCCounter;
+    private Dictionary<IndicatorType, GameObject> items = new Dictionary<IndicatorType, GameObject>();
 
     List<Indicator> indicators = new List<Indicator>();
     //Dictionary<Text, Vector3> textPositionsOnStart = new Dictionary<Text, Vector3>();
@@ -113,8 +114,8 @@ public class CollectablesManagerGUI : MonoBehaviour
     //METHODS
     private void Awake()
     {
-        items.Add(IndicatorType.SL, SLText);
-        items.Add(IndicatorType.CC, CCText);
+        items.Add(IndicatorType.SL, SLCounter);
+        items.Add(IndicatorType.CC, CCCounter);
     }
 
     private void Start()
@@ -150,7 +151,7 @@ public class CollectablesManagerGUI : MonoBehaviour
         UpdateCounter(IndicatorType.SL, value);
 
         
-        Debug.Log("CollectablesManagerGUI | Updating SLText in " + items[IndicatorType.SL].text);
+        Debug.Log("CollectablesManagerGUI | Updating SLText in " + items[IndicatorType.SL].transform.Find("Count").GetComponent<TextMeshProUGUI>().text);
     }
 
     public void UpdateCC(int value)
@@ -158,7 +159,7 @@ public class CollectablesManagerGUI : MonoBehaviour
         UpdateCounter(IndicatorType.CC, value);
 
         
-        Debug.Log("CollectablesManagerGUI | Updating CCText in " + items[IndicatorType.CC].text);
+        Debug.Log("CollectablesManagerGUI | Updating CCText in " + items[IndicatorType.CC].transform.Find("Count").GetComponent<TextMeshProUGUI>().text);
     }
     
     public void UpdateCounter(IndicatorType indicatorType, int value)
@@ -167,7 +168,7 @@ public class CollectablesManagerGUI : MonoBehaviour
         {
             case IndicatorType.SL:
                 ShowText(IndicatorType.SL);
-                items[IndicatorType.SL].text = "SL: " + value;
+                items[IndicatorType.SL].transform.Find("Count").GetComponent<TextMeshProUGUI>().text = value.ToString();
 
                 Debug.Log("CollectablesManagerGUI | Calling start timer function");
 
@@ -175,7 +176,7 @@ public class CollectablesManagerGUI : MonoBehaviour
 
             case IndicatorType.CC:
                 ShowText(IndicatorType.CC);
-                items[IndicatorType.CC].text = "CC: " + value;
+                items[IndicatorType.CC].transform.Find("Count").GetComponent<TextMeshProUGUI>().text = value.ToString();
 
                 Debug.Log("CollectablesManagerGUI | Calling start timer function");
 
@@ -212,9 +213,11 @@ public class CollectablesManagerGUI : MonoBehaviour
 
     private void HideText(IndicatorType indicatorType)
     {
-        items[indicatorType].rectTransform.localPosition = new Vector3(-100, 0, 0);                                                                //POSIZIONE
+        //items[indicatorType].rectTransform.localPosition = new Vector3(-100, 0, 0);                                                                //POSIZIONE
 
-        Debug.Log("CollectablesManagerGUI | Hiding text by moving it to "+ items[indicatorType].rectTransform.localPosition);
+        items[indicatorType].transform.localPosition = new Vector3(-200, 0, 0);
+
+        Debug.Log("CollectablesManagerGUI | Hiding text by moving it to "+ items[indicatorType].transform.localPosition);
 
         if (indicators.Exists(i => i.indicatorType==indicatorType))
         {
@@ -233,8 +236,9 @@ public class CollectablesManagerGUI : MonoBehaviour
         foreach(Indicator indicator in indicators)
         {
             int index = indicators.IndexOf(indicator);
-            
-            items[indicator.indicatorType].rectTransform.localPosition = new Vector3(0, index * -25f,0);                       //POSIZIONE
+
+            //items[indicator.indicatorType].rectTransform.localPosition = new Vector3(0, index * -25f,0);                       //POSIZIONE
+            items[indicator.indicatorType].transform.localPosition = new Vector3(0, index * -60f, 0);
             //indicator.UpdatePosition(indicators.IndexOf(indicator));
         }
     }

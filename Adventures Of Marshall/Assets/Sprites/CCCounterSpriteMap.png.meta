@@ -1,0 +1,1136 @@
+fileFormatVersion: 2
+guid: 04ed7e478375e4379b7d7b308c174713
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3040
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beb5bb985b080437ebd41b0ace2d4f9a
+      internalID: 435393616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_1
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 3040
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41f1c042d955e49d79fa46aa7ee767d8
+      internalID: 1906597453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_2
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 3040
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 505a4b9f59935481891aadf8557ad969
+      internalID: 1366613113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_3
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 3040
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 727b39f660a4342d2a57b9645ac01656
+      internalID: 594156826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_4
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 3040
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63c5e1641313b447f97cf095cb46cf68
+      internalID: 1143895568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2660
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94d53c902a9da4f349a43dd30c95a9fd
+      internalID: 868183795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_6
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 2660
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b977f4b94cb564089874a88ae70d8ac3
+      internalID: -1848875360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_7
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 2660
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bad47e27fb64d4b85bd67f587a1610e2
+      internalID: -382527354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_8
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 2660
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93e42f1265e4a4fb7979e097f662085b
+      internalID: -1215391505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_9
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 2660
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7f2e12a23b2342ef82dec5333b53839
+      internalID: -96866477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2280
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92d93b14c09f4457fa11528b04635151
+      internalID: 1055240098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_11
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 2280
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa30c223cf9924aafb2a700601f07676
+      internalID: -257094612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_12
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 2280
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7258624097bf4f5e8ff9a6709c6f8d0
+      internalID: -288697959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_13
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 2280
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98a68cfa0c636458c844d694bec980c2
+      internalID: 652252786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_14
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 2280
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb0fc6363053d40a397cea1290bec63b
+      internalID: 1846620953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1900
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ea6c9517f88140e592b487e4ea54e09
+      internalID: 1725571711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_16
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 1900
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74ec5ec7db2b14ec2aa77dafc60a2d44
+      internalID: 1721515312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_17
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 1900
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61256681762c749658eebdfcc435ddf7
+      internalID: 1175197676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_18
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 1900
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e508f59602c748cea551ce67c8a8e63
+      internalID: 946910978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_19
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1900
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f64e3062500d41ff89df47acaedc8a1
+      internalID: -1139376744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1520
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4763b27b271b416aafeb916880eee89
+      internalID: 2082550066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_21
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 1520
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ae44bc988b384106b3256b7b23ca484
+      internalID: 1217059756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_22
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 1520
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73b8404a8c4a549f193d69d00748ef77
+      internalID: -1806526898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_23
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 1520
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aafbffeace5834509982c4416523613e
+      internalID: 1249960309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_24
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1520
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea8eefe4552ea49a0bf5c2879bb84d32
+      internalID: -600533870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1140
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e975819242b3f4e38beedd071ac06bb6
+      internalID: -57503557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_26
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 1140
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7938b4e4b650541329b3461fa6c41fe5
+      internalID: 745389504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_27
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 1140
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae871b4bf56834683bc0f6aaa9253331
+      internalID: -257258952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_28
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 1140
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fa4fc84c8c5e490da96121533f6dccd
+      internalID: -791658466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_29
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1140
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbcfb5d8cb9364b3496ba5786630ca24
+      internalID: 778512433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 760
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fadfd94c1ec04620a6db24dc44337ad
+      internalID: -1866790451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_31
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 760
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdca82ec7d2944606ab08029fe4cdddb
+      internalID: 1572001881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_32
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 760
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cd64834acb304cca81bf46fa26b0dfc
+      internalID: -360867925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_33
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 760
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b425fa395338247a6b20eafa6d3d53a2
+      internalID: -919919774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_34
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 760
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 390004eb777574673bec74ad561379ef
+      internalID: 310252146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 380
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a57005f9f46324b4ba80700df1b4415a
+      internalID: -2113930507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_36
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 380
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2500943118ea74bc092e69205ec1ad50
+      internalID: 682361046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_37
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 380
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10e7d553b310d43b0b3656c752addfbc
+      internalID: -1558884077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_38
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 380
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7824b793c13a343a094d1f470195bdb1
+      internalID: -254793569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_39
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 380
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dda04892f9ca54eca9e227a3e48c0dbe
+      internalID: -1724716118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb1d9e10759bf4fe3b1f8c60e60cf61f
+      internalID: -2118241320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_41
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 0
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d780e71e28ae64d06a5a6c3f0c0b49ff
+      internalID: 2136410917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_42
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 0
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0cd5c8d75c6c41469290c4a24745efb
+      internalID: 966423848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_43
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 0
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0e03d619d1db433a890bcf39b9d349d
+      internalID: 1330505014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CCCounterSpriteMap_44
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 0
+        width: 390
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2db84551651e1493f8301626eb5c491d
+      internalID: 1043615321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: e70878e17de334ea7b46828cac4a934b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      CCCounterSpriteMap_33: -919919774
+      CCCounterSpriteMap_7: -382527354
+      CCCounterSpriteMap_29: 778512433
+      CCCounterSpriteMap_11: -257094612
+      CCCounterSpriteMap_30: -1866790451
+      CCCounterSpriteMap_28: -791658466
+      CCCounterSpriteMap_27: -257258952
+      CCCounterSpriteMap_35: -2113930507
+      CCCounterSpriteMap_10: 1055240098
+      CCCounterSpriteMap_1: 1906597453
+      CCCounterSpriteMap_44: 1043615321
+      CCCounterSpriteMap_0: 435393616
+      CCCounterSpriteMap_21: 1217059756
+      CCCounterSpriteMap_3: 594156826
+      CCCounterSpriteMap_2: 1366613113
+      CCCounterSpriteMap_5: 868183795
+      CCCounterSpriteMap_9: -96866477
+      CCCounterSpriteMap_16: 1721515312
+      CCCounterSpriteMap_32: -360867925
+      CCCounterSpriteMap_4: 1143895568
+      CCCounterSpriteMap_43: 1330505014
+      CCCounterSpriteMap_13: 652252786
+      CCCounterSpriteMap_34: 310252146
+      CCCounterSpriteMap_17: 1175197676
+      CCCounterSpriteMap_6: -1848875360
+      CCCounterSpriteMap_12: -288697959
+      CCCounterSpriteMap_42: 966423848
+      CCCounterSpriteMap_22: -1806526898
+      CCCounterSpriteMap_26: 745389504
+      CCCounterSpriteMap_23: 1249960309
+      CCCounterSpriteMap_20: 2082550066
+      CCCounterSpriteMap_39: -1724716118
+      CCCounterSpriteMap_15: 1725571711
+      CCCounterSpriteMap_38: -254793569
+      CCCounterSpriteMap_24: -600533870
+      CCCounterSpriteMap_14: 1846620953
+      CCCounterSpriteMap_18: 946910978
+      CCCounterSpriteMap_31: 1572001881
+      CCCounterSpriteMap_37: -1558884077
+      CCCounterSpriteMap_41: 2136410917
+      CCCounterSpriteMap_40: -2118241320
+      CCCounterSpriteMap_36: 682361046
+      CCCounterSpriteMap_25: -57503557
+      CCCounterSpriteMap_8: -1215391505
+      CCCounterSpriteMap_19: -1139376744
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
