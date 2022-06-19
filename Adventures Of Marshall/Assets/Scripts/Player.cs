@@ -12,12 +12,12 @@ public class Player : MonoBehaviour
     public int CCCount;
     public Vector3 position;
 
-    private PlayerHealthManager playerHealth;
+    private PlayerHealthController playerHealth;
     private CollectablesManager collectablesManager;
 
     private void Awake()
     {
-        playerHealth = gameObject.GetComponent<PlayerHealthManager>();
+        playerHealth = gameObject.GetComponent<PlayerHealthController>();
         collectablesManager = gameObject.GetComponent<CollectablesManager>();
     }
 

@@ -15,14 +15,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthManager : MonoBehaviour, IDamageable
+public class HealthController : MonoBehaviour, IDamageable
 {
     //INSPECTOR'S VALUES
     [Header("Health values:")]
     [SerializeField] private protected float maxHealth = 100f;
-    [SerializeField] private protected float currHealth;   //FIXME: must hide then
+    [SerializeField] [ReadOnlyInspector] private protected float currHealth;
     [SerializeField] private protected float maxArmor = 0f;
-    [SerializeField] private protected float currArmor;    //FIXME; must hide then
+    [SerializeField] [ReadOnlyInspector] private protected float currArmor;
 
     private protected bool _isAlive;
     private protected bool hasArmor = false;

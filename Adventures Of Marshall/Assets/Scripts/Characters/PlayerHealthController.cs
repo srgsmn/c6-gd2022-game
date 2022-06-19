@@ -15,9 +15,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerHealthManager : HealthManager
+public class PlayerHealthController : HealthController
 {
-    [Header("Status Bars:")]
+    [Header("UI:")]
     [SerializeField] private PlayerHealthGUI statusBars;
 
     //public string DeathType { get; private set; }

@@ -1,12 +1,42 @@
+/* PlayerManager.cs
+ * Attach it to player, it'll automatically add all the required components that manage the player
+ * 
+ * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
+ * 
+ * TODO:
+ *  - Perfezionare movimenti in accordo con la camera
+ *  
+ * Ref:
+ *  - https://www.youtube.com/watch?v=4HpC--2iowE
+ *  - (Checkpoints) https://www.youtube.com/watch?v=ofCLJsSUom0
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerHealthController))]
+[RequireComponent(typeof(CollectablesManager))]
 public class PlayerManager : MonoBehaviour
 {
+    [Header("Debug purpose readonly fields")]
+    [SerializeField] [ReadOnlyInspector] private PlayerController playerController;
+    [SerializeField] [ReadOnlyInspector] private PlayerHealthController playerHealthController;
+    [SerializeField] [ReadOnlyInspector] private CollectablesManager collectablesManager;
 
-    Rigidbody rb;
+    private void Awake()
+    {
+        playerController = GetComponent<PlayerController>();
+        playerHealthController = GetComponent<PlayerHealthController>();
+        collectablesManager = GetComponent<CollectablesManager>();
+    }
+
+}
+
+// OLD
+/*
+Rigidbody rb;
     public bool isGrounded;
     [SerializeField] private float _speed = 5.0f;
 
@@ -66,4 +96,4 @@ public class PlayerManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
-}
+*/
