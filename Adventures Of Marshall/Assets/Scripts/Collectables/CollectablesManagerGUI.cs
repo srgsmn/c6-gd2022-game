@@ -38,15 +38,6 @@ public class CollectablesManagerGUI : MonoBehaviour
             get { return _indicatorType; }
         }
 
-        /*
-        private Text _text;
-        public Text text
-        {
-            get { return _text; }
-            set { _text = value; }
-        }
-        */
-
         private float _timer;           // FIELD
         public float timer              // PROPERTY
         {
@@ -54,33 +45,11 @@ public class CollectablesManagerGUI : MonoBehaviour
             set { _timer = value; }
         }
 
-        /*
-        public Indicator(IndicatorType indicatorType, Text text, float timer = showTime)
-        {
-            this._indicatorType = indicatorType;
-            this.text.transform.position = new Vector3(0, 0, 0);
-            this.timer = timer;
-        }
-        */
-
         public Indicator(IndicatorType indicatorType, float timer = showTime)
         {
             this._indicatorType = indicatorType;
             ResetTimer(timer);
         }
-
-        /*
-        public void UpdatePosition(int index)
-        {
-            Debug.Log("CollectablesManagerGUI | Updating indicator position");
-            Vector3 temp = this.text.transform.position;
-            temp.y = 0;
-
-            text.transform.position = temp;
-            text.transform.position += new Vector3(0, index * -20f, 0);
-            Debug.Log("CollectablesManagerGUI | New text position is: " + text.transform.position);
-        }
-        */
 
         public void ResetTimer(float showTime = showTime)
         {
@@ -91,31 +60,29 @@ public class CollectablesManagerGUI : MonoBehaviour
         {
             timer = 0f;
         }
-
-        /*
-        public bool TextCheck(Text text)
-        {
-            if (this.text == text)
-                return true;
-            else
-                return false;
-        }
-        */
     }
 
     [SerializeField] private GameObject SLCounter;
     [SerializeField] private GameObject CCCounter;
+
     private Dictionary<IndicatorType, GameObject> items = new Dictionary<IndicatorType, GameObject>();
 
     List<Indicator> indicators = new List<Indicator>();
-    //Dictionary<Text, Vector3> textPositionsOnStart = new Dictionary<Text, Vector3>();
-    //Dictionary<Text, float> timers = new Dictionary<Text, float>();
 
     //METHODS
     private void Awake()
     {
         items.Add(IndicatorType.SL, SLCounter);
         items.Add(IndicatorType.CC, CCCounter);
+
+        CollectablesManager.OnSLUpdate += UpdateSL;
+        CollectablesManager.OnCCUpdate += UpdateCC;
+    }
+
+    private void OnDestroy()
+    {
+        CollectablesManager.OnSLUpdate -= UpdateSL;
+        CollectablesManager.OnCCUpdate -= UpdateCC;
     }
 
     private void Start()
@@ -124,9 +91,6 @@ public class CollectablesManagerGUI : MonoBehaviour
         {
             HideText(indicatorType);
         }
-
-        //HideText(IndicatorType.SL);
-        //HideText(IndicatorType.CC);
     }
 
     private void Update()
@@ -146,7 +110,7 @@ public class CollectablesManagerGUI : MonoBehaviour
         }
     }
 
-    public void UpdateSL(int value)
+    private void UpdateSL(int value)
     {
         UpdateCounter(IndicatorType.SL, value);
 
@@ -154,7 +118,7 @@ public class CollectablesManagerGUI : MonoBehaviour
         Debug.Log("CollectablesManagerGUI | Updating SLText in " + items[IndicatorType.SL].transform.Find("Count").GetComponent<TextMeshProUGUI>().text);
     }
 
-    public void UpdateCC(int value)
+    private void UpdateCC(int value)
     {
         UpdateCounter(IndicatorType.CC, value);
 
@@ -162,7 +126,7 @@ public class CollectablesManagerGUI : MonoBehaviour
         Debug.Log("CollectablesManagerGUI | Updating CCText in " + items[IndicatorType.CC].transform.Find("Count").GetComponent<TextMeshProUGUI>().text);
     }
     
-    public void UpdateCounter(IndicatorType indicatorType, int value)
+    private void UpdateCounter(IndicatorType indicatorType, int value)
     {
         switch (indicatorType)
         {
@@ -204,17 +168,11 @@ public class CollectablesManagerGUI : MonoBehaviour
             Debug.Log("CollectablesManagerGUI | Indicator non existing. Adding at index "+index);
         }
 
-        //items[indicatorType].rectTransform.position = new Vector3(0, index*-20f, 0);
-
         UpdateList();
-
-        
     }
 
     private void HideText(IndicatorType indicatorType)
     {
-        //items[indicatorType].rectTransform.localPosition = new Vector3(-100, 0, 0);                                                                //POSIZIONE
-
         items[indicatorType].transform.localPosition = new Vector3(-200, 0, 0);
 
         Debug.Log("CollectablesManagerGUI | Hiding text by moving it to "+ items[indicatorType].transform.localPosition);
@@ -237,9 +195,7 @@ public class CollectablesManagerGUI : MonoBehaviour
         {
             int index = indicators.IndexOf(indicator);
 
-            //items[indicator.indicatorType].rectTransform.localPosition = new Vector3(0, index * -25f,0);                       //POSIZIONE
             items[indicator.indicatorType].transform.localPosition = new Vector3(0, index * -60f, 0);
-            //indicator.UpdatePosition(indicators.IndexOf(indicator));
         }
     }
 }

@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 
 public class CheckPoint : MonoBehaviour
 {
-    [SerializeField] private Player player;
+    //[SerializeField] private Player player;
 
     private GameManager gameManager;
     //private Player player;
@@ -23,7 +23,7 @@ public class CheckPoint : MonoBehaviour
     {
         //FIXME
         //gameManager = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,9 +31,10 @@ public class CheckPoint : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //gameManager.lastPosition = transform.position;
-            player.position = transform.position;
-            player.level = SceneManager.GetActiveScene().buildIndex;
-            player.SavePlayer();
+            GameManager.SaveData();
+            //player.position = transform.position;
+            //player.level = SceneManager.GetActiveScene().buildIndex;
+            //player.SavePlayer();
             //player.SavePlayer();
             //GameManager.SaveGame();
         }

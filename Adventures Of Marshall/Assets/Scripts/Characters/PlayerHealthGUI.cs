@@ -53,6 +53,41 @@ public class PlayerHealthGUI : MonoBehaviour    //FIXME
                 new Bar(healthSlider, healthSlider.transform.Find("Handle Slide Area").transform.Find("Handle").GetComponent<Image>()));
         bars.Add(BarType.armor,
             new Bar(armorSlider, armorSlider.transform.Find("Handle Slide Area").transform.Find("Handle").GetComponent<Image>()));
+
+        PlayerHealthController.OnHealthUpdate += UpdateHealth;
+        PlayerHealthController.OnArmorUpdate += UpdateArmor;
+
+        PlayerHealthController.OnMaxHealthUpdate += UpdateMaxHealth;
+        PlayerHealthController.OnMaxArmorUpdate += UpdateMaxArmor;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerHealthController.OnHealthUpdate -= UpdateHealth;
+        PlayerHealthController.OnArmorUpdate -= UpdateArmor;
+
+        PlayerHealthController.OnMaxHealthUpdate -= UpdateMaxHealth;
+        PlayerHealthController.OnMaxArmorUpdate -= UpdateMaxArmor;
+    }
+
+    private void UpdateHealth(float value)
+    {
+        SetValue(BarType.health, value);
+    }
+
+    private void UpdateArmor(float value)
+    {
+        SetValue(BarType.armor, value);
+    }
+
+    private void UpdateMaxHealth(float value)
+    {
+        SetMaxValue(BarType.health, value);
+    }
+
+    private void UpdateMaxArmor(float value)
+    {
+        SetMaxValue(BarType.armor, value);
     }
 
     private void Start()

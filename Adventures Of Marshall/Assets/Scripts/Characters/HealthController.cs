@@ -62,10 +62,13 @@ public class HealthController : MonoBehaviour, IDamageable
 
     public virtual void AddArmor(float value)
     {
-        currArmor += value;
-        if (currArmor > maxArmor)
+        if (currArmor >= 0 && hasArmor)
         {
-            currArmor = maxArmor;
+            currArmor += value;
+            if (currArmor > maxArmor)
+            {
+                currArmor = maxArmor;
+            }
         }
     }
 
@@ -88,7 +91,11 @@ public class HealthController : MonoBehaviour, IDamageable
         }
 
         if (currHealth < 0) currHealth = 0;
-        if (currArmor < 0) currArmor = 0;
+        if (currArmor < 0)
+        {
+            currArmor = 0;
+            hasArmor = false;
+        }
     }
 
     public virtual void Die()

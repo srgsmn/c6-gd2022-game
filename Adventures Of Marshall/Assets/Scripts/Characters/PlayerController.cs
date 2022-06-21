@@ -67,8 +67,16 @@ public class PlayerController : MonoBehaviour
     */
 
 
-    private CharacterController characterController;
+    //TURNING COSE
+    [SerializeField] private float turnSmoothTime = .1f;
+    float turnSmoothVelocity;
 
+    private CharacterController characterController;
+    [SerializeField] private Transform camera;
+
+    //EVENTS
+    public delegate void PositionUpdateEvent(Vector3 value);
+    public static event PositionUpdateEvent OnPositionUpdate;
 
     void Awake()
     {
@@ -94,6 +102,19 @@ public class PlayerController : MonoBehaviour
         setupJumpVariables();
     }
 
+    private void OnDestroy()
+    {
+        playerInput.CharacterControls.Move.started -= OnMovementInput;
+        playerInput.CharacterControls.Move.canceled -= OnMovementInput;
+        playerInput.CharacterControls.Move.performed -= OnMovementInput;    //Per i controller
+
+        playerInput.CharacterControls.Run.started -= OnRun;
+        playerInput.CharacterControls.Run.canceled -= OnRun;
+
+        playerInput.CharacterControls.Jump.started -= OnJump;
+        playerInput.CharacterControls.Jump.canceled -= OnJump;
+    }
+
     void setupJumpVariables()
     {
         float timeToApex = maxJumpTime / 2;
@@ -116,6 +137,31 @@ public class PlayerController : MonoBehaviour
         isMovementPressed = currMovementInput.x != 0 || currMovementInput.y != 0;
     }
 
+    /*
+    void OnMovementInput(InputAction.CallbackContext context)
+    {
+        Debug.Log(context.ReadValue<Vector2>());
+
+        currMovementInput = context.ReadValue<Vector2>();
+
+        float targetAngle = Mathf.Atan2(currMovementInput.x, currMovementInput.y) * Mathf.Rad2Deg + camera.eulerAngles.y;
+        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+        Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        moveDir = moveDir.normalized;
+
+        currMovement.x = moveDir.x * currMovementInput.x * speed;
+        currMovement.z = moveDir.z * currMovementInput.y * speed;
+
+        currRunMovement.x = moveDir.x * currMovementInput.x * runMultiplier;
+        currRunMovement.z = moveDir.z * currMovementInput.y * runMultiplier;
+
+        isMovementPressed = currMovementInput.x != 0 || currMovementInput.y != 0;
+    }
+    */
+    
     void OnRun(InputAction.CallbackContext context)
     {
         Debug.Log(context.ReadValueAsButton());
@@ -204,7 +250,7 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
         }
     }
-
+    
     private void Update()
     {
         HandleRotation();
@@ -230,6 +276,11 @@ public class PlayerController : MonoBehaviour
         HandleJump();
     }
 
+    private void LateUpdate()
+    {
+        OnPositionUpdate(transform.position);
+    }
+
     private void OnEnable()
     {
         playerInput.CharacterControls.Enable();
@@ -240,161 +291,3 @@ public class PlayerController : MonoBehaviour
         playerInput.CharacterControls.Disable();
     }
 }
-
-/*
-
-[SerializeField] private float speed = 5f;
-    [SerializeField] private float gravity = Physics.gravity.y;
-    [SerializeField] private float jumpHeight = 5f;
-    [SerializeField] private float DashDistance = 5f;
-    //[SerializeField] private LayerMask Ground;
-    [SerializeField] private Vector3 Drag;
-
-    private Vector3 velocity;
-    private CharacterController CTRL;
-
-    private PlayerHealthController healthCTRL;
-
-    [Header("SFX:")]
-    [SerializeField] AudioSource jumpSound;
-
-    //CHECKPOINT TODO: To refine
-    private GameManager gameManager;
-    private Player player;
-
-    void Start()
-    {
-        CTRL = GetComponent<CharacterController>();
-        Debug.Log("Player controller is now on");
-
-        healthCTRL = GetComponent<PlayerHealthController>();
-
-        //LOAD CHECKPOINT FIXME!!!
-        
-        //gameManager = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
-        //transform.position = gameManager.lastPosition;
-        
-
-        //LOAD GAME     FIXME
-        //player = GetComponent<Player>();
-    }
-
-    void Update()
-    {
-        //MOVEMENT
-        Vector3 input = new(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        CTRL.Move(input * Time.deltaTime * speed);
-
-        //DIRECTION CONTROL
-        if (input != Vector3.zero)
-            transform.forward = input;
-        //GRAVITY
-        velocity.y += gravity * Time.deltaTime;
-        CTRL.Move(velocity * Time.deltaTime);
-
-        if (CTRL.isGrounded && velocity.y < 0)
-            velocity.y = 0f;
-
-        //JUMP
-        if (Input.GetButtonDown("Jump") && CTRL.isGrounded)
-            velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-
-        // DASH
-        if (Input.GetButtonDown("Dash"))
-        {
-            Debug.Log("Dash");
-            velocity += Vector3.Scale(transform.forward,
-                                       DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime),
-                                                                  0,
-                                                                  (Mathf.Log(1f / (Time.deltaTime * Drag.z + 1)) / -Time.deltaTime)));
-        }
-
-        // FRICTION SIMULATION
-        velocity.x /= 1 + Drag.x * Time.deltaTime;
-        velocity.y /= 1 + Drag.y * Time.deltaTime;
-        velocity.z /= 1 + Drag.z * Time.deltaTime;
-
-        CTRL.Move(velocity * Time.deltaTime);
-    }
-
-    /*
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("COLLISION DETECTED (w/ name: " + collision.gameObject.name + "; tag: " + collision.gameObject.tag + ")");
-
-        if (collision.gameObject.CompareTag("Enemy Head"))
-        {
-            Debug.Log("You collided with " + collision.gameObject.tag);
-
-            var killable = collision.transform.parent.gameObject.GetComponent<IKillable>();
-
-            if (killable != null)
-            {
-                Debug.Log("KILLING THE ENEMY BY JUMPING ON HIS HEAD (OR SORTA)");
-                killable.Kill();
-                //Destroy(collision.transform.gameObject);
-            }
-
-            Jump();
-        }
-    }
-    */
-
-
-/* OLD UPDATE:
- * float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        Vector3 moveDir = Vector3.zero;
-
-        // DIRECTION MANAGER
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (direction.magnitude >= .1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
-        }
-
-        
-        if (moveDir != Vector3.zero)
-        {
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
-        }
-
-        // JUMP ACTION MANAGER
-        if (controller.isGrounded)
-        {
-            verticalVelocity = gravity * Time.deltaTime;
-            if (Input.GetButton("Jump"))
-            {
-                Jump();
-            }
-        }
-        else
-        {
-            verticalVelocity += gravity * Time.deltaTime;
-        }
-
-        // DO MOVE
-        //moveVector.y = verticalVelocity;
-
-        //controller.Move(moveVector * Time.deltaTime);
-*/
-
-/* OLD JUMP
- * private void Jump()
-    {
-        verticalVelocity = jumpForce;
-        jumpSound.Play();  
-    }
-*/

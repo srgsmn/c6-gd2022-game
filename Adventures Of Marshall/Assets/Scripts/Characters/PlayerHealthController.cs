@@ -17,20 +17,37 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealthController : HealthController
 {
-    [Header("UI:")]
-    [SerializeField] private PlayerHealthGUI statusBars;
+    //EVENTS
+    public delegate void HealthUpdateEvent(float value);
+    public static event HealthUpdateEvent OnHealthUpdate;
 
-    //public string DeathType { get; private set; }
+    public delegate void MaxHealthUpdateEvent(float value);
+    public static event MaxHealthUpdateEvent OnMaxHealthUpdate;
+
+    public delegate void ArmorUpdateEvent(float value);
+    public static event ArmorUpdateEvent OnArmorUpdate;
+
+    public delegate void MaxArmorUpdateEvent(float value);
+    public static event MaxArmorUpdateEvent OnMaxArmorUpdate;
+
 
     void Start()
     {
         Debug.Log("PlayerHealth | Starting PlayerHealth component");
+
+        /*
+        if (statusBars == null)
+            Debug.LogError("You must link the status bars first in the inspector");
+        */
+
         currHealth = maxHealth;
-        statusBars.gameObject.SetActive(true);
+        //statusBars.gameObject.SetActive(true);
         //statusBars.SetMaxHealthValue(maxHealth);
-        statusBars.SetMaxValue(PlayerHealthGUI.BarType.health, maxHealth);
+        //statusBars.SetMaxValue(PlayerHealthGUI.BarType.health, maxHealth);
+        OnMaxHealthUpdate(maxHealth);
         //statusBars.SetHealthValue(currHealth);
-        statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
+        //statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
+        OnHealthUpdate(currHealth);
     }
 
     // Update is called once per frame
@@ -69,8 +86,10 @@ public class PlayerHealthController : HealthController
 
         DEB("Updating armor bar (maxValue and current Value)");
         //statusBars.SetMaxArmorValue(maxValue, maxValue);
-        statusBars.SetMaxValue(PlayerHealthGUI.BarType.armor, maxValue);
-        statusBars.SetValue(PlayerHealthGUI.BarType.armor, maxValue);
+        //statusBars.SetMaxValue(PlayerHealthGUI.BarType.armor, maxValue);
+        OnMaxArmorUpdate(maxArmor);
+        //statusBars.SetValue(PlayerHealthGUI.BarType.armor, maxValue);
+        OnArmorUpdate(currArmor);
     }
 
     public override void AddHealth(float value)
@@ -80,7 +99,8 @@ public class PlayerHealthController : HealthController
 
         DEB("Updating health bar (incrementing)");
         //statusBars.SetHealthValue(currHealth);
-        statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
+        //statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
+        OnHealthUpdate(currHealth);
     }
 
     public override void AddArmor(float value)
@@ -90,13 +110,17 @@ public class PlayerHealthController : HealthController
 
         //statusBars.SetArmorValue(currArmor);
         DEB("Updating armor bar (incrementing)");
-        statusBars.SetValue(PlayerHealthGUI.BarType.armor, currArmor);
+        //statusBars.SetValue(PlayerHealthGUI.BarType.armor, currArmor);
+        OnArmorUpdate(currArmor);
     }
 
     public override void TakeDamage(float damage, Object instigator)
     {
         Debug.Log("PlayerHealth | Taking damage from " + instigator.name);
         base.TakeDamage(damage, instigator);
+
+        OnArmorUpdate(currArmor);
+        OnHealthUpdate(currHealth);
     }
 
     public override void TakeDamage(float damage)
@@ -107,8 +131,11 @@ public class PlayerHealthController : HealthController
         DEB("Updating health and armor bars (decrementing)");
         //statusBars.SetHealthValue(currHealth);
         //statusBars.SetArmorValue(currArmor);
-        statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
-        statusBars.SetValue(PlayerHealthGUI.BarType.armor, currArmor);
+        //statusBars.SetValue(PlayerHealthGUI.BarType.health, currHealth);
+        OnHealthUpdate(currHealth);
+        //statusBars.SetValue(PlayerHealthGUI.BarType.armor, currArmor);
+
+        OnArmorUpdate(currArmor);
     }
 
     public override void Die()

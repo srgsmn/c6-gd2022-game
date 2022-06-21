@@ -17,6 +17,19 @@ public static class SaveSystem
         get { return File.Exists(savePath); }
     }
 
+    public static void SaveData(GameManager.GameData gameData, GameManager.PlayerData playerData)
+    {
+        Debug.Log("SaveSystem.cs | Creating the binary formatter");
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        Debug.Log("SaveSystem.cs | Creating the filestream (in " + savePath + ")");
+        FileStream stream = new FileStream(savePath, FileMode.Create);
+
+        Debug.Log("SaveSystem.cs | Retrieving player's data");
+        //PlayerData data = new PlayerData(player); FIXME
+        //Debug.Log("StartMenu.cs | Data to be saved is: " + data.ToString());  FIXME
+    }
+
     public static void SavePlayer(Player player)
     {
         Debug.Log("SaveSystem.cs | Creating the binary formatter");
