@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxJumpTime = .75f;
     private bool isJumping = false;
     /*
-    //Finire video sui salti
+    //Finire video sui salti per animazione
     private int isJumpingHash;
     private bool isJumpAnimating = false;
     private int jumpCount = 0;
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     float turnSmoothVelocity;
 
     private CharacterController characterController;
-    [SerializeField] private Transform camera;
+    //[SerializeField] private Transform camera;
 
     //EVENTS
     public delegate void PositionUpdateEvent(Vector3 value);
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         playerInput.CharacterControls.Move.started += OnMovementInput;
         playerInput.CharacterControls.Move.canceled += OnMovementInput;
         playerInput.CharacterControls.Move.performed += OnMovementInput;    //Per i controller
-
+        
         playerInput.CharacterControls.Run.started += OnRun;
         playerInput.CharacterControls.Run.canceled += OnRun;
 
@@ -104,10 +104,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
+        
         playerInput.CharacterControls.Move.started -= OnMovementInput;
         playerInput.CharacterControls.Move.canceled -= OnMovementInput;
         playerInput.CharacterControls.Move.performed -= OnMovementInput;    //Per i controller
-
+        
         playerInput.CharacterControls.Run.started -= OnRun;
         playerInput.CharacterControls.Run.canceled -= OnRun;
 
@@ -124,6 +125,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //  CALLBACK FUNCTIONS
+    /* Back up
     void OnMovementInput(InputAction.CallbackContext context)
     {
         Debug.Log(context.ReadValue<Vector2>());
@@ -135,7 +137,74 @@ public class PlayerController : MonoBehaviour
         currRunMovement.z = currMovementInput.y * runMultiplier;
 
         isMovementPressed = currMovementInput.x != 0 || currMovementInput.y != 0;
+    }*/
+
+    
+    void OnMovementInput(InputAction.CallbackContext context)
+    {
+        Debug.Log(context.ReadValue<Vector2>());
+        currMovementInput = context.ReadValue<Vector2>();
+
+        Vector3 camFw = Camera.main.transform.forward;
+        //Vector3 camFw = camera.transform.forward;
+        //Vector3 camFw = transform.InverseTransformVector(Camera.main.transform.forward);
+        camFw.y = 0;
+        camFw = camFw.normalized;
+
+        Vector3 camRt = Camera.main.transform.right;
+        //Vector3 camRt = camera.transform.right;
+        //Vector3 camRt = transform.InverseTransformVector(Camera.main.transform.right);
+        camRt.y = 0;
+        camRt = camRt.normalized;
+
+        Vector3 forwardRelVerticalInput = currMovementInput.x * camRt * speed;
+        Vector3 rightRelVerticalInput = currMovementInput.y * camFw * speed;
+
+        Vector3 camRelMovement = forwardRelVerticalInput + rightRelVerticalInput;
+
+        currMovement.x = camRelMovement.x;
+        currMovement.z = camRelMovement.z;
+
+        currRunMovement.x = camRelMovement.x * runMultiplier;
+        currRunMovement.z = camRelMovement.y * runMultiplier;
+
+        isMovementPressed = currMovementInput.x != 0 || currMovementInput.y != 0;
     }
+    
+    /*
+    void MovePlayerRelativeToCamera()
+    {
+        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        Vector3 playerInput = new Vector3(verticalInput, gravity, horizontalInput);
+
+        Vector3 camFw = Camera.main.transform.forward;
+        //Vector3 camFw = camera.transform.forward;
+        //Vector3 camFw = transform.InverseTransformVector(Camera.main.transform.forward);
+        camFw.y = 0;
+        camFw = camFw.normalized;
+
+        Vector3 camRt = Camera.main.transform.right;
+        //Vector3 camRt = camera.transform.right;
+        //Vector3 camRt = transform.InverseTransformVector(Camera.main.transform.right);
+        camRt.y = 0;
+        camRt = camRt.normalized;
+
+        Vector3 forwardRelVerticalInput = playerInput.x * camRt * speed;
+        Vector3 rightRelVerticalInput = playerInput.y * camFw * speed;
+
+        Vector3 camRelMovement = forwardRelVerticalInput + rightRelVerticalInput;
+
+        currMovement.x = camRelMovement.x;
+        currMovement.z = camRelMovement.z;
+
+        currRunMovement.x = camRelMovement.x * runMultiplier;
+        currRunMovement.z = camRelMovement.y * runMultiplier;
+
+        isMovementPressed = playerInput.x != 0 || playerInput.y != 0;
+    }
+    */
 
     /*
     void OnMovementInput(InputAction.CallbackContext context)
@@ -161,7 +230,7 @@ public class PlayerController : MonoBehaviour
         isMovementPressed = currMovementInput.x != 0 || currMovementInput.y != 0;
     }
     */
-    
+
     void OnRun(InputAction.CallbackContext context)
     {
         Debug.Log(context.ReadValueAsButton());
@@ -254,6 +323,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         HandleRotation();
+        //MovePlayerRelativeToCamera();
         //HandleAnimation();    TODO
         
 

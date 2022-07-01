@@ -27,37 +27,16 @@ public class GameManager : MonoBehaviour
         Pause
     }
 
+    [Serializable]
     public class GameData
     {
-        private int level;
-        private Vector3 lastPosition;
-
-        public GameData(int level, Vector3 lastPosition)
-        {
-            this.level = level;
-            this.lastPosition = lastPosition;
-        }
-
-        public void UpdateGameData(int level, Vector3 lastPosition)
-        {
-            this.level = level;
-            this.lastPosition = lastPosition;
-        }
-
-        public int GetLevel() { return level; }
-        public void SetLevel(int level) { this.level = level; }
-        public Vector3 GetPosition() { return lastPosition; }
-        public void SetPosition(Vector3 position) { lastPosition = position; }
-    }
-
-    public class PlayerData
-    {
-        private int sl, cc;
+        private int sl, cc, level;
         private float health, armor, maxHealth, maxArmor;
         private Vector3 position;
 
-        public PlayerData()
+        public GameData()
         {
+            level = 0;
             sl = 0;
             cc = 0;
             health = 0;
@@ -67,6 +46,7 @@ public class GameManager : MonoBehaviour
             position = Vector3.zero;
         }
 
+        public void SetLv(int lv) { level = lv; }
         public void SetSL(int sl){ this.sl = sl; }
         public void SetCC(int cc) { this.cc = cc; }
         public void SetH(float health) { this.health = health; }
@@ -75,6 +55,7 @@ public class GameManager : MonoBehaviour
         public void SetMaxA(float maxArmor) { this.maxArmor = maxArmor; }
         public void SetPos(Vector3 pos) { this.position = pos; }
 
+        public int GetLv() { return level; }
         public int GetSL() { return sl; }
         public int GetCC() { return cc; }
         public float GetH() { return health; }
@@ -82,6 +63,16 @@ public class GameManager : MonoBehaviour
         public float GetMaxH() { return maxHealth; }
         public float GetMaxA() { return maxArmor; }
         public Vector3 GetPos() { return position; }
+
+        public float[] GetFloatPos()
+        {
+            float[] posF = new float[3];
+            posF[0] = position.x;
+            posF[1] = position.y;
+            posF[2] = position.z;
+
+            return posF;
+        }
     }
 
     public static GameManager Instance;
@@ -98,7 +89,6 @@ public class GameManager : MonoBehaviour
 
     private GameState currentState;
     public static GameData currentGame, savedGame;
-    public static PlayerData playerData;
 
     public static int level = 0;
 
@@ -148,51 +138,51 @@ public class GameManager : MonoBehaviour
 
     private void UpdatePlayerSL(int value)
     {
-        playerData.SetSL(value);
-        OnIntDataChanged(false, SaveDebugPanelManager.InfoType.sl, playerData.GetSL());
+        currentGame.SetSL(value);
+        OnIntDataChanged(false, SaveDebugPanelManager.InfoType.sl, currentGame.GetSL());
     }
 
     private void UpdatePlayerCC(int value)
     {
-        playerData.SetCC(value);
-        OnIntDataChanged(false, SaveDebugPanelManager.InfoType.cc, playerData.GetCC());
+        currentGame.SetCC(value);
+        OnIntDataChanged(false, SaveDebugPanelManager.InfoType.cc, currentGame.GetCC());
 
     }
 
     private void UpdatePlayerH(float value)
     {
-        playerData.SetH(value);
-        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.health, playerData.GetH());
+        currentGame.SetH(value);
+        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.health, currentGame.GetH());
     }
 
     private void UpdatePlayerMaxH(float value)
     {
-        playerData.SetMaxH(value);
-        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.maxHealth, playerData.GetMaxH());
+        currentGame.SetMaxH(value);
+        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.maxHealth, currentGame.GetMaxH());
     }
 
     private void UpdatePlayerA(float value)
     {
-        playerData.SetA(value);
-        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.armor, playerData.GetA());
+        currentGame.SetA(value);
+        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.armor, currentGame.GetA());
     }
 
     private void UpdatePlayerMaxA(float value)
     {
-        playerData.SetMaxA(value);
-        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.maxArmor, playerData.GetMaxA());
+        currentGame.SetMaxA(value);
+        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.maxArmor, currentGame.GetMaxA());
     }
 
     private void UpdatePlayerPosition(Vector3 value)
     {
-        playerData.SetPos(value);
-        OnVector3DataChanged(false, SaveDebugPanelManager.InfoType.position, playerData.GetPos());
+        currentGame.SetPos(value);
+        OnVector3DataChanged(false, SaveDebugPanelManager.InfoType.position, currentGame.GetPos());
     }
 
     private void Start()
     {
         UpdateGameState(GameState.MainMenu);
-        playerData = new PlayerData();
+        currentGame = new GameData();
     }
 
     private void Update()
@@ -255,10 +245,11 @@ public class GameManager : MonoBehaviour
         return currentState;
     }
 
+    //FIXME forse non serve più
     private float[] LastPositionToFloat()
     {
         float[] posF = new float[3];
-        Vector3 posV = currentGame.GetPosition();
+        Vector3 posV = currentGame.GetPos();
 
         posF[0] = posV.x;
         posF[1] = posV.y;
@@ -269,7 +260,7 @@ public class GameManager : MonoBehaviour
 
     public static void SaveData()
     {
-        SaveSystem.SaveData(currentGame, playerData);
+        SaveSystem.SaveData(currentGame);
     }
 
     private void DEB(string msg)    //DEBUG

@@ -26,9 +26,9 @@ public class CheckPoint : MonoBehaviour
         //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider obj)
     {
-        if (other.CompareTag("Player"))
+        if (obj.CompareTag("Player"))
         {
             //gameManager.lastPosition = transform.position;
             GameManager.SaveData();
