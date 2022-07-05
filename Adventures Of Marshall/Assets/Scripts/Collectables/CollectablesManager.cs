@@ -20,6 +20,11 @@ using UnityEngine;
 
 public class CollectablesManager : MonoBehaviour
 {
+    public enum keys
+    {
+        SL, CC
+    }
+
     //EVENTS
     public delegate void SLUpdateEvent(int value);
     public static event SLUpdateEvent OnSLUpdate;
@@ -31,7 +36,6 @@ public class CollectablesManager : MonoBehaviour
     //[SerializeField] private CollectablesManagerGUI collectablesGUI;
 
     private Dictionary<string, int> items = new Dictionary<string, int>();
-
 
     //METHODS
     private void Start()
@@ -54,32 +58,30 @@ public class CollectablesManager : MonoBehaviour
         DebugInputs();
     }
 
-    private void OnTriggerEnter(Collider collider)
+    public void IncrementItem(string key, Collider collider)
     {
-        switch (collider.gameObject.tag)
-        {
-            case "SugarLump":
-                Debug.Log("CollectablesManager | Collision detected w/ SL. Incrementing the counter");
-                items["SL"]++;
+        items[key]++;
 
+        switch (key)
+        {
+            case "SL":
                 Debug.Log("CollectablesManager | Setting the event for SL Update");
+
                 OnSLUpdate?.Invoke(items["SL"]);
 
-                Debug.Log("CollectablesManager | Communicating with the GUI to update the SL counter");
+                //Debug.Log("CollectablesManager | Communicating with the GUI to update the SL counter");
                 //collectablesGUI.UpdateSL(items["SL"]);
                 //collectablesGUI.UpdateCounter(CollectablesManagerGUI.IndicatorType.SL, items["SL"]);
 
                 DestroyCollectable(collider);
                 break;
 
-            case "ChocoChip":
-                Debug.Log("CollectablesManager | Collision detected w/ CC. Incrementing the counter");
-                items["CC"]++;
-
+            case "CC":
                 Debug.Log("CollectablesManager | Setting the event for CC update");
+
                 OnCCUpdate?.Invoke(items["CC"]);
 
-                Debug.Log("CollectablesManager | Communicating with the GUI to update the CC counter");
+                //Debug.Log("CollectablesManager | Communicating with the GUI to update the CC counter");
                 //collectablesGUI.UpdateCC(items["CC"]);
                 //collectablesGUI.UpdateCounter(CollectablesManagerGUI.IndicatorType.CC, items["CC"]);
 
@@ -90,6 +92,8 @@ public class CollectablesManager : MonoBehaviour
 
     private void DestroyCollectable(Collider collider)
     {
+        Debug.Log("CollectablesManager | Destroying the collectable [" + collider.tag + "]");
+
         Destroy(collider.transform.parent.gameObject);
     }
 

@@ -46,7 +46,7 @@ public class StartMenu : MenuActions
             player = GameObject.FindGameObjectWithTag("Player");
         }
 
-        if (SaveSystem.isSaved)
+        /*if (SaveSystem.isSaved)
         {
             EnableExistingGamePanel();
             //isFirstStart = false;
@@ -55,7 +55,7 @@ public class StartMenu : MenuActions
         {
             EnableFirstGamePanel();
             //isFirstStart = true;
-        }
+        }*/
     }
 
     private void Update()
@@ -83,14 +83,14 @@ public class StartMenu : MenuActions
 
     public void RestartGame()
     {
-        SaveSystem.DeleteSaved();
+        //SaveSystem.DeleteSaved();
         StartGame();
     }
 
     public void LoadGame()
     {
         Debug.Log("StartMenu.cs | Loading the last game");
-        SaveSystem.LoadPlayer();
+        //SaveSystem.LoadPlayer();
         Debug.Log("StartMenu.cs | Loading the last game scene");
         SceneManager.LoadScene(player.GetComponent<Player>().level);
     }

@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour
     //EVENTS
     public delegate void PositionUpdateEvent(Vector3 value);
     public static event PositionUpdateEvent OnPositionUpdate;
+    public delegate void RotationUpdateEvent(Quaternion value);
+    public static event RotationUpdateEvent OnRotationUpdate;
 
     void Awake()
     {
@@ -349,6 +351,7 @@ public class PlayerController : MonoBehaviour
     private void LateUpdate()
     {
         OnPositionUpdate(transform.position);
+        OnRotationUpdate(transform.rotation);
     }
 
     private void OnEnable()

@@ -64,15 +64,15 @@ public class PlayerHealthController : HealthController
         if (!isAlive)
         {
             Player player = GetComponent<Player>();
-            player.LoadPlayer();
-            if (!SaveSystem.isSaved)    //FIXME to refine with file try-catch
+            //player.LoadPlayer();
+            /*if (!SaveSystem.isSaved)    //FIXME to refine with file try-catch
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             else
             {
                 SceneManager.LoadScene(player.level);
-            }
+            }*/
             
             isAlive = true;
         }

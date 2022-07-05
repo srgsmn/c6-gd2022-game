@@ -39,6 +39,7 @@ public class SaveDebugPanelManager : MonoBehaviour
         GameManager.OnIntDataChanged += UpdateIntValue;
         GameManager.OnFloatDataChanged += UpdateFloatValue;
         GameManager.OnVector3DataChanged += UpdateVector3Value;
+        GameManager.OnSave += UpdateSavedValues;
     }
 
     private void OnDestroy()
@@ -69,6 +70,21 @@ public class SaveDebugPanelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private void UpdateSavedValues(GameData loadedGame) {
+        if (loadedGame != null)
+        {
+            UpdateIntValue(true, InfoType.level, loadedGame.level);
+            UpdateIntValue(true, InfoType.sl, loadedGame.sl);
+            UpdateIntValue(true, InfoType.cc, loadedGame.cc);
+            UpdateFloatValue(true, InfoType.health, loadedGame.health);
+            UpdateFloatValue(true, InfoType.maxHealth, loadedGame.maxHealth);
+            UpdateFloatValue(true, InfoType.armor, loadedGame.armor);
+            UpdateFloatValue(true, InfoType.maxHealth, loadedGame.maxArmor);
+            UpdateVector3Value(true, InfoType.position, loadedGame.position);
+        }
         
     }
 

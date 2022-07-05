@@ -27,55 +27,9 @@ public class GameManager : MonoBehaviour
         Pause
     }
 
-    [Serializable]
-    public class GameData
-    {
-        private int sl, cc, level;
-        private float health, armor, maxHealth, maxArmor;
-        private Vector3 position;
-
-        public GameData()
-        {
-            level = 0;
-            sl = 0;
-            cc = 0;
-            health = 0;
-            armor = 0;
-            maxHealth = 0;
-            maxArmor = 0;
-            position = Vector3.zero;
-        }
-
-        public void SetLv(int lv) { level = lv; }
-        public void SetSL(int sl){ this.sl = sl; }
-        public void SetCC(int cc) { this.cc = cc; }
-        public void SetH(float health) { this.health = health; }
-        public void SetA(float armor) { this.armor = armor; }
-        public void SetMaxH(float maxHealth) { this.maxHealth = maxHealth; }
-        public void SetMaxA(float maxArmor) { this.maxArmor = maxArmor; }
-        public void SetPos(Vector3 pos) { this.position = pos; }
-
-        public int GetLv() { return level; }
-        public int GetSL() { return sl; }
-        public int GetCC() { return cc; }
-        public float GetH() { return health; }
-        public float GetA() { return armor; }
-        public float GetMaxH() { return maxHealth; }
-        public float GetMaxA() { return maxArmor; }
-        public Vector3 GetPos() { return position; }
-
-        public float[] GetFloatPos()
-        {
-            float[] posF = new float[3];
-            posF[0] = position.x;
-            posF[1] = position.y;
-            posF[2] = position.z;
-
-            return posF;
-        }
-    }
-
     public static GameManager Instance;
+
+    public static GameData currentGame, loadedGame;
 
     public static event Action<GameState> onGameStateChanged;
     // I can subscribe to this event from other classe by adding a subscriber in the following way:
@@ -88,7 +42,6 @@ public class GameManager : MonoBehaviour
     //      }
 
     private GameState currentState;
-    public static GameData currentGame, savedGame;
 
     public static int level = 0;
 
@@ -102,6 +55,9 @@ public class GameManager : MonoBehaviour
     public delegate void Vector3DataChangedEvent(bool saved, SaveDebugPanelManager.InfoType type, Vector3 value);
     public static event Vector3DataChangedEvent OnVector3DataChanged;
 
+    public delegate void NewSavingEvent(GameData savedGame);
+    public static event NewSavingEvent OnSave;
+
     private void Awake()
     {
         //Subscribing to the event
@@ -112,6 +68,7 @@ public class GameManager : MonoBehaviour
         PlayerHealthController.OnMaxArmorUpdate += UpdatePlayerMaxA;
         PlayerHealthController.OnMaxHealthUpdate += UpdatePlayerMaxH;
         PlayerController.OnPositionUpdate += UpdatePlayerPosition;
+        PlayerController.OnRotationUpdate += UpdatePlayerRotation;
 
         if (Instance == null)
         {
@@ -122,7 +79,15 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (currentGame == null)
+            currentGame = new GameData();
+
+        if (loadedGame == null)
+            LoadGame();
     }
+
+    
 
     private void OnDestroy()
     {
@@ -134,55 +99,77 @@ public class GameManager : MonoBehaviour
         PlayerHealthController.OnMaxArmorUpdate -= UpdatePlayerMaxA;
         PlayerHealthController.OnMaxHealthUpdate -= UpdatePlayerMaxH;
         PlayerController.OnPositionUpdate -= UpdatePlayerPosition;
+        PlayerController.OnRotationUpdate -= UpdatePlayerRotation;
     }
-
+    
     private void UpdatePlayerSL(int value)
     {
-        currentGame.SetSL(value);
-        OnIntDataChanged(false, SaveDebugPanelManager.InfoType.sl, currentGame.GetSL());
+        currentGame.sl = value;
+        SaveData.current.gameData.sl = currentGame.sl;
+        OnIntDataChanged(false, SaveDebugPanelManager.InfoType.sl, currentGame.sl);
     }
 
     private void UpdatePlayerCC(int value)
     {
-        currentGame.SetCC(value);
-        OnIntDataChanged(false, SaveDebugPanelManager.InfoType.cc, currentGame.GetCC());
+        currentGame.cc = value;
+        SaveData.current.gameData.cc = currentGame.cc;
+        OnIntDataChanged(false, SaveDebugPanelManager.InfoType.cc, currentGame.cc);
 
     }
 
     private void UpdatePlayerH(float value)
     {
-        currentGame.SetH(value);
-        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.health, currentGame.GetH());
+        currentGame.health = value;
+        SaveData.current.gameData.health = currentGame.health;
+        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.health, currentGame.health);
     }
 
     private void UpdatePlayerMaxH(float value)
     {
-        currentGame.SetMaxH(value);
-        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.maxHealth, currentGame.GetMaxH());
+        currentGame.maxHealth = value;
+        SaveData.current.gameData.maxHealth = currentGame.maxHealth;
+        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.maxHealth, currentGame.maxHealth);
     }
 
     private void UpdatePlayerA(float value)
     {
-        currentGame.SetA(value);
-        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.armor, currentGame.GetA());
+        currentGame.armor = value;
+        SaveData.current.gameData.armor = currentGame.armor;
+        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.armor, currentGame.armor);
     }
 
     private void UpdatePlayerMaxA(float value)
     {
-        currentGame.SetMaxA(value);
-        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.maxArmor, currentGame.GetMaxA());
+        currentGame.maxArmor = value;
+        SaveData.current.gameData.maxArmor = currentGame.maxArmor;
+        OnFloatDataChanged(false, SaveDebugPanelManager.InfoType.maxArmor, currentGame.maxArmor);
     }
 
     private void UpdatePlayerPosition(Vector3 value)
     {
-        currentGame.SetPos(value);
-        OnVector3DataChanged(false, SaveDebugPanelManager.InfoType.position, currentGame.GetPos());
+        currentGame.position = value;
+        SaveData.current.gameData.position = currentGame.position;
+        OnVector3DataChanged(false, SaveDebugPanelManager.InfoType.position, currentGame.position);
+    }
+
+    private void UpdatePlayerRotation(Quaternion value)
+    {
+        currentGame.rotation = value;
+        SaveData.current.gameData.rotation = currentGame.rotation;
     }
 
     private void Start()
     {
         UpdateGameState(GameState.MainMenu);
-        currentGame = new GameData();
+
+        UpdatePlayerMaxH(0);
+        UpdatePlayerH(0);
+        UpdatePlayerMaxA(0);
+        UpdatePlayerA(0);
+        UpdatePlayerSL(0);
+        UpdatePlayerCC(0);
+        UpdatePlayerPosition(Vector3.zero);
+        UpdatePlayerRotation(Quaternion.identity);
     }
 
     private void Update()
@@ -206,6 +193,8 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+
+        
     }
 
     /*
@@ -215,7 +204,7 @@ public class GameManager : MonoBehaviour
         return currentLevel;
     }
     */
-
+    
     public void UpdateGameState(GameState newState)
     {
         currentState = newState;
@@ -245,22 +234,42 @@ public class GameManager : MonoBehaviour
         return currentState;
     }
 
-    //FIXME forse non serve più
-    private float[] LastPositionToFloat()
+    //FIXME non serve più
+    /*private float[] Vector3ToFloats(Vector3 vect)
     {
-        float[] posF = new float[3];
-        Vector3 posV = currentGame.GetPos();
+        float[] array = new float[3];
 
-        posF[0] = posV.x;
-        posF[1] = posV.y;
-        posF[2] = posV.z;
+        array[0] = vect.x;
+        array[1] = vect.y;
+        array[2] = vect.z;
 
-        return posF;
+        return array;
     }
 
-    public static void SaveData()
+    //FIXME non serve più
+    private Vector3 FloatsToVector3(float[] floats)
     {
-        SaveSystem.SaveData(currentGame);
+        Vector3 vect;
+
+        vect.x = floats[0];
+        vect.y = floats[1];
+        vect.z = floats[2];
+
+        return vect;
+    }
+    */
+    public static void SaveGame()
+    {
+        Debug.Log("GameManager.cs | Saving the game");
+        SerializationManager.Save(SaveData.current);
+
+        OnSave(LoadGame());
+    }
+
+    public static GameData LoadGame()
+    {
+        Debug.Log("GameManager.cs | Loading the game");
+        return loadedGame = (GameData)SerializationManager.Load();
     }
 
     private void DEB(string msg)    //DEBUG

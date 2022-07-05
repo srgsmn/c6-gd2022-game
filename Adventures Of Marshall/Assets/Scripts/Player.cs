@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         SLCount = collectablesManager.GetSL();
         CCCount = collectablesManager.GetCC();
     }
-
+    /*
     public void SavePlayer()
     {
         SaveSystem.SavePlayer(this);
@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
 
         transform.position = position;
     }
+    */
 
     /*
     private PlayerHealthManager playerHealth;
