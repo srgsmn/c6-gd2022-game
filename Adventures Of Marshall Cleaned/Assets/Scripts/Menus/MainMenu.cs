@@ -1,4 +1,4 @@
-//LoadStartMenu.cs
+//MainMenu.cs
 /* Checks if there are already saved games and basing on that it shows a starting menù intead of another
  * 
  * Scripted by Simone Siragusa 306067 @ PoliTO | Game Design & Gamification Exam
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenu : MenuActions
+public class MainMenu : MenuActions
 {
     private string DebIntro = "StartMenu.cs | ";
 
@@ -68,18 +68,21 @@ public class StartMenu : MenuActions
     public void StartGame()
     {
         Debug.Log(DebIntro + "Starting Game");
+        GameManager.StartGame(false);
         //TODO Start game
     }
 
     public void RestartGame()
     {
         Debug.Log(DebIntro + "Restarting game");
+        GameManager.StartGame(false);
         //TODO
     }
 
     public void LoadGame()
     {
         Debug.Log(DebIntro + "Loading game");
+        GameManager.StartGame(true);
         //TODO
     }
 }

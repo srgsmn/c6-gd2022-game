@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private static string[] sceneNames =
     {
-        "00_StartMenu", "SaveLoadScene"
+        "00_StartMenu", "Scenes/Tests/SaveLoadScene"
     };
 
     public enum GameState
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public static int level = 0;
 
-    private Dictionary<int, Scene> levels;
+    private static Dictionary<int, Scene> levels;
 
     //EVENTS
     public delegate void IntDataChangedEvent(bool saved, SaveDebugPanelManager.InfoType type, int value);
@@ -100,8 +100,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         foreach(string sceneName in sceneNames)
         {
-            flag = levels.TryAdd(i++, SceneManager.GetSceneByName(sceneName));
-            Debug.Log(DebIntro + "Trying to add scene (scene name: " + sceneName + "): " + flag);
+            flag = levels.TryAdd(i, SceneManager.GetSceneByName(sceneName));
+            Debug.Log(DebIntro + "Trying to add scene: [scene name: " + sceneName + "; Dictionary entry: [" + i + " | " + levels[i].name + "]]");
+            i++;
         }
     }
 
@@ -323,11 +324,31 @@ public class GameManager : MonoBehaviour, IDataPersistence
         return FileDataHandler.Check();
     }
 
+    public static void StartGame(bool loadSaved)
+    {
+        if (loadSaved)
+        {
+            SceneManager.LoadScene(currentGame.level);
+        }
+        else
+        {
+            DataPersistenceManager.instance.NewGame();
+            SceneManager.LoadScene(1);
+        }
+        
+    }
+
     public void LoadData(GameData data)
     {
         currentGame.level = data.level;
         currentGame.sl = data.sl;
         currentGame.cc = data.cc;
+        currentGame.health = data.health;
+        currentGame.maxHealth = data.maxHealth;
+        currentGame.armor = data.armor;
+        currentGame.maxArmor = data.maxArmor;
+        currentGame.position = data.position;
+        currentGame.rotation = data.rotation;
     }
 
     public void SaveData(GameData data)
