@@ -1,0 +1,125 @@
+﻿{
+    "storeItems": [
+        {
+            "id": 0,
+            "name": "Glucose Syrup",
+            "description": "Helps you restore your health level (+20 pts)",
+            "price": {
+                "SL": 10,
+                "CC": 0
+            },
+            "effect": {
+                "strengthening": {
+                    "health": 20,
+                    "armor": 0
+                },
+                "damage": {
+                    "health": 0,
+                    "armor": 0
+                }
+            },
+            "availability": 0
+        },
+        {
+            "id": 1,
+            "name": "Hot Choco Mug",
+            "description": "A nice mug of hot chocolate to restore your armor (+25 pts)",
+            "price": {
+                "SL": 0,
+                "CC": 10
+            },
+            "effect": {
+                "strengthening": {
+                    "health": 20,
+                    "armor": 0
+                },
+                "damage": {
+                    "health": 0,
+                    "armor": 0
+                }
+            },
+            "availability": 2
+        },
+        {
+            "id": 2,
+            "name": "Choco Armor",
+            "description": "A harder chocolate armor that reduces enemy damages of 25%",
+            "price": {
+                "SL": 5,
+                "CC": 20
+            },
+            "effect": {
+                "strengthening": {
+                    "health": 20,
+                    "armor": 0
+                },
+                "damage": {
+                    "health": 0,
+                    "armor": 0
+                }
+            },
+            "availability": 1
+        },
+        {
+            "id": 3,
+            "name": "Darker Choco Armor",
+            "description": "A sprinkled icing that reduces the damage of 35%",
+            "price": {
+                "SL": 10,
+                "CC": 0
+            },
+            "effect": {
+                "strengthening": {
+                    "health": 20,
+                    "armor": 0
+                },
+                "damage": {
+                    "health": 0,
+                    "armor": 0
+                }
+            },
+            "availability": 3
+        },
+        {
+            "id": 4,
+            "name": "Sprinkled Armor",
+            "description": "A sprinkled icing that reduces the damage of 45%",
+            "price": {
+                "SL": 25,
+                "CC": 75
+            },
+            "effect": {
+                "strengthening": {
+                    "health": 20,
+                    "armor": 0
+                },
+                "damage": {
+                    "health": 0,
+                    "armor": 0
+                }
+            },
+            "availability": 4
+        },
+        {
+            "id": 5,
+            "name": "Rainbow Armor",
+            "description": "The most powerfull armor, made of different sugars from worldwide (75% damage reduction)",
+            "price": {
+                "SL": 500,
+                "CC": 1000
+            },
+            "effect": {
+                "strengthening": {
+                    "health": 20,
+                    "armor": 0
+                },
+                "damage": {
+                    "health": 0,
+                    "armor": 0
+                }
+            },
+            "availability": 5
+        }
+    ]
+}
+
