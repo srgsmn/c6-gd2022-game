@@ -20,11 +20,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
+    private string DebIntro = "GameManager.cs | ";
+
+    private static string[] sceneNames =
+    {
+        "00_StartMenu", "SaveLoadScene"
+    };
+
     public enum GameState
     {
         MainMenu,
         Play,
-        Pause
+        Pause,
+        MenuOpen
     }
 
     public static GameManager Instance;
@@ -45,6 +53,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public static int level = 0;
 
+    private Dictionary<int, Scene> levels;
+
     //EVENTS
     public delegate void IntDataChangedEvent(bool saved, SaveDebugPanelManager.InfoType type, int value);
     public static event IntDataChangedEvent OnIntDataChanged;
@@ -58,10 +68,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public delegate void NewSavingEvent(GameData savedGame);
     public static event NewSavingEvent OnSave;
 
-    private void Awake()
+    private void EventSubscriber()
     {
-        //Subscribing to the event
-        
         CollectablesManager.OnSLUpdate += UpdatePlayerSL;
         CollectablesManager.OnCCUpdate += UpdatePlayerCC;
         PlayerHealthController.OnArmorUpdate += UpdatePlayerA;
@@ -70,7 +78,39 @@ public class GameManager : MonoBehaviour, IDataPersistence
         PlayerHealthController.OnMaxHealthUpdate += UpdatePlayerMaxH;
         PlayerController.OnPositionUpdate += UpdatePlayerPosition;
         PlayerController.OnRotationUpdate += UpdatePlayerRotation;
-  
+    }
+
+    private void EventUnsubscriber()
+    {
+        CollectablesManager.OnSLUpdate -= UpdatePlayerSL;
+        CollectablesManager.OnCCUpdate -= UpdatePlayerCC;
+        PlayerHealthController.OnArmorUpdate -= UpdatePlayerA;
+        PlayerHealthController.OnHealthUpdate -= UpdatePlayerH;
+        PlayerHealthController.OnMaxArmorUpdate -= UpdatePlayerMaxA;
+        PlayerHealthController.OnMaxHealthUpdate -= UpdatePlayerMaxH;
+        PlayerController.OnPositionUpdate -= UpdatePlayerPosition;
+        PlayerController.OnRotationUpdate -= UpdatePlayerRotation;
+    }
+
+    private void LevelDictionaryMaker()
+    {
+        levels = new Dictionary<int, Scene>();
+        bool flag;
+        int i = 0;
+
+        foreach(string sceneName in sceneNames)
+        {
+            flag = levels.TryAdd(i++, SceneManager.GetSceneByName(sceneName));
+            Debug.Log(DebIntro + "Trying to add scene (scene name: " + sceneName + "): " + flag);
+        }
+    }
+
+    private void Awake()
+    {
+        //Subscribing to the event
+        EventSubscriber();
+        LevelDictionaryMaker();
+
         if (Instance == null)
         {
             Instance = this;
@@ -89,24 +129,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
             LoadGame();
             loadedGame = new GameData();
         }
-            
     }
-
-    
 
     private void OnDestroy()
     {
         //Unsubscribing to the event
-        
-        CollectablesManager.OnSLUpdate -= UpdatePlayerSL;
-        CollectablesManager.OnCCUpdate -= UpdatePlayerCC;
-        PlayerHealthController.OnArmorUpdate -= UpdatePlayerA;
-        PlayerHealthController.OnHealthUpdate -= UpdatePlayerH;
-        PlayerHealthController.OnMaxArmorUpdate -= UpdatePlayerMaxA;
-        PlayerHealthController.OnMaxHealthUpdate -= UpdatePlayerMaxH;
-        PlayerController.OnPositionUpdate -= UpdatePlayerPosition;
-        PlayerController.OnRotationUpdate -= UpdatePlayerRotation;
-        
+        EventUnsubscriber();
     }
 
     private void UpdatePlayerLevel(int value)
@@ -210,8 +238,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
                     break;
             }
         }
-
-        
     }
 
     /*
@@ -224,6 +250,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     
     public void UpdateGameState(GameState newState)
     {
+        //TODO gestione freeze (da prendere da PauseMenu)
         currentState = newState;
 
         switch (currentState)
@@ -234,16 +261,38 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 break;
 
             case GameState.Play:
+                Freeze(false);
 
                 break;
 
             case GameState.Pause:
+                Freeze(true);
+
+                break;
+
+            case GameState.MenuOpen:
+                Freeze(true);
 
                 break;
 
         }
 
         onGameStateChanged?.Invoke(currentState);
+    }
+
+    private void Freeze(bool flag)
+    {
+        //FIXME
+        if (flag)
+        {
+            Debug.Log(DebIntro + "Freezing the game");
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Debug.Log(DebIntro + "Unfreezing the game");
+            Time.timeScale = 1f;
+        }
     }
 
     public GameState GetState()
@@ -269,9 +318,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         DataPersistenceManager.instance.LoadGame();
     }
 
-    private void DEB(string msg)    //DEBUG
+    public static bool CheckSaved()
     {
-        Debug.Log(this.GetType().Name + " | " + msg);
+        return FileDataHandler.Check();
     }
 
     public void LoadData(GameData data)
@@ -323,5 +372,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         data.rotation = currentGame.rotation;
         loadedGame.rotation = data.rotation;
+    }
+
+    private void DEB(string msg)    //DEBUG
+    {
+        Debug.Log(this.GetType().Name + " | " + msg);
     }
 }

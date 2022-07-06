@@ -954,7 +954,6 @@ GameObject:
   - component: {fileID: 383181032521270747}
   - component: {fileID: 383181032521270746}
   - component: {fileID: 383181032521270745}
-  - component: {fileID: 836760204358800306}
   m_Layer: 5
   m_Name: AlertPopUp
   m_TagString: Untagged
@@ -1025,20 +1024,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &836760204358800306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383181032521270744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc0b9445210a14dcda244704ffafed1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: 
-  caption: 
-  desc: 
-  lBtnTxt: 
-  rBtnTxt: 

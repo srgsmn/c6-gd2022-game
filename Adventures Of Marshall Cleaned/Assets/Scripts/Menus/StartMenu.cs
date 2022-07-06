@@ -10,6 +10,7 @@
  *  - 
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,82 +18,68 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MenuActions
 {
+    private string DebIntro = "StartMenu.cs | ";
+
+    [Header("Buttons")]
+    [SerializeField]
+    private GameObject btnsContainer;
+
+    private GameObject startBtn, loadBtn, restartBtn, creditsBtn, exitBtn;
+
     #region DEBUG FIELDS
     [SerializeField]
-    [Tooltip("(DEBUG ONLY) Checkbox for enabling one screen or another")]
-    private bool isFirstStart = true;
+    [Header("DEBUG VALUES")]
+    [Tooltip("Flag for existing saved games")]
+    [ReadOnlyInspector] private bool isSaved = false;
     #endregion
-
-    [Header("Menu elements")]
-    [SerializeField]
-    [Tooltip("Menu that appears on first start, when there isn't any game saved")]
-    private GameObject firstGamePanel;
-
-    [SerializeField]
-    [Tooltip("Menu that appears when there is alreary a game saved")]
-    private GameObject existingGamePanel;
-
-    [SerializeField]
-    [Tooltip("Alert that appears when clicking on quit button")]
-    private GameObject quitAlertPanel;
-
-    private GameObject player;
-
 
     private void Awake()
     {
-        if (player == null)
+        Debug.Log(DebIntro + "Awaking component");
+        if (btnsContainer == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            btnsContainer = transform.Find("Buttons").gameObject;
         }
 
-        if (GameManager.loadedGame != null) //FIXME
-        {
-            EnableExistingGamePanel();
-            //isFirstStart = false;
-        }
-        else
-        {
-            EnableFirstGamePanel();
-            //isFirstStart = true;
-        }
+        startBtn = btnsContainer.transform.Find("StartBtn").gameObject;
+        loadBtn = btnsContainer.transform.Find("LoadBtn").gameObject;
+        restartBtn = btnsContainer.transform.Find("RestartBtn").gameObject;
+        creditsBtn = btnsContainer.transform.Find("CreditsBtn").gameObject;
+        exitBtn = btnsContainer.transform.Find("ExitBtn").gameObject;
+
     }
 
-    private void Update()
+    private void Start()
     {
-        //if (isFirstStart)   EnableFirstGamePanel();
-        //else                EnableExistingGamePanel();
+        Debug.Log(DebIntro + "Starting component");
+        //Check if there is a saved game
+        isSaved = CheckSaved();
+
+        startBtn.SetActive(!isSaved);
+        loadBtn.SetActive(isSaved);
+        restartBtn.SetActive(isSaved);
     }
 
-    private void EnableFirstGamePanel()
+    private bool CheckSaved()
     {
-        firstGamePanel.SetActive(true);
-        existingGamePanel.SetActive(false);
-    }
-
-    private void EnableExistingGamePanel()
-    {
-        firstGamePanel.SetActive(false);
-        existingGamePanel.SetActive(true);
+        return GameManager.CheckSaved();
     }
 
     public void StartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Debug.Log(DebIntro + "Starting Game");
+        //TODO Start game
     }
 
     public void RestartGame()
     {
-        //SaveSystem.DeleteSaved();
-        StartGame();
+        Debug.Log(DebIntro + "Restarting game");
+        //TODO
     }
 
     public void LoadGame()
     {
-        Debug.Log("StartMenu.cs | Loading the last game");
-        //SaveSystem.LoadPlayer();
-        Debug.Log("StartMenu.cs | Loading the last game scene");
-        //SceneManager.LoadScene(player.GetComponent<Player>().level);
-        GameManager.LoadGame();
+        Debug.Log(DebIntro + "Loading game");
+        //TODO
     }
 }

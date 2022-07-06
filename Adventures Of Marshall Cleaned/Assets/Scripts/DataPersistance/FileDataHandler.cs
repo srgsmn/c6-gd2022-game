@@ -6,15 +6,17 @@ using System.IO;
 
 public class FileDataHandler
 {
-    private string dataDirPath = "";
+    private static string dataDirPath = Application.persistentDataPath;
 
-    private string dataFileName = "";
+    private static string dataFileName = "test.json";
 
+    /*
     public FileDataHandler(string dataDirPath, string dataFileName)
     {
         this.dataDirPath = dataDirPath;
         this.dataFileName = dataFileName;
     }
+    */
 
     public GameData Load()
     {
@@ -42,7 +44,7 @@ public class FileDataHandler
             }
             catch(Exception e)
             {
-                Debug.LogError("Erroroccured when trying to load data from file: " + fullPath + "\n" + e);
+                Debug.LogError("Error occured when trying to load data from file: " + fullPath + "\n" + e);
             }
         }
 
@@ -84,5 +86,38 @@ public class FileDataHandler
         }
 
         Debug.Log("FileDataHandler.cs | Returning from Save()");
+    }
+
+    public static bool Check()
+    {
+        Debug.Log("FileDataHandler.cs | Check() called");
+
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+
+        bool flag = false;
+
+        if (File.Exists(fullPath))
+        {
+            try
+            {
+                string dataToLoad = "";
+
+                using (FileStream stream = new FileStream(fullPath, FileMode.Open))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        dataToLoad = reader.ReadToEnd();
+                    }
+                }
+
+                flag = true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error occured when trying to load data from file: " + fullPath + "\n" + e);
+            }
+        }
+
+        return flag;
     }
 }

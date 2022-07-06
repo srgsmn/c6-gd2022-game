@@ -20,7 +20,7 @@ using UnityEngine.SceneManagement;
 public class MenuActions : MonoBehaviour
 {
     
-    [SerializeField] private Canvas canvas;
+    //[SerializeField] private Canvas canvas;
 
     public static bool isAlertOpen { get; set; }
 

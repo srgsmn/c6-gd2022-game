@@ -48,7 +48,8 @@ public class DataPersistenceManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        //this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.dataHandler = new FileDataHandler();
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
     }
 
