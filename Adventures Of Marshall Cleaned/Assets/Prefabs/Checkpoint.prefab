@@ -110,3 +110,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88b9008105354b11bbe32239dc9d5f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cpAnimated: {fileID: 6822959651106330561, guid: d7673addd0bd143269bc0495b043dd2c, type: 3}
+  canvas: {fileID: 0}

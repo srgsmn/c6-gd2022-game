@@ -10,23 +10,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class CheckPoint : MonoBehaviour
 {
-    /* SPOSTATO IN COLLISION MANAGER
-    private void OnTriggerEnter(Collider obj)
+    [SerializeField] private GameObject cpAnimated;
+    [SerializeField] private Canvas canvas;
+
+    private GameObject cpText;
+
+    private void OnTriggerEnter(Collider collider)
     {
-        if (obj.CompareTag("Player"))
+        if (collider.gameObject.tag == "Player")
         {
-            //gameManager.lastPosition = transform.position;
-            GameManager.SaveGame();
-            //player.position = transform.position;
-            //player.level = SceneManager.GetActiveScene().buildIndex;
-            //player.SavePlayer();
-            //player.SavePlayer();
-            //GameManager.SaveGame();
+            cpText = Instantiate(cpAnimated, canvas.transform);
+            Destroy(cpText, 2f);
         }
     }
-    */
 }

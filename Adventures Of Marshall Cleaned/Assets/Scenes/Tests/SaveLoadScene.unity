@@ -475,8 +475,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144458443}
-  m_LocalRotation: {x: 0.26433706, y: 0.005149227, z: -0.0014113534, w: 0.9644156}
-  m_LocalPosition: {x: -0.07026188, y: 5, z: -8.999589}
+  m_LocalRotation: {x: 0.26433712, y: 0.0051492536, z: -0.0014113608, w: 0.9644156}
+  m_LocalPosition: {x: -0.07026233, y: 5, z: -8.999589}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -848,7 +848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343108953}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.07026188, y: 5, z: -8.999589}
+  m_LocalPosition: {x: -0.07026233, y: 5, z: -8.999589}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -912,6 +912,10 @@ PrefabInstance:
     - target: {fileID: 5588124513073939876, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
       propertyPath: m_Name
       value: ChocoChip
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588124513073939877, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
@@ -1371,7 +1375,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530139212}
-  m_LocalRotation: {x: 0.26433706, y: 0.005149227, z: -0.0014113536, w: 0.9644156}
+  m_LocalRotation: {x: 0.26433706, y: 0.005149253, z: -0.0014113607, w: 0.9644156}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1612,6 +1616,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChocoChip (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5588124513073939877, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
 --- !u!1 &633047254
@@ -1699,6 +1707,10 @@ PrefabInstance:
     - target: {fileID: 5588124513073939876, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
       propertyPath: m_Name
       value: ChocoChip (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588124513073939877, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
@@ -2193,6 +2205,10 @@ PrefabInstance:
     - target: {fileID: 5588124513073939876, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
       propertyPath: m_Name
       value: ChocoChip (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588124513073939877, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
@@ -3459,6 +3475,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6092435492232076745, guid: 2e88fb3237081410e84a9180cba73f72, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1976209697}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e88fb3237081410e84a9180cba73f72, type: 3}
 --- !u!1 &1224900377
@@ -3884,6 +3904,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChocoChip (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5588124513073939877, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
 --- !u!224 &1314959715 stripped
@@ -4097,6 +4121,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChocoChip (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5588124513073939877, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
 --- !u!1 &1456462583
@@ -4289,6 +4317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChocoChip (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5588124513073939877, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
 --- !u!1001 &1497656452
@@ -4346,6 +4378,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6092435492232076745, guid: 2e88fb3237081410e84a9180cba73f72, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1976209697}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e88fb3237081410e84a9180cba73f72, type: 3}
 --- !u!1 &1527888070
@@ -4546,8 +4582,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546976369}
-  m_LocalRotation: {x: 0.22913027, y: 0.0051971055, z: -0.0012233786, w: 0.97338116}
-  m_LocalPosition: {x: 0.000000007450581, y: 0, z: 0}
+  m_LocalRotation: {x: 0.22913027, y: 0.0051971385, z: -0.0012233871, w: 0.97338116}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4609,6 +4645,10 @@ PrefabInstance:
     - target: {fileID: 5588124513073939876, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
       propertyPath: m_Name
       value: ChocoChip (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588124513073939877, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daee71ad9f8341eea33647a5de6db59, type: 3}
@@ -5010,7 +5050,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711935308}
-  m_LocalRotation: {x: 0.24675111, y: 0.005174041, z: -0.001317457, w: 0.9690642}
+  m_LocalRotation: {x: 0.24675111, y: 0.0051741083, z: -0.0013174741, w: 0.9690642}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5549,6 +5589,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6092435492232076745, guid: 2e88fb3237081410e84a9180cba73f72, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1976209697}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e88fb3237081410e84a9180cba73f72, type: 3}
 --- !u!4 &1972664344 stripped
@@ -5714,6 +5758,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6092435492232076745, guid: 2e88fb3237081410e84a9180cba73f72, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1976209697}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e88fb3237081410e84a9180cba73f72, type: 3}
 --- !u!1001 &2086378065
