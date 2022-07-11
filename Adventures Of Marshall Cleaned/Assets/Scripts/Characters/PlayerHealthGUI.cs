@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthGUI : MonoBehaviour    //FIXME
+public class PlayerHealthGUI : MonoBehaviour
 {
     [SerializeField] private Slider healthSlider;
     [SerializeField] private bool hasArmor = false;
@@ -113,9 +113,29 @@ public class PlayerHealthGUI : MonoBehaviour    //FIXME
             armorSlider.maxValue = 0;
         }
 
+        LoadData();
+
         DEB("Checking both sliders");
         CheckEndpoint(BarType.health);
         CheckEndpoint(BarType.armor);
+    }
+
+    private void LoadData()
+    {
+        if (GameManager.loadedGame != null)
+        {
+            Debug.Log("PlayerHealthGUI.cs | Loading Data");
+
+            healthSlider.value = GameManager.loadedGame.health;
+            healthSlider.maxValue = GameManager.loadedGame.maxHealth;
+            armorSlider.value = GameManager.loadedGame.armor;
+            armorSlider.maxValue = GameManager.loadedGame.maxArmor;
+        }
+        else
+        {
+            Debug.Log("PlayerHealthGUI.cs | No data to load");
+
+        }
     }
 
     public bool SetMaxValue(BarType type, float maxValue)

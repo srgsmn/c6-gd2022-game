@@ -19,13 +19,39 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] private Canvas canvas;
 
     private GameObject cpText;
+    private float timeRemaining;
+
+    private void Start()
+    {
+        timeRemaining = 2f;
+    }
+
+    private void Update()
+    {
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+        }
+    }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player" && !IsOnStart())
         {
             cpText = Instantiate(cpAnimated, canvas.transform);
             Destroy(cpText, 2f);
+        }
+    }
+
+    private bool IsOnStart()
+    {
+        if (timeRemaining > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

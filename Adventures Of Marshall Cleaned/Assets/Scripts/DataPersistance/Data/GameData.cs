@@ -14,14 +14,19 @@ public class GameData
     // Default values the game starts with when there's no data to load
     public GameData()
     {
-        level = 1;
+        level = 0;
         sl = 0;
         cc = 0;
         position = Vector3.zero;
         rotation = Quaternion.identity;
-        health = 0f;
-        maxHealth = 0f;
+        health = 100f;
+        maxHealth = 100f;
         armor = 0f;
         maxArmor = 0;
+    }
+
+    public override string ToString()
+    {
+        return "Game data: {Level: "+level+";\nSL: "+sl+"; CC: "+cc+";\nPosition: "+position+";\nRotation: "+rotation+";\nHealth: "+health+"/"+maxHealth+";\nArmor: "+armor+"/"+maxArmor+";\n }";
     }
 }

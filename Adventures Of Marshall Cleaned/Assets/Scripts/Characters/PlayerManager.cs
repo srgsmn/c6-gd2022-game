@@ -31,4 +31,28 @@ public class PlayerManager : MonoBehaviour
         collectablesManager = GetComponent<CollectablesManager>();
         collisionManager = GetComponent<CollisionManager>();
     }
+
+    private void Start()
+    {
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        if (GameManager.loadedGame != null)
+        {
+            transform.position = GameManager.loadedGame.position;
+            transform.rotation = GameManager.loadedGame.rotation;
+            collectablesManager.SetSL(GameManager.loadedGame.sl);
+            collectablesManager.SetCC(GameManager.loadedGame.cc);
+            playerHealthController.SetHeatlth(GameManager.loadedGame.health);
+            playerHealthController.SetArmor(GameManager.loadedGame.armor);
+            playerHealthController.SetMaxHeatlth(GameManager.loadedGame.maxHealth);
+            playerHealthController.SetMaxArmor(GameManager.loadedGame.maxArmor);
+        }
+        else
+        {
+            Debug.Log("PlayerManager.cs | No data to load");
+        }
+    }
 }

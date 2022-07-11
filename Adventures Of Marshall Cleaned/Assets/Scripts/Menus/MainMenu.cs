@@ -15,22 +15,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class MainMenu : MenuActions
 {
     private string DebIntro = "StartMenu.cs | ";
 
+    [Header("Appearance")]
+    [SerializeField][Range(0f,1f)]
+    private float lerpTime;
+    [SerializeField]
+    private Color[] colors;
+
+    //private float t = 0f;
+    //private int index = 0;
+
     [Header("Buttons")]
     [SerializeField]
     private GameObject btnsContainer;
 
-    private GameObject startBtn, loadBtn, restartBtn, creditsBtn, exitBtn;
+    private GameObject startBtn, loadBtn, restartBtn, settingsBtn, creditsBtn, exitBtn;
 
     #region DEBUG FIELDS
     [SerializeField]
     [Header("DEBUG VALUES")]
     [Tooltip("Flag for existing saved games")]
     [ReadOnlyInspector] private bool isSaved = false;
+    [SerializeField][ReadOnlyInspector] private float t=0f;
+    [SerializeField][ReadOnlyInspector] private int currIndex = 0;
+    [SerializeField][ReadOnlyInspector] private Color currColor = Color.white;
     #endregion
 
     private void Awake()
@@ -41,12 +55,12 @@ public class MainMenu : MenuActions
             btnsContainer = transform.Find("Buttons").gameObject;
         }
 
-        startBtn = btnsContainer.transform.Find("StartBtn").gameObject;
-        loadBtn = btnsContainer.transform.Find("LoadBtn").gameObject;
-        restartBtn = btnsContainer.transform.Find("RestartBtn").gameObject;
-        creditsBtn = btnsContainer.transform.Find("CreditsBtn").gameObject;
-        exitBtn = btnsContainer.transform.Find("ExitBtn").gameObject;
-
+        startBtn = btnsContainer.transform.Find("TopGroup").transform.Find("StartBtn").gameObject;
+        loadBtn = btnsContainer.transform.Find("TopGroup").transform.Find("LoadBtn").gameObject;
+        restartBtn = btnsContainer.transform.Find("TopGroup").transform.Find("RestartBtn").gameObject;
+        settingsBtn = btnsContainer.transform.Find("BtmGroup").transform.Find("SettingsBtn").gameObject;
+        creditsBtn = btnsContainer.transform.Find("BtmGroup").transform.Find("CreditsBtn").gameObject;
+        exitBtn = btnsContainer.transform.Find("BtmGroup").transform.Find("ExitBtn").gameObject;
     }
 
     private void Start()
@@ -58,6 +72,30 @@ public class MainMenu : MenuActions
         startBtn.SetActive(!isSaved);
         loadBtn.SetActive(isSaved);
         restartBtn.SetActive(isSaved);
+        GetComponent<Image>().color = colors[UnityEngine.Random.Range(0, colors.Length-1)];
+        currColor = GetComponent<Image>().color;
+    }
+
+    private void Update()
+    {
+        GetComponent<Image>().color = Color.Lerp(GetComponent<Image>().color, colors[currIndex], lerpTime*Time.deltaTime);
+        currColor = GetComponent<Image>().color;
+
+        t = Mathf.Lerp(t, 1f, lerpTime * Time.deltaTime);
+
+        int prevIndex;
+
+        if (t > .99f)
+        {
+            t = 0f;
+            prevIndex = currIndex;
+
+            do
+            {
+                currIndex = UnityEngine.Random.Range(0, colors.Length);
+            } while (currIndex == prevIndex);
+            
+        }
     }
 
     private bool CheckSaved()

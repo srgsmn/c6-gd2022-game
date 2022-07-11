@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class SaveDebugPanelManager : MonoBehaviour
+public class SaveDebugPanelManager : MonoBehaviour, IDataPersistence
 {
     public enum InfoType
     {
@@ -42,8 +42,28 @@ public class SaveDebugPanelManager : MonoBehaviour
         GameManager.OnSave += UpdateSavedValues;
 
         BuildDictionary();
+    }
 
-        GameManager.LoadGame();
+    private void Start()
+    {
+        if (GameManager.loadedGame != null)
+        {
+            Debug.Log("SaveDebugPanel.cs | Trying to load data on awaking");
+            UpdateIntValue(true, InfoType.level, GameManager.loadedGame.level);
+            UpdateIntValue(true, InfoType.sl, GameManager.loadedGame.sl);
+            UpdateIntValue(true, InfoType.cc, GameManager.loadedGame.cc);
+            UpdateFloatValue(true, InfoType.health, GameManager.loadedGame.health);
+            UpdateFloatValue(true, InfoType.maxHealth, GameManager.loadedGame.maxHealth);
+            UpdateFloatValue(true, InfoType.armor, GameManager.loadedGame.armor);
+            UpdateFloatValue(true, InfoType.maxArmor, GameManager.loadedGame.maxArmor);
+            UpdateVector3Value(true, InfoType.position, GameManager.loadedGame.position);
+            //UpdateSavedValues(GameManager.loadedGame);
+        }
+        else
+        {
+            Debug.Log("SaveDebugPanel.cs | Loaded data is null!!!");
+
+        }
     }
 
     private void OnDestroy()
@@ -78,12 +98,12 @@ public class SaveDebugPanelManager : MonoBehaviour
             UpdateIntValue(true, InfoType.level, loadedGame.level);
             UpdateIntValue(true, InfoType.sl, loadedGame.sl);
             UpdateIntValue(true, InfoType.cc, loadedGame.cc);
-            /*UpdateFloatValue(true, InfoType.health, loadedGame.health);
+            UpdateFloatValue(true, InfoType.health, loadedGame.health);
             UpdateFloatValue(true, InfoType.maxHealth, loadedGame.maxHealth);
             UpdateFloatValue(true, InfoType.armor, loadedGame.armor);
             UpdateFloatValue(true, InfoType.maxHealth, loadedGame.maxArmor);
             UpdateVector3Value(true, InfoType.position, loadedGame.position);
-            */
+            
         }
     }
 
@@ -170,5 +190,24 @@ public class SaveDebugPanelManager : MonoBehaviour
                 break;
         }
 
+    }
+
+    public void LoadData(GameData data)
+    {
+        Debug.Log("SaveDebugPanel.cs | LoadData() called");
+        UpdateIntValue(true, InfoType.level, data.level);
+        UpdateIntValue(true, InfoType.sl, data.sl);
+        UpdateIntValue(true, InfoType.cc, data.cc);
+        UpdateFloatValue(true, InfoType.health, data.health);
+        UpdateFloatValue(true, InfoType.maxHealth, data.maxHealth);
+        UpdateFloatValue(true, InfoType.armor, data.armor);
+        UpdateFloatValue(true, InfoType.maxArmor, data.maxArmor);
+        UpdateVector3Value(true, InfoType.position, data.position);
+        //UpdateSavedValues(data);
+    }
+
+    public void SaveData(GameData data)
+    {
+        Debug.Log("SaveDebugPanel.cs | SaveData() called: nothing to save from here");
     }
 }

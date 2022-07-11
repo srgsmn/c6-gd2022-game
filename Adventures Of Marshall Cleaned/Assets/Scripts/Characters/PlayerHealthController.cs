@@ -32,10 +32,29 @@ public class PlayerHealthController : HealthController
     {
         DEB("Starting PlayerHealth component");
 
-        currHealth = maxHealth;
+        LoadData();
 
-        OnMaxHealthUpdate?.Invoke(maxHealth);
-        OnHealthUpdate?.Invoke(currHealth);
+        //OnMaxHealthUpdate?.Invoke(maxHealth);
+        //OnHealthUpdate?.Invoke(currHealth);
+    }
+
+    private void LoadData()
+    {
+        if (GameManager.loadedGame != null)
+        {
+            Debug.Log("PlayerHealthController.cs | Trying to load data");
+            currHealth = GameManager.loadedGame.health;
+            maxHealth = GameManager.loadedGame.maxHealth;
+            currArmor = GameManager.loadedGame.armor;
+            maxArmor = GameManager.loadedGame.maxArmor;
+            if (currArmor != 0)
+                hasArmor = true;
+        }
+        else
+        {
+            Debug.Log("PlayerHealthController.cs | Loaded data is null!!!");
+
+        }
     }
 
     private void Update()
@@ -47,6 +66,17 @@ public class PlayerHealthController : HealthController
             Debug.Log("PlayerHealth | Armor is active but its current level is <=0: deactivating armor");
             hasArmor = false;
         }
+    }
+
+    public override void SetMaxHeatlth(float maxHealth) {
+        base.SetMaxHeatlth(maxHealth);
+        OnMaxHealthUpdate(this.maxHealth);
+    }
+
+    public override void SetMaxArmor(float maxArmor)
+    {
+        base.SetMaxArmor(maxArmor);
+        OnMaxHealthUpdate(this.maxArmor);
     }
 
     public override bool BuildArmor(float maxValue)

@@ -123,4 +123,9 @@ public class DataPersistenceManager : MonoBehaviour
             return true;
         }
     }
+
+    public GameData GetGameData()
+    {
+        return gameData;
+    }
 }

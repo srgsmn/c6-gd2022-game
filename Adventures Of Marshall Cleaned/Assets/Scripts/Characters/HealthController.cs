@@ -47,7 +47,9 @@ public class HealthController : MonoBehaviour, IDamageable
     public float GetArmor() { return currArmor; }
     public void SetHeatlth(float health) { currHealth = health; }
     public void SetArmor(float armor) { currArmor = armor; }
-    
+    public virtual void SetMaxHeatlth(float maxHealth) { this.maxArmor = maxHealth; }
+    public virtual void SetMaxArmor(float maxArmor) { this.maxArmor = maxArmor; }
+
 
     private void Awake()
     {

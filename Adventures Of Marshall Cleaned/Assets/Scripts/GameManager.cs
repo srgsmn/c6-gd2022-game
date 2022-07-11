@@ -106,6 +106,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Trying to load data on scene loading");
+        DataPersistenceManager.instance.LoadGame();
+    }
+
     private void Awake()
     {
         //Subscribing to the event
@@ -128,7 +134,14 @@ public class GameManager : MonoBehaviour, IDataPersistence
         if (loadedGame == null)
         {
             LoadGame();
-            loadedGame = new GameData();
+            if (!DataPersistenceManager.instance.IsSaved())
+            {
+                Debug.Log("###GameManager.cs | It appears like there is already a saved game, trying to load it");
+
+                loadedGame = DataPersistenceManager.instance.GetGameData();
+
+                Debug.Log("GameManager.cs | Saved data are: " + loadedGame.ToString());
+            }
         }
     }
 
@@ -340,6 +353,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        Debug.Log("++++GameManager.cs | Loading data in GameManager (should be called from DPM.cs)");
         currentGame.level = data.level;
         currentGame.sl = data.sl;
         currentGame.cc = data.cc;
@@ -349,6 +363,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
         currentGame.maxArmor = data.maxArmor;
         currentGame.position = data.position;
         currentGame.rotation = data.rotation;
+
+        loadedGame = currentGame;
+
+        Debug.Log("LOADED DATA IS: " + loadedGame.ToString());
     }
 
     public void SaveData(GameData data)
