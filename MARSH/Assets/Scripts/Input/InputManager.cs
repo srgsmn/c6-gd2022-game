@@ -1,4 +1,7 @@
 /* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
+ * 
+ *  TODO:
+ *      - UI input management
  */
 
 using System.Collections;
@@ -15,6 +18,9 @@ public class InputManager : MonoBehaviour
     // DEBUG VARIABLES _________________________________________________________ DEBUG VARIABLES
 
     [Header("Character Controls:")]
+    [SerializeField][ReadOnlyInspector] private Vector2 movementInput;
+    [SerializeField][ReadOnlyInspector] private bool jumpInput;
+    [SerializeField][ReadOnlyInspector] private bool runInput;
 
     [Header("Debug:")]
     [SerializeField][ReadOnlyInspector] private bool debugOn = false;
@@ -90,6 +96,8 @@ public class InputManager : MonoBehaviour
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
 
+    // Debug
+
     public delegate void DebugModeSwitcherEvent();
     public static DebugModeSwitcherEvent OnDebugModeSwitch;
 
@@ -102,6 +110,15 @@ public class InputManager : MonoBehaviour
     public static DebugLoadEvent OnDebugLoad;
     public delegate void DebugQuitEvent();
     public static DebugQuitEvent OnDebugQuit;
+
+    // Character Controls
+
+    public delegate void MovementInputEvent(Vector2 movementInput);
+    public static MovementInputEvent OnMovementInput;
+    public delegate void JumpInputEvent(bool isPressed);
+    public static JumpInputEvent OnJumpInput;
+    public delegate void RunInputEvent(bool isPressed);
+    public static RunInputEvent OnRunInput;
 
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
@@ -138,6 +155,14 @@ public class InputManager : MonoBehaviour
             inputs.Debug.Quit.started += OnDebugQuitPressed;
             inputs.Debug.Quit.canceled += OnDebugQuitPressed;
 
+            inputs.CharacterControls.Move.started += OnMovementInputPressed;
+            inputs.CharacterControls.Move.canceled += OnMovementInputPressed;
+            inputs.CharacterControls.Move.performed += OnMovementInputPressed;
+            inputs.CharacterControls.Run.started += OnRunInputPressed;
+            inputs.CharacterControls.Run.canceled += OnRunInputPressed;
+            inputs.CharacterControls.Jump.started += OnJumpInputPressed;
+            inputs.CharacterControls.Jump.canceled += OnJumpInputPressed;
+
         }
         else
         {
@@ -168,10 +193,20 @@ public class InputManager : MonoBehaviour
             inputs.Debug.Load.canceled -= OnDebugLoadPressed;
             inputs.Debug.Quit.started -= OnDebugQuitPressed;
             inputs.Debug.Quit.canceled -= OnDebugQuitPressed;
+
+            inputs.CharacterControls.Move.started -= OnMovementInputPressed;
+            inputs.CharacterControls.Move.canceled -= OnMovementInputPressed;
+            inputs.CharacterControls.Move.performed -= OnMovementInputPressed;
+            inputs.CharacterControls.Run.started -= OnRunInputPressed;
+            inputs.CharacterControls.Run.canceled -= OnRunInputPressed;
+            inputs.CharacterControls.Jump.started -= OnJumpInputPressed;
+            inputs.CharacterControls.Jump.canceled -= OnJumpInputPressed;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    // Debug
 
     private void OnDebugPressed(InputAction.CallbackContext context)
     {
@@ -184,84 +219,122 @@ public class InputManager : MonoBehaviour
     {
         Deb("OnDebugSwitcher(): " + context.ReadValueAsButton());
 
-        debugSwitcher = context.ReadValueAsButton();
+        if (debugOn) debugSwitcher = context.ReadValueAsButton();
     }
 
     private void OnDebugHealthPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugHealth(): " + context.ReadValueAsButton());
 
-        debugHealth = context.ReadValueAsButton();
+        if (debugOn) debugHealth = context.ReadValueAsButton();
     }
 
     private void OnDebugArmorPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugArmor(): " + context.ReadValueAsButton());
 
-        debugArmor = context.ReadValueAsButton();
+        if (debugOn) debugArmor = context.ReadValueAsButton();
     }
 
     private void OnDebugSLPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugSL(): " + context.ReadValueAsButton());
 
-        debugSL = context.ReadValueAsButton();
+        if (debugOn) debugSL = context.ReadValueAsButton();
     }
 
     private void OnDebugCCPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugCC(): " + context.ReadValueAsButton());
 
-        debugCC = context.ReadValueAsButton();
+        if (debugOn) debugCC = context.ReadValueAsButton();
     }
 
     private void OnDebugIncPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugInc(): " + context.ReadValueAsButton());
 
-        debugInc = context.ReadValueAsButton();
+        if (debugOn) debugInc = context.ReadValueAsButton();
     }
 
     private void OnDebugDecPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugDec(): " + context.ReadValueAsButton());
 
-        debugDec = context.ReadValueAsButton();
+        if (debugOn) debugDec = context.ReadValueAsButton();
     }
 
     private void OnDebugMaxPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugMax(): " + context.ReadValueAsButton());
 
-        debugMax = context.ReadValueAsButton();
+        if (debugOn) debugMax = context.ReadValueAsButton();
     }
 
     private void OnDebugResetPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugReset(): " + context.ReadValueAsButton());
 
-        debugRst = context.ReadValueAsButton();
+        if (debugOn) debugRst = context.ReadValueAsButton();
     }
 
     private void OnDebugSavePressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugSavePressed(): " + context.ReadValueAsButton());
 
-        debugSave = context.ReadValueAsButton();
+        if (debugOn) debugSave = context.ReadValueAsButton();
     }
 
     private void OnDebugLoadPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugLoadPressed(): " + context.ReadValueAsButton());
 
-        debugLoad = context.ReadValueAsButton();
+        if (debugOn) debugLoad = context.ReadValueAsButton();
     }
 
     private void OnDebugQuitPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugLoadPressed(): " + context.ReadValueAsButton());
 
-        debugQuit = context.ReadValueAsButton();
+        if (debugOn) debugQuit = context.ReadValueAsButton();
+    }
+
+    // Character Controls
+
+    private void OnMovementInputPressed(InputAction.CallbackContext context)
+    {
+        Deb("OnMovementInput(): " + context.ReadValue<Vector2>());
+
+        if (!debugOn)
+        {
+            movementInput = context.ReadValue<Vector2>();
+
+            OnMovementInput?.Invoke(movementInput);
+        }
+    }
+
+    private void OnRunInputPressed(InputAction.CallbackContext context)
+    {
+        Deb("OnMovementInput(): " + context.ReadValueAsButton());
+
+        if (!debugOn)
+        {
+            runInput = context.ReadValueAsButton();
+
+            OnRunInput?.Invoke(runInput);
+        }
+    }
+
+    private void OnJumpInputPressed(InputAction.CallbackContext context)
+    {
+        Deb("OnMovementInput(): " + context.ReadValueAsButton());
+
+        if (!debugOn)
+        {
+            jumpInput = context.ReadValueAsButton();
+
+            OnJumpInput?.Invoke(jumpInput);
+        }
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
