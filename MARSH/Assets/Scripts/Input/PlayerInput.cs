@@ -334,6 +334,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0f1f392-f7ed-4c4d-b95f-4b17e6e6d808"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -490,6 +499,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Load"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f40d7b58-978b-4cce-8e87-434df7eb5ec3"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -563,6 +583,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Debug_DebugSwitcher = m_Debug.FindAction("DebugSwitcher", throwIfNotFound: true);
         m_Debug_Save = m_Debug.FindAction("Save", throwIfNotFound: true);
         m_Debug_Load = m_Debug.FindAction("Load", throwIfNotFound: true);
+        m_Debug_Quit = m_Debug.FindAction("Quit", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
@@ -687,6 +708,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Debug_DebugSwitcher;
     private readonly InputAction m_Debug_Save;
     private readonly InputAction m_Debug_Load;
+    private readonly InputAction m_Debug_Quit;
     public struct DebugActions
     {
         private @PlayerInput m_Wrapper;
@@ -703,6 +725,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @DebugSwitcher => m_Wrapper.m_Debug_DebugSwitcher;
         public InputAction @Save => m_Wrapper.m_Debug_Save;
         public InputAction @Load => m_Wrapper.m_Debug_Load;
+        public InputAction @Quit => m_Wrapper.m_Debug_Quit;
         public InputActionMap Get() { return m_Wrapper.m_Debug; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -748,6 +771,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Load.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnLoad;
                 @Load.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnLoad;
                 @Load.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnLoad;
+                @Quit.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnQuit;
             }
             m_Wrapper.m_DebugActionsCallbackInterface = instance;
             if (instance != null)
@@ -788,6 +814,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Load.started += instance.OnLoad;
                 @Load.performed += instance.OnLoad;
                 @Load.canceled += instance.OnLoad;
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
             }
         }
     }
@@ -853,6 +882,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnDebugSwitcher(InputAction.CallbackContext context);
         void OnSave(InputAction.CallbackContext context);
         void OnLoad(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
