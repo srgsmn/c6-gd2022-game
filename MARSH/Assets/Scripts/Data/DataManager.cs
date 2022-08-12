@@ -52,7 +52,8 @@ public class DataManager : MonoBehaviour
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
-
+    public delegate void ValueUpdateEvent(bool saved, ChParam param, object value);
+    public static ValueUpdateEvent OnValueUpdate;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -130,6 +131,8 @@ public class DataManager : MonoBehaviour
 
                 break;
         }
+
+        OnValueUpdate?.Invoke(false, param, value);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

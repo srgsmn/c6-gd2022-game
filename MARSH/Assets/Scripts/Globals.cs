@@ -39,6 +39,43 @@ namespace Globals
         SL, CC
     }
 
+    /// <summary>
+    /// State of the game (NOT the screen to display!)
+    /// </summary>
+    public enum GameState
+    {
+        /// <summary>
+        /// The game isn't playable yet (pre-play state)
+        /// </summary>
+        Start,
+        /// <summary>
+        /// The game is playable (in-play state)
+        /// </summary>
+        Play,
+        /// <summary>
+        /// The game is stopped but still playable (in-play state)
+        /// </summary>
+        Pause,
+        /// <summary>
+        /// The game is no longer playable because player died (post-play state)
+        /// </summary>
+        GameOver
+    }
+
+    /// <summary>
+    /// Screen to display (NOT the state of the game!)
+    /// </summary>
+    public enum GameScreen
+    {
+        StartMenu,
+        PlayScreen,
+        PauseMenu,
+        SettingsMenu,
+        CreditsMenu,
+        StoreMenu,
+        GameOver
+    }
+
     // CLASSES _________________________________________________________________ CLASSES
     [Serializable]
     public class PlayerData

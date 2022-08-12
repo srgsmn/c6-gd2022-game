@@ -213,6 +213,12 @@ public class InputManager : MonoBehaviour
     public delegate void RunInputEvent(bool isPressed);
     public static RunInputEvent OnRunInput;
 
+    // GameState and UI
+    public delegate void PauseInputEvent();
+    public static PauseInputEvent OnPause;
+    public delegate void BackInputEvent();
+    public static BackInputEvent OnBack;
+
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -256,6 +262,8 @@ public class InputManager : MonoBehaviour
             inputs.CharacterControls.Jump.started += OnJumpInputPressed;
             inputs.CharacterControls.Jump.canceled += OnJumpInputPressed;
 
+            inputs.UI.Pause.started += OnPausePressed;
+            inputs.UI.Back.performed += OnBackPressed;
         }
         else
         {
@@ -294,6 +302,9 @@ public class InputManager : MonoBehaviour
             inputs.CharacterControls.Run.canceled -= OnRunInputPressed;
             inputs.CharacterControls.Jump.started -= OnJumpInputPressed;
             inputs.CharacterControls.Jump.canceled -= OnJumpInputPressed;
+
+            inputs.UI.Pause.started -= OnPausePressed;
+            inputs.UI.Back.performed -= OnBackPressed;
         }
     }
 
@@ -303,14 +314,14 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugPressed(InputAction.CallbackContext context)
     {
-        Deb("OnIsDebug(): " + context.ReadValueAsButton() );
+        //Deb("OnIsDebug(): " + context.ReadValueAsButton() );
 
         debugOn = context.ReadValueAsButton();
     }
 
     private void OnDebugSwitcherPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugSwitcher(): " + context.ReadValueAsButton());
+        //Deb("OnDebugSwitcher(): " + context.ReadValueAsButton());
 
         if (debugOn) debugSwitcher = context.ReadValueAsButton();
 
@@ -319,37 +330,35 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugHealthPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugHealth(): " + context.ReadValueAsButton());
+        //Deb("OnDebugHealth(): " + context.ReadValueAsButton());
 
         if (debugOn) debugHealth = context.ReadValueAsButton();
     }
 
     private void OnDebugArmorPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugArmor(): " + context.ReadValueAsButton());
+        //Deb("OnDebugArmor(): " + context.ReadValueAsButton());
 
         if (debugOn) debugArmor = context.ReadValueAsButton();
     }
 
     private void OnDebugSLPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugSL(): " + context.ReadValueAsButton());
+        //Deb("OnDebugSL(): " + context.ReadValueAsButton());
 
         if (debugOn) debugSL = context.ReadValueAsButton();
     }
 
     private void OnDebugCCPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugCC(): " + context.ReadValueAsButton());
+        //Deb("OnDebugCC(): " + context.ReadValueAsButton());
 
         if (debugOn) debugCC = context.ReadValueAsButton();
     }
 
-    //####
-
     private void OnDebugIncPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugInc(): " + context.ReadValueAsButton());
+        //Deb("OnDebugInc(): " + context.ReadValueAsButton());
 
         if (debugOn) debugInc = context.ReadValueAsButton();
 
@@ -370,7 +379,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugDecPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugDec(): " + context.ReadValueAsButton());
+        //Deb("OnDebugDec(): " + context.ReadValueAsButton());
 
         if (debugOn)
         {
@@ -387,7 +396,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugMaxPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugMax(): " + context.ReadValueAsButton());
+        //Deb("OnDebugMax(): " + context.ReadValueAsButton());
 
         if (debugOn)
         {
@@ -404,7 +413,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugResetPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugReset(): " + context.ReadValueAsButton());
+        //Deb("OnDebugReset(): " + context.ReadValueAsButton());
 
         if (debugOn)
         {
@@ -431,7 +440,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugSavePressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugSavePressed(): " + context.ReadValueAsButton());
+        //Deb("OnDebugSavePressed(): " + context.ReadValueAsButton());
 
         if (debugOn) debugSave = context.ReadValueAsButton();
 
@@ -440,7 +449,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugLoadPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugLoadPressed(): " + context.ReadValueAsButton());
+        //Deb("OnDebugLoadPressed(): " + context.ReadValueAsButton());
 
         if (debugOn) debugLoad = context.ReadValueAsButton();
 
@@ -449,7 +458,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugQuitPressed(InputAction.CallbackContext context)
     {
-        Deb("OnDebugLoadPressed(): " + context.ReadValueAsButton());
+        //Deb("OnDebugLoadPressed(): " + context.ReadValueAsButton());
 
         if (debugOn) debugQuit = context.ReadValueAsButton();
 
@@ -460,7 +469,7 @@ public class InputManager : MonoBehaviour
 
     private void OnMovementInputPressed(InputAction.CallbackContext context)
     {
-        Deb("OnMovementInput(): " + context.ReadValue<Vector2>());
+        //Deb("OnMovementInput(): " + context.ReadValue<Vector2>());
 
         if (!debugOn)
         {
@@ -472,7 +481,7 @@ public class InputManager : MonoBehaviour
 
     private void OnRunInputPressed(InputAction.CallbackContext context)
     {
-        Deb("OnMovementInput(): " + context.ReadValueAsButton());
+        //Deb("OnMovementInput(): " + context.ReadValueAsButton());
 
         if (!debugOn)
         {
@@ -484,13 +493,29 @@ public class InputManager : MonoBehaviour
 
     private void OnJumpInputPressed(InputAction.CallbackContext context)
     {
-        Deb("OnMovementInput(): " + context.ReadValueAsButton());
+        //Deb("OnMovementInput(): " + context.ReadValueAsButton());
 
         if (!debugOn)
         {
             jumpInput = context.ReadValueAsButton();
 
             OnJumpInput?.Invoke(jumpInput);
+        }
+    }
+
+    private void OnPausePressed(InputAction.CallbackContext context)
+    {
+        if (context.ReadValueAsButton())
+        {
+            OnPause?.Invoke();
+        }
+    }
+
+    private void OnBackPressed(InputAction.CallbackContext context)
+    {
+        if (context.ReadValueAsButton())
+        {
+            OnBack?.Invoke();
         }
     }
 

@@ -483,9 +483,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Close",
+                    "name": "Pause",
                     "type": "Button",
-                    "id": "79f730bc-ff8f-4c25-ae34-68cfd15faa31",
+                    "id": "bba8b437-f0ae-4ad3-9cc5-22a10cbb0a1f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -506,12 +506,12 @@
                 },
                 {
                     "name": "",
-                    "id": "3126c97b-5582-4870-9f18-8f8941b461f1",
+                    "id": "eb5abbf6-28b4-4982-9e43-a91d296be2d3",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Close",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
