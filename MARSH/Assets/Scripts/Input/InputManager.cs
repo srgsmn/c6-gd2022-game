@@ -231,7 +231,7 @@ public class InputManager : MonoBehaviour
             inputs.Debug.Armor.canceled += OnDebugArmorPressed;
             inputs.Debug.SL.started += OnDebugSLPressed;
             inputs.Debug.SL.canceled += OnDebugSLPressed;
-            inputs.Debug.CC.started += OnDebugSLPressed;
+            inputs.Debug.CC.started += OnDebugCCPressed;
             inputs.Debug.CC.canceled += OnDebugCCPressed;
             inputs.Debug.Inc.started += OnDebugIncPressed;
             inputs.Debug.Inc.canceled += OnDebugIncPressed;
@@ -270,7 +270,7 @@ public class InputManager : MonoBehaviour
             inputs.Debug.Armor.canceled -= OnDebugArmorPressed;
             inputs.Debug.SL.started -= OnDebugSLPressed;
             inputs.Debug.SL.canceled -= OnDebugSLPressed;
-            inputs.Debug.CC.started -= OnDebugSLPressed;
+            inputs.Debug.CC.started -= OnDebugCCPressed;
             inputs.Debug.CC.canceled -= OnDebugCCPressed;
             inputs.Debug.Inc.started -= OnDebugIncPressed;
             inputs.Debug.Inc.canceled -= OnDebugIncPressed;
@@ -353,8 +353,19 @@ public class InputManager : MonoBehaviour
 
         if (debugOn) debugInc = context.ReadValueAsButton();
 
-        DebValue? param = ParameterHandler();
-        if (param!= null && debugInc) OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Inc);
+        if (debugOn)
+        {
+            Deb("OnDebugInc(): check: SL = " + debugSL + " CC = " + debugCC);
+
+            debugInc = context.ReadValueAsButton();
+            DebValue? param = ParameterHandler();
+
+            if (param != null && debugInc)
+            {
+                Deb("OnDebugInc(): invoking inc event for param " + param);
+                OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Inc);
+            }
+        }
     }
 
     private void OnDebugDecPressed(InputAction.CallbackContext context)
@@ -364,29 +375,48 @@ public class InputManager : MonoBehaviour
         if (debugOn)
         {
             debugDec = context.ReadValueAsButton();
+            DebValue? param = ParameterHandler();
+
+            if (param != null && debugDec)
+            {
+                Deb("OnDebugDec(): invoking dec event for param " + param);
+                OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Dec);
+            }
         }
-        DebValue? param = ParameterHandler();
-        if (param != null && debugDec) OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Dec);
     }
 
     private void OnDebugMaxPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugMax(): " + context.ReadValueAsButton());
 
-        if (debugOn) debugMax = context.ReadValueAsButton();
+        if (debugOn)
+        {
+            debugMax = context.ReadValueAsButton();
+            DebValue? param = ParameterHandler();
 
-        DebValue? param = ParameterHandler();
-        if (param != null && debugMax) OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Max);
+            if (param != null && debugMax)
+            {
+                Deb("OnDebugMax(): invoking max event for param " + param);
+                OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Max);
+            }
+        }
     }
 
     private void OnDebugResetPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugReset(): " + context.ReadValueAsButton());
 
-        if (debugOn) debugRst = context.ReadValueAsButton();
+        if (debugOn)
+        {
+            debugRst = context.ReadValueAsButton();
+            DebValue? param = ParameterHandler();
 
-        DebValue? param = ParameterHandler();
-        if (param != null && debugRst) OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Rst);
+            if (param != null && debugRst)
+            {
+                Deb("OnDebugReset(): invoking reset event for param " + param);
+                OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Rst);
+            }
+        }
     }
 
     private DebValue? ParameterHandler()

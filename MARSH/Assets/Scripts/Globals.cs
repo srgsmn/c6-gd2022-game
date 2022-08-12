@@ -8,6 +8,11 @@ using UnityEngine;
 
 namespace Globals
 {
+    // CONSTS __________________________________________________________________ CONSTS
+    public static class Consts
+    {
+        public static int COLLECTABLE_MAX = 1000;
+    }
 
     // ENUMS ___________________________________________________________________ ENUMS
     public enum DebAction
@@ -30,7 +35,8 @@ namespace Globals
     /// </summary>
     public enum ChParam
     {
-        Pos, Rot, Health, MaxHealth, DefHFact, Armor, MaxArmor, DefAFact
+        Pos, Rot, Health, MaxHealth, DefHFact, Armor, MaxArmor, DefAFact,
+        SL, CC
     }
 
     // CLASSES _________________________________________________________________ CLASSES
@@ -43,16 +49,22 @@ namespace Globals
         public float health, maxHealth, armor, maxArmor;
         public float defHFactor, defAFactor;
 
+        public int sl, cc;
+
         public PlayerData()
         {
             position = Vector3.zero;
             rotation = Quaternion.identity;
+
             health = 0;
             maxHealth = 0;
             armor = 0;
             maxArmor = 0;
             defHFactor = 0;
             defAFactor = 0;
+
+            sl = 0;
+            cc = 0;
         }
     }
 

@@ -158,8 +158,8 @@ public class MCHealthController : HealthController
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
-    public delegate void ValueChangedEvent(ChParam parameter, object value);
-    public static ValueChangedEvent OnValueChanged;
+    public delegate void HealthChangedEvent(ChParam parameter, object value);
+    public static HealthChangedEvent OnValueChanged;
 
     public delegate void DeathEvent();
     public static DeathEvent OnDeath;
@@ -204,37 +204,45 @@ public class MCHealthController : HealthController
                 parameter = ChParam.Armor;
 
                 break;
+
+            default:
+                parameter = null;
+
+                break;
         }
 
-        switch (action)
+        if (parameter != null)
         {
-            case DebAction.Inc:
-                Deb("OnDebugValueUpdate(): incrementing target value...");
+            switch (action)
+            {
+                case DebAction.Inc:
+                    Deb("OnDebugValueUpdate(): incrementing target value...");
 
-                IncValue((ChParam)parameter);
+                    IncValue((ChParam)parameter);
 
-                break;
+                    break;
 
-            case DebAction.Dec:
-                Deb("OnDebugValueUpdate(): decrementing target value...");
+                case DebAction.Dec:
+                    Deb("OnDebugValueUpdate(): decrementing target value...");
 
-                DecValue((ChParam)parameter);
+                    DecValue((ChParam)parameter);
 
-                break;
+                    break;
 
-            case DebAction.Max:
-                Deb("OnDebugValueUpdate(): maxing target value...");
+                case DebAction.Max:
+                    Deb("OnDebugValueUpdate(): maxing target value...");
 
-                RestoreValue((ChParam)parameter);
+                    RestoreValue((ChParam)parameter);
 
-                break;
+                    break;
 
-            case DebAction.Rst:
-                Deb("OnDebugValueUpdate(): resetting target value...");
+                case DebAction.Rst:
+                    Deb("OnDebugValueUpdate(): resetting target value...");
 
-                ResetValue((ChParam)parameter);
+                    ResetValue((ChParam)parameter);
 
-                break;
+                    break;
+            }
         }
     }
 

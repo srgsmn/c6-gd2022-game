@@ -10,8 +10,6 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
 
-    [SerializeField] private Player player;
-
     [SerializeField] private PlayerData currentPlayerData;
     [SerializeField] private EnvironmentData currentEnvironmentData;
     [SerializeField] private GameData currentGameData, loadedGameData;
@@ -64,12 +62,13 @@ public class DataManager : MonoBehaviour
         {
             MCMovementController.OnTransformChanged += OnValueChanged;
             MCHealthController.OnValueChanged += OnValueChanged;
+            MCCollectionManager.OnValueChanged += OnValueChanged;
         }
         else
         {
             MCMovementController.OnTransformChanged -= OnValueChanged;
             MCHealthController.OnValueChanged -= OnValueChanged;
-
+            MCCollectionManager.OnValueChanged -= OnValueChanged;
         }
     }
 
@@ -120,43 +119,14 @@ public class DataManager : MonoBehaviour
                 currentPlayerData.defAFactor = (float)value;
 
                 break;
-        }
-    }
 
-    //FIXME
-    private void OnHealthChanged(ChParam param, object value)
-    {
-        Deb("OnHealthParamsChanged(): change detected (" + param + ", " + value + ")");
-
-        switch (param)
-        {
-            case ChParam.Health:
-                currentPlayerData.health = (float)value;
+            case ChParam.SL:
+                currentPlayerData.sl = (int)value;
 
                 break;
 
-            case ChParam.MaxHealth:
-                currentPlayerData.maxHealth = (float)value;
-
-                break;
-
-            case ChParam.DefHFact:
-                currentPlayerData.defHFactor = (float)value;
-
-                break;
-
-            case ChParam.Armor:
-                currentPlayerData.armor = (float)value;
-
-                break;
-
-            case ChParam.MaxArmor:
-                currentPlayerData.maxArmor = (float)value;
-
-                break;
-
-            case ChParam.DefAFact:
-                currentPlayerData.defAFactor = (float)value;
+            case ChParam.CC:
+                currentPlayerData.cc = (int)value;
 
                 break;
         }
