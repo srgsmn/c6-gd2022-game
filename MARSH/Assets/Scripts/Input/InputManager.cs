@@ -1,7 +1,7 @@
 /* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
  * 
  *  TODO:
- *      - UI input management
+ *      - UI input management (isGUIActive when menu are open)
  */
 
 using System.Collections;
@@ -15,6 +15,8 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance;
 
     private PlayerInput inputs;
+
+
 
     // DEBUG VARIABLES _________________________________________________________ DEBUG VARIABLES
 
@@ -38,7 +40,8 @@ public class InputManager : MonoBehaviour
     [SerializeField][ReadOnlyInspector] private bool debugLoad = false;
     [SerializeField][ReadOnlyInspector] private bool debugQuit = false;
 
-    //[Header("UI:")]
+    [Header("UI:")]
+    [SerializeField][ReadOnlyInspector] private bool isGUIActive = false;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -68,31 +71,110 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (debugOn)
         {
-            if (debugSwitcher)  OnDebugModeSwitch?.Invoke();
+            
+            if (debugSwitcher)  
 
-            if (debugHealth && debugInc) OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Inc);
-            if (debugHealth && debugDec) OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Dec);
-            if (debugHealth && debugMax) OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Max);
-            if (debugHealth && debugRst) OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Rst);
-            if (debugArmor && debugInc) OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Inc);
-            if (debugArmor && debugDec) OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Dec);
-            if (debugArmor && debugMax) OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Max);
-            if (debugArmor && debugRst) OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Rst);
-            if (debugSL && debugInc) OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Inc);
-            if (debugSL && debugDec) OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Dec);
-            if (debugSL && debugMax) OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Max);
-            if (debugSL && debugRst) OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Rst);
-            if (debugCC && debugInc) OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Inc);
-            if (debugCC && debugDec) OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Dec);
-            if (debugCC && debugMax) OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Max);
-            if (debugCC && debugRst) OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Rst);
+            if (debugHealth && debugInc)
+            {
+                Deb("Update(): Detected input command for Inc H");
+                OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Inc);
+            }
+            if (debugHealth && debugDec)
+            {
+                Deb("Update(): Detected input command for Dec H");
+                OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Dec);
+            }
+            if (debugHealth && debugMax)
+            {
+                Deb("Update(): Detected input command for Max H");
+                OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Max);
+            }
+            if (debugHealth && debugRst)
+            {
+                Deb("Update(): Detected input command for Rst H");
+                OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Rst);
+            }
+            if (debugArmor && debugInc)
+            {
+                Deb("Update(): Detected input command for Inc A");
+                OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Inc);
+            }
+            if (debugArmor && debugDec)
+            {
+                Deb("Update(): Detected input command for Dec A");
+                OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Dec);
+            }
+            if (debugArmor && debugMax)
+            {
+                Deb("Update(): Detected input command for Max A");
+                OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Max);
+            }
+            if (debugArmor && debugRst)
+            {
+                Deb("Update(): Detected input command for Rst A");
+                OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Rst);
+            }
+            if (debugSL && debugInc)
+            {
+                Deb("Update(): Detected input command for Inc SL");
+                OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Inc);
+            }
+            if (debugSL && debugDec)
+            {
+                Deb("Update(): Detected input command for Dec SL");
+                OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Dec);
+            }
+            if (debugSL && debugMax)
+            {
+                Deb("Update(): Detected input command for Max SL");
+                OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Max);
+            }
+            if (debugSL && debugRst)
+            {
+                Deb("Update(): Detected input command for Rst SL");
+                OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Rst);
+            }
+            if (debugCC && debugInc)
+            {
+                Deb("Update(): Detected input command for Inc CC");
+                OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Inc);
+            }
+            if (debugCC && debugDec)
+            {
+                Deb("Update(): Detected input command for Dec CC");
+                OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Dec);
+            }
+            if (debugCC && debugMax)
+            {
+                Deb("Update(): Detected input command for Max CC");
+                OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Max);
+            }
+            if (debugCC && debugRst)
+            {
+                Deb("Update(): Detected input command for Rst CC");
+                OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Rst);
+            }
 
-            if (debugSave) OnDebugSave?.Invoke();
-            if (debugLoad) OnDebugLoad?.Invoke();
-            if (debugQuit) OnDebugQuit?.Invoke();
+            if (debugSave)
+            {
+                Deb("Update(): Detected input command for Save");
+                OnDebugSave?.Invoke();
+            }
+            if (debugLoad)
+            {
+                Deb("Update(): Detected input command for Load");
+                OnDebugLoad?.Invoke();
+            }
+            if (debugQuit)
+            {
+                Deb("Update(): Detected input command for Quit");
+                OnDebugQuit?.Invoke();
+            }
         }
+        */
     }
 
     private void OnDisable()
@@ -112,7 +194,7 @@ public class InputManager : MonoBehaviour
     public delegate void DebugModeSwitcherEvent();
     public static DebugModeSwitcherEvent OnDebugModeSwitch;
 
-    public delegate void DebugValueUpdateEvent(DebugValue value, DebugAction action);
+    public delegate void DebugValueUpdateEvent(DebValue value, DebAction action);
     public static DebugValueUpdateEvent OnDebugValueUpdate;
 
     public delegate void DebugSaveEvent();
@@ -231,6 +313,8 @@ public class InputManager : MonoBehaviour
         Deb("OnDebugSwitcher(): " + context.ReadValueAsButton());
 
         if (debugOn) debugSwitcher = context.ReadValueAsButton();
+
+        if(debugSwitcher) OnDebugModeSwitch?.Invoke();
     }
 
     private void OnDebugHealthPressed(InputAction.CallbackContext context)
@@ -261,18 +345,28 @@ public class InputManager : MonoBehaviour
         if (debugOn) debugCC = context.ReadValueAsButton();
     }
 
+    //####
+
     private void OnDebugIncPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugInc(): " + context.ReadValueAsButton());
 
         if (debugOn) debugInc = context.ReadValueAsButton();
+
+        DebValue? param = ParameterHandler();
+        if (param!= null && debugInc) OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Inc);
     }
 
     private void OnDebugDecPressed(InputAction.CallbackContext context)
     {
         Deb("OnDebugDec(): " + context.ReadValueAsButton());
 
-        if (debugOn) debugDec = context.ReadValueAsButton();
+        if (debugOn)
+        {
+            debugDec = context.ReadValueAsButton();
+        }
+        DebValue? param = ParameterHandler();
+        if (param != null && debugDec) OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Dec);
     }
 
     private void OnDebugMaxPressed(InputAction.CallbackContext context)
@@ -280,6 +374,9 @@ public class InputManager : MonoBehaviour
         Deb("OnDebugMax(): " + context.ReadValueAsButton());
 
         if (debugOn) debugMax = context.ReadValueAsButton();
+
+        DebValue? param = ParameterHandler();
+        if (param != null && debugMax) OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Max);
     }
 
     private void OnDebugResetPressed(InputAction.CallbackContext context)
@@ -287,6 +384,19 @@ public class InputManager : MonoBehaviour
         Deb("OnDebugReset(): " + context.ReadValueAsButton());
 
         if (debugOn) debugRst = context.ReadValueAsButton();
+
+        DebValue? param = ParameterHandler();
+        if (param != null && debugRst) OnDebugValueUpdate?.Invoke((DebValue)param, DebAction.Rst);
+    }
+
+    private DebValue? ParameterHandler()
+    {
+        if (debugHealth) return DebValue.H;
+        if (debugArmor) return DebValue.A;
+        if (debugSL) return DebValue.SL;
+        if (debugCC) return DebValue.CC;
+
+        return null;
     }
 
     private void OnDebugSavePressed(InputAction.CallbackContext context)
@@ -294,6 +404,8 @@ public class InputManager : MonoBehaviour
         Deb("OnDebugSavePressed(): " + context.ReadValueAsButton());
 
         if (debugOn) debugSave = context.ReadValueAsButton();
+
+        if(debugSave) OnDebugSave?.Invoke();
     }
 
     private void OnDebugLoadPressed(InputAction.CallbackContext context)
@@ -301,6 +413,8 @@ public class InputManager : MonoBehaviour
         Deb("OnDebugLoadPressed(): " + context.ReadValueAsButton());
 
         if (debugOn) debugLoad = context.ReadValueAsButton();
+
+        if (debugLoad) OnDebugLoad?.Invoke();
     }
 
     private void OnDebugQuitPressed(InputAction.CallbackContext context)
@@ -308,6 +422,8 @@ public class InputManager : MonoBehaviour
         Deb("OnDebugLoadPressed(): " + context.ReadValueAsButton());
 
         if (debugOn) debugQuit = context.ReadValueAsButton();
+
+        if (debugQuit) OnDebugQuit?.Invoke();
     }
 
     // Character Controls
@@ -350,21 +466,21 @@ public class InputManager : MonoBehaviour
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
 
-    private void Deb(string msg, DebugMsgType type = DebugMsgType.log)
+    private void Deb(string msg, DebMsgType type = DebMsgType.log)
     {
         switch (type)
         {
-            case DebugMsgType.log:
+            case DebMsgType.log:
                 Debug.Log(this.GetType().Name + " > " + msg);
 
                 break;
 
-            case DebugMsgType.warn:
+            case DebMsgType.warn:
                 Debug.LogWarning(this.GetType().Name + " > " + msg);
 
                 break;
 
-            case DebugMsgType.err:
+            case DebMsgType.err:
                 Debug.LogError(this.GetType().Name + " > " + msg);
 
 

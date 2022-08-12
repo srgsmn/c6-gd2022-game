@@ -120,9 +120,10 @@ public class MCMovementController : MonoBehaviour
 
     private void Update()
     {
+        UpdateViewParams();
+
         if (isMovementPressed)
         {
-            UpdateViewParams();
             HandleMovement();
             HandleRotation();
             //HandleAnimation();
@@ -133,12 +134,13 @@ public class MCMovementController : MonoBehaviour
             }
         }
 
-        if(isMovementPressed || isJumping)
-            characterController.Move(appliedMovement * Time.deltaTime);
-
-
         HandleGravity();
         HandleJump();
+
+        if (isMovementPressed || isJumping)
+            characterController.Move(appliedMovement * Time.deltaTime);
+
+        appliedMovement = Vector3.zero;
     }
 
     private void LateUpdate()
@@ -146,13 +148,13 @@ public class MCMovementController : MonoBehaviour
         if (oldPos != transform.position)
         {
             oldPos = transform.position;
-            OnTransformChanged?.Invoke(CharParam.Pos, transform.position);
+            OnTransformChanged?.Invoke(ChParam.Pos, transform.position);
         }
 
         if (oldRot != transform.rotation)
         {
             oldRot = transform.rotation;
-            OnTransformChanged?.Invoke(CharParam.Rot, transform.rotation);
+            OnTransformChanged?.Invoke(ChParam.Rot, transform.rotation);
         }
     }
 
@@ -163,7 +165,7 @@ public class MCMovementController : MonoBehaviour
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
 
-    public delegate void TransformChangedEvent(CharParam parameter, object value);
+    public delegate void TransformChangedEvent(ChParam parameter, object value);
     public static TransformChangedEvent OnTransformChanged;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
@@ -330,21 +332,21 @@ public class MCMovementController : MonoBehaviour
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
 
-    private void Deb(string msg, DebugMsgType type = DebugMsgType.log)
+    private void Deb(string msg, DebMsgType type = DebMsgType.log)
     {
         switch (type)
         {
-            case DebugMsgType.log:
+            case DebMsgType.log:
                 Debug.Log(this.GetType().Name + " > " + msg);
 
                 break;
 
-            case DebugMsgType.warn:
+            case DebMsgType.warn:
                 Debug.LogWarning(this.GetType().Name + " > " + msg);
 
                 break;
 
-            case DebugMsgType.err:
+            case DebMsgType.err:
                 Debug.LogError(this.GetType().Name + " > " + msg);
 
 

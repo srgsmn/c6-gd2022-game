@@ -10,6 +10,8 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
 
+    [SerializeField] private Player player;
+
     [SerializeField] private PlayerData currentPlayerData;
     [SerializeField] private EnvironmentData currentEnvironmentData;
     [SerializeField] private GameData currentGameData, loadedGameData;
@@ -35,6 +37,7 @@ public class DataManager : MonoBehaviour
     private void Start()
     {
         currentPlayerData = new PlayerData();
+
         currentEnvironmentData = new EnvironmentData();
 
         currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
@@ -59,30 +62,101 @@ public class DataManager : MonoBehaviour
     {
         if (subscribing)
         {
-            MCMovementController.OnTransformChanged += OnCurrentParamsChanged;
+            MCMovementController.OnTransformChanged += OnValueChanged;
+            MCHealthController.OnValueChanged += OnValueChanged;
         }
         else
         {
-            MCMovementController.OnTransformChanged -= OnCurrentParamsChanged;
+            MCMovementController.OnTransformChanged -= OnValueChanged;
+            MCHealthController.OnValueChanged -= OnValueChanged;
 
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
 
-    private void OnCurrentParamsChanged(CharParam param, object value)
+    private void OnValueChanged(ChParam param, object value)
     {
-        Deb("OnCurrentParamsChanged(): change detected (" + param + ", " + value + ")");
+        Deb("OnTransformParamsChanged(): change detected (" + param + ", " + value + ")");
 
         switch (param)
         {
-            case CharParam.Pos:
+            case ChParam.Pos:
                 currentPlayerData.position = (Vector3)value;
 
                 break;
 
-            case CharParam.Rot:
+            case ChParam.Rot:
                 currentPlayerData.rotation = (Quaternion)value;
+
+                break;
+
+            case ChParam.Health:
+                currentPlayerData.health = (float)value;
+
+                break;
+
+            case ChParam.MaxHealth:
+                currentPlayerData.maxHealth = (float)value;
+
+                break;
+
+            case ChParam.DefHFact:
+                currentPlayerData.defHFactor = (float)value;
+
+                break;
+
+            case ChParam.Armor:
+                currentPlayerData.armor = (float)value;
+
+                break;
+
+            case ChParam.MaxArmor:
+                currentPlayerData.maxArmor = (float)value;
+
+                break;
+
+            case ChParam.DefAFact:
+                currentPlayerData.defAFactor = (float)value;
+
+                break;
+        }
+    }
+
+    //FIXME
+    private void OnHealthChanged(ChParam param, object value)
+    {
+        Deb("OnHealthParamsChanged(): change detected (" + param + ", " + value + ")");
+
+        switch (param)
+        {
+            case ChParam.Health:
+                currentPlayerData.health = (float)value;
+
+                break;
+
+            case ChParam.MaxHealth:
+                currentPlayerData.maxHealth = (float)value;
+
+                break;
+
+            case ChParam.DefHFact:
+                currentPlayerData.defHFactor = (float)value;
+
+                break;
+
+            case ChParam.Armor:
+                currentPlayerData.armor = (float)value;
+
+                break;
+
+            case ChParam.MaxArmor:
+                currentPlayerData.maxArmor = (float)value;
+
+                break;
+
+            case ChParam.DefAFact:
+                currentPlayerData.defAFactor = (float)value;
 
                 break;
         }
@@ -90,21 +164,21 @@ public class DataManager : MonoBehaviour
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
 
-    private void Deb(string msg, DebugMsgType type = DebugMsgType.log)
+    private void Deb(string msg, DebMsgType type = DebMsgType.log)
     {
         switch (type)
         {
-            case DebugMsgType.log:
+            case DebMsgType.log:
                 Debug.Log(this.GetType().Name + " > " + msg);
 
                 break;
 
-            case DebugMsgType.warn:
+            case DebMsgType.warn:
                 Debug.LogWarning(this.GetType().Name + " > " + msg);
 
                 break;
 
-            case DebugMsgType.err:
+            case DebMsgType.err:
                 Debug.LogError(this.GetType().Name + " > " + msg);
 
 

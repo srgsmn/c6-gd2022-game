@@ -10,17 +10,17 @@ namespace Globals
 {
 
     // ENUMS ___________________________________________________________________ ENUMS
-    public enum DebugAction
+    public enum DebAction
     {
         Inc, Dec, Max, Rst
     }
 
-    public enum DebugValue
+    public enum DebValue
     {
         H, A, SL, CC
     }
 
-    public enum DebugMsgType
+    public enum DebMsgType
     {
         log, warn, err
     }
@@ -28,9 +28,9 @@ namespace Globals
     /// <summary>
     /// Parameter types of a character
     /// </summary>
-    public enum CharParam
+    public enum ChParam
     {
-        Pos, Rot
+        Pos, Rot, Health, MaxHealth, DefHFact, Armor, MaxArmor, DefAFact
     }
 
     // CLASSES _________________________________________________________________ CLASSES
@@ -40,10 +40,19 @@ namespace Globals
         public Vector3 position;
         public Quaternion rotation;
 
+        public float health, maxHealth, armor, maxArmor;
+        public float defHFactor, defAFactor;
+
         public PlayerData()
         {
             position = Vector3.zero;
             rotation = Quaternion.identity;
+            health = 0;
+            maxHealth = 0;
+            armor = 0;
+            maxArmor = 0;
+            defHFactor = 0;
+            defAFactor = 0;
         }
     }
 

@@ -60,21 +60,21 @@ public class GameManager : MonoBehaviour
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
 
-    private void Deb(string msg, DebugMsgType type = DebugMsgType.log)
+    private void Deb(string msg, DebMsgType type = DebMsgType.log)
     {
         switch (type)
         {
-            case DebugMsgType.log:
+            case DebMsgType.log:
                 Debug.Log(this.GetType().Name + " > " + msg);
 
                 break;
 
-            case DebugMsgType.warn:
+            case DebMsgType.warn:
                 Debug.LogWarning(this.GetType().Name + " > " + msg);
 
                 break;
 
-            case DebugMsgType.err:
+            case DebMsgType.err:
                 Debug.LogError(this.GetType().Name + " > " + msg);
 
 
