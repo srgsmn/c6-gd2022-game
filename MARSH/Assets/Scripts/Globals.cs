@@ -11,7 +11,8 @@ namespace Globals
     // CONSTS __________________________________________________________________ CONSTS
     public static class Consts
     {
-        public static int COLLECTABLE_MAX = 1000;
+        public const int COLLECTABLE_MAX = 1000;
+        public const float SHOW_TIME = 3f;
     }
 
     // ENUMS ___________________________________________________________________ ENUMS
@@ -36,6 +37,11 @@ namespace Globals
     public enum ChParam
     {
         Pos, Rot, Health, MaxHealth, DefHFact, Armor, MaxArmor, DefAFact,
+        SL, CC
+    }
+
+    public enum CollectableType
+    {
         SL, CC
     }
 

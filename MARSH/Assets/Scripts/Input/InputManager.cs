@@ -218,6 +218,8 @@ public class InputManager : MonoBehaviour
     public static PauseInputEvent OnPause;
     public delegate void BackInputEvent();
     public static BackInputEvent OnBack;
+    public delegate void InfoInputEvent();
+    public static InfoInputEvent OnInfo;
 
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
@@ -264,6 +266,8 @@ public class InputManager : MonoBehaviour
 
             inputs.UI.Pause.started += OnPausePressed;
             inputs.UI.Back.performed += OnBackPressed;
+            inputs.UI.Info.performed += OnInfoPressed;
+
         }
         else
         {
@@ -305,6 +309,7 @@ public class InputManager : MonoBehaviour
 
             inputs.UI.Pause.started -= OnPausePressed;
             inputs.UI.Back.performed -= OnBackPressed;
+            inputs.UI.Info.performed -= OnInfoPressed;
         }
     }
 
@@ -516,6 +521,14 @@ public class InputManager : MonoBehaviour
         if (context.ReadValueAsButton())
         {
             OnBack?.Invoke();
+        }
+    }
+
+    private void OnInfoPressed(InputAction.CallbackContext context)
+    {
+        if (context.ReadValueAsButton())
+        {
+            OnInfo?.Invoke();
         }
     }
 

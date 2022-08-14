@@ -147,14 +147,13 @@ public class MCHealthController : HealthController
     private void NotifyStart()
     {
         Deb("NotifyStart(): Component is active and communicating initial parameters. DataManager is supposed to update inspector data.");
-        
-        OnValueChanged?.Invoke(ChParam.Health, health);
+
         OnValueChanged?.Invoke(ChParam.MaxHealth, maxHealth);
-        OnValueChanged?.Invoke(ChParam.Armor, armor);
+        OnValueChanged?.Invoke(ChParam.Health, health);
         OnValueChanged?.Invoke(ChParam.MaxArmor, maxArmor);
+        OnValueChanged?.Invoke(ChParam.Armor, armor);
         OnValueChanged?.Invoke(ChParam.DefHFact, defHealthFactor);
         OnValueChanged?.Invoke(ChParam.DefAFact, defArmorFactor);
-        
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
