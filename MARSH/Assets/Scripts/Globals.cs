@@ -13,6 +13,7 @@ namespace Globals
     {
         public const int COLLECTABLE_MAX = 1000;
         public const float SHOW_TIME = 3f;
+        public const float TIME_TO_CURSOR = 3.5f;
     }
 
     // ENUMS ___________________________________________________________________ ENUMS

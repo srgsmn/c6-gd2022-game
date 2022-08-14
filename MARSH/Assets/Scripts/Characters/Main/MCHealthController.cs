@@ -70,6 +70,8 @@ public class MCHealthController : HealthController
     {
         base.ResetValue(parameter);
 
+        Die();
+
         EventNotifier(parameter);
     }
 

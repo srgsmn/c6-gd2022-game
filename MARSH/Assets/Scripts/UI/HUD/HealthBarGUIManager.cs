@@ -49,11 +49,6 @@ public class HealthBarGUIManager : MonoBehaviour
         EventSubscriber();
     }
 
-    private void Start()
-    {
-
-    }
-
     private void OnDestroy()
     {
         EventSubscriber(false);

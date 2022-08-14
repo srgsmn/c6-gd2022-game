@@ -120,13 +120,17 @@ public class GameManager : MonoBehaviour
 
             case GameScreen.PlayScreen:
 
-                if(next == GameScreen.PauseMenu ||
-                    next == GameScreen.StoreMenu ||
-                    next == GameScreen.GameOver)
+                if(next == GameScreen.PauseMenu || next == GameScreen.StoreMenu)
                 {
                     Deb("DisplayScreen(): from play screen you're going into an acceptable screen. Changing here current state and setting true the flag to manage the screen and state");
 
                     currentState = GameState.Pause;
+                    flag = true;
+                }
+
+                if(next == GameScreen.GameOver)
+                {
+                    currentState = GameState.GameOver;
                     flag = true;
                 }
 
@@ -139,7 +143,6 @@ public class GameManager : MonoBehaviour
                     currentState = GameState.Play;
                     flag = true;
                 }
-
 
                 break;
         }
@@ -165,6 +168,17 @@ public class GameManager : MonoBehaviour
         // fai la pop ma non la push
     }
 
+    IEnumerator ShowingGameOver(float time)
+    {
+        Deb("ShowingGameOver(): Showuing game over animation");
+
+        yield return new WaitForSeconds(time);
+
+        Cursor.visible = true;
+
+        Deb("ShowingGameOver(): Animation should be done and cursor should be visible");
+    }
+
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
     public delegate void NewStateEvent(GameState state);
     public static NewStateEvent OnNewState;
@@ -182,6 +196,8 @@ public class GameManager : MonoBehaviour
             InputManager.OnBack += OnBack;
 
             OnNewState += OnStateChanged;
+
+            MCHealthController.OnDeath += OnGameOver;
         }
         else
         {
@@ -190,6 +206,8 @@ public class GameManager : MonoBehaviour
             InputManager.OnBack -= OnBack;
 
             OnNewState -= OnStateChanged;
+
+            MCHealthController.OnDeath -= OnGameOver;
         }
     }
 
@@ -255,6 +273,13 @@ public class GameManager : MonoBehaviour
 
                 break;
 
+            case GameState.GameOver:
+                Deb("OnStateChanged(): cursor should be visible after all gameover option are shown.");
+
+                StartCoroutine(ShowingGameOver(Consts.TIME_TO_CURSOR));
+
+                break;
+
             default:
                 Deb("OnStateChanged(): cursor should be visible now");
 
@@ -263,6 +288,11 @@ public class GameManager : MonoBehaviour
 
                 break;
         }
+    }
+
+    private void OnGameOver()
+    {
+        DisplayScreen(GameScreen.GameOver);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
