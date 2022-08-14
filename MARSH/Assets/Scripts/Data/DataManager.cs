@@ -31,7 +31,7 @@ public class DataManager : MonoBehaviour
 
         EventSubscriber();
     }
-
+    
     private void Start()
     {
         currentPlayerData = new PlayerData();
@@ -49,6 +49,12 @@ public class DataManager : MonoBehaviour
     private void OnDestroy()
     {
         EventSubscriber(false);
+    }
+
+    // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
+    public PlayerData GetCurrentPlayerData()
+    {
+        return currentGameData.player;
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
@@ -77,7 +83,7 @@ public class DataManager : MonoBehaviour
 
     private void OnValueChanged(ChParam param, object value)
     {
-        Deb("OnTransformParamsChanged(): change detected (" + param + ", " + value + ")");
+        //Deb("OnTransformParamsChanged(): change detected (" + param + ", " + value + ")");
 
         switch (param)
         {

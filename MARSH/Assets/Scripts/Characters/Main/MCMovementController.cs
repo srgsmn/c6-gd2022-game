@@ -190,7 +190,7 @@ public class MCMovementController : MonoBehaviour
 
     private void OnMovementInput(Vector2 inputValue)
     {
-        Deb("OnMovementInput(): input value for movement is " + inputValue);
+        //Deb("OnMovementInput(): input value for movement is " + inputValue);
 
         isMovementPressed = inputValue.x != 0 || inputValue.y != 0;
 
@@ -201,14 +201,14 @@ public class MCMovementController : MonoBehaviour
 
     private void OnJumpInput(bool inputValue)
     {
-        Deb("OnJumpInput(): input value for jump is " + inputValue);
+        //Deb("OnJumpInput(): input value for jump is " + inputValue);
 
         isJumpPressed = inputValue;
     }
 
     private void OnRunInput(bool inputValue)
     {
-        Deb("OnJumpInput(): input value for run is " + inputValue);
+        //Deb("OnJumpInput(): input value for run is " + inputValue);
 
         isRunPressed = inputValue;
     }

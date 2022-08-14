@@ -174,11 +174,15 @@ public class MCHealthController : HealthController
             // Debug
             InputManager.OnDebugValueUpdate += OnDebugValueUpdate;
 
+            StoreItem.OnPurchase += Purchase;
+
         }
         else
         {
             // Debug
             InputManager.OnDebugValueUpdate -= OnDebugValueUpdate;
+
+            StoreItem.OnPurchase -= Purchase;
         }
     }
 
@@ -244,6 +248,32 @@ public class MCHealthController : HealthController
 
                     break;
             }
+        }
+    }
+
+    private void Purchase(StoreTransaction transaction)
+    {
+        if (transaction.isIncremental)
+        {
+            if (transaction.health != 0) AddValue(ChParam.Health, transaction.health);
+            if (transaction.armor != 0) AddValue(ChParam.Armor, transaction.armor);
+        }
+        else
+        {
+            if (transaction.health != 0)
+            {
+                SetValue(ChParam.MaxHealth, transaction.health);
+                RestoreValue(ChParam.Health);
+                
+            }
+            if (transaction.armor != 0)
+            {
+                SetValue(ChParam.MaxArmor, transaction.armor);
+                RestoreValue(ChParam.Armor);
+            }
+
+            if (transaction.defHFactor != 0) SetValue(ChParam.DefHFact, transaction.defHFactor);
+            if (transaction.defAFactor != 0) SetValue(ChParam.DefAFact, transaction.defAFactor);
         }
     }
 

@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     /// Pause game function accessible from UI and more
     /// </summary>
     /// <param name="pause"></param>
-    public void PauseGame(bool pause = true)
+    public void PauseGame()
     {
         DisplayScreen(GameScreen.PauseMenu);
     }
@@ -72,6 +72,12 @@ public class GameManager : MonoBehaviour
     {
         Deb("ResumeGame(): Display PlayScreen");
         DisplayScreen(GameScreen.PlayScreen);
+    }
+
+    public void OpenStore()
+    {
+        Deb("OpenStore(): Display Store menu");
+        DisplayScreen(GameScreen.StoreMenu);
     }
 
     /// <summary>
@@ -137,6 +143,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameScreen.PauseMenu:
+            case GameScreen.StoreMenu:
 
                 if (next == GameScreen.PlayScreen)
                 {
@@ -251,9 +258,15 @@ public class GameManager : MonoBehaviour
         switch (currentScreen)
         {
             case GameScreen.PauseMenu:
-                PauseGame(false);
-                NewState(GameState.Play);
                 DisplayScreen(GameScreen.PlayScreen);
+                NewState(GameState.Play);
+                previousScreens.Pop();
+
+                break;
+
+            case GameScreen.StoreMenu:
+                DisplayScreen(GameScreen.PlayScreen);
+                NewState(GameState.Play);
                 previousScreens.Pop();
 
                 break;

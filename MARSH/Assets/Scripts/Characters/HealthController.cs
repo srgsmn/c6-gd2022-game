@@ -205,6 +205,7 @@ public class HealthController : MonoBehaviour
 
             case ChParam.Armor:
                 armor = maxArmor;
+                isArmored = true;
 
                 break;
         }

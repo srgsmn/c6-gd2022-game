@@ -206,11 +206,14 @@ public class MCCollectionManager : MonoBehaviour
             // Debug inputs
             InputManager.OnDebugValueUpdate += OnDebugValueUpdate;
 
+            StoreItem.OnPurchase += Purchase;
         }
         else
         {
             // Debug inputs
             InputManager.OnDebugValueUpdate -= OnDebugValueUpdate;
+
+            StoreItem.OnPurchase -= Purchase;
         }
     }
 
@@ -276,6 +279,13 @@ public class MCCollectionManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void Purchase(StoreTransaction transaction)
+    {
+        SubValue(ChParam.SL, transaction.SL);
+        SubValue(ChParam.CC, transaction.CC);
+
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

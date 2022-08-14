@@ -87,6 +87,8 @@ namespace Globals
     [Serializable]
     public class PlayerData
     {
+        public int level;
+
         public Vector3 position;
         public Quaternion rotation;
 
@@ -97,6 +99,8 @@ namespace Globals
 
         public PlayerData()
         {
+            level = 0;
+
             position = Vector3.zero;
             rotation = Quaternion.identity;
 
@@ -141,6 +145,26 @@ namespace Globals
         {
             this.player = player;
             this.environment = environment;
+        }
+    }
+
+    public class StoreTransaction
+    {
+        public int SL, CC;
+        public bool isIncremental;
+        public float health, armor;
+        public float defHFactor;
+        public float defAFactor;
+
+        public StoreTransaction(int SL, int CC, bool isIncremental, float health, float armor, float defHFactor, float defAFactor)
+        {
+            this.SL = SL;
+            this.CC = CC;
+            this.isIncremental = isIncremental;
+            this.health = health;
+            this.armor = armor;
+            this.defHFactor = defHFactor;
+            this.defAFactor = defAFactor;
         }
     }
 }

@@ -9,6 +9,7 @@ public class CanvasesManager : MonoBehaviour
 
     [SerializeField] private GameObject HUDCanvas;
     [SerializeField] private GameObject pauseCanvas;
+    [SerializeField] private GameObject storeCanvas;
     [SerializeField] private GameObject gameOverCanvas;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
@@ -64,7 +65,14 @@ public class CanvasesManager : MonoBehaviour
 
             case GameScreen.PlayScreen:
                 if (pauseCanvas.activeSelf) pauseCanvas.SetActive(false);
+                if (storeCanvas.activeSelf) storeCanvas.SetActive(false);
                 if (!HUDCanvas.activeSelf) HUDCanvas.SetActive(true);
+
+                break;
+
+            case GameScreen.StoreMenu:
+                if (HUDCanvas.activeSelf) HUDCanvas.SetActive(false);
+                storeCanvas.SetActive(true);
 
                 break;
 
