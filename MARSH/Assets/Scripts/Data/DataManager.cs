@@ -39,6 +39,11 @@ public class DataManager : MonoBehaviour
         currentEnvironmentData = new EnvironmentData();
 
         currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
+
+        if (currentEnvironmentData.lastCheckpointID != null)
+        {
+            OnCPLoad(currentEnvironmentData.lastCheckpointID);
+        }
     }
 
     private void Update()
@@ -60,6 +65,8 @@ public class DataManager : MonoBehaviour
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
     public delegate void ValueUpdateEvent(bool saved, ChParam param, object value);
     public static ValueUpdateEvent OnValueUpdate;
+    public delegate void CPLoadEvent(string id);
+    public static CPLoadEvent OnCPLoad;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -70,12 +77,17 @@ public class DataManager : MonoBehaviour
             MCMovementController.OnTransformChanged += OnValueChanged;
             MCHealthController.OnValueChanged += OnValueChanged;
             MCCollectionManager.OnValueChanged += OnValueChanged;
+
+            Checkpoint.OnCheckpoint += SaveGameData;
         }
         else
         {
             MCMovementController.OnTransformChanged -= OnValueChanged;
             MCHealthController.OnValueChanged -= OnValueChanged;
             MCCollectionManager.OnValueChanged -= OnValueChanged;
+
+            Checkpoint.OnCheckpoint -= SaveGameData;
+
         }
     }
 
@@ -139,6 +151,12 @@ public class DataManager : MonoBehaviour
         }
 
         OnValueUpdate?.Invoke(false, param, value);
+    }
+
+    private void SaveGameData(string id)
+    {
+        //TODO
+        currentGameData.environment.lastCheckpointID = id;
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

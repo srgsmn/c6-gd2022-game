@@ -57,57 +57,6 @@ public class GameManager : MonoBehaviour
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
 
     /// <summary>
-    /// Pause game function accessible from UI and more
-    /// </summary>
-    /// <param name="pause"></param>
-    public void PauseGame()
-    {
-        DisplayScreen(GameScreen.PauseMenu);
-    }
-
-    /// <summary>
-    /// Resume game function accessible from UI and more
-    /// </summary>
-    public void ResumeGame()
-    {
-        Deb("ResumeGame(): Display PlayScreen");
-        DisplayScreen(GameScreen.PlayScreen);
-    }
-
-    public void OpenStore()
-    {
-        Deb("OpenStore(): Display Store menu");
-        DisplayScreen(GameScreen.StoreMenu);
-    }
-
-    /// <summary>
-    /// Manages time flow in the game
-    /// </summary>
-    /// <param name="flag">Whether time should be stopped or not</param>
-    private void Freeze(bool flag = true)
-    {
-        if (flag)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1f;
-        }
-    }
-
-    /// <summary>
-    /// Changes the state of the game
-    /// </summary>
-    /// <param name="state">Which new state we want to set</param>
-    private void NewState(GameState state)
-    {
-        currentState = state;
-
-        OnNewState?.Invoke(currentState);
-    }
-
-    /// <summary>
     /// Displays the next sceen
     /// </summary>
     /// <param name="next">Which screen should be shown next</param>
@@ -126,7 +75,7 @@ public class GameManager : MonoBehaviour
 
             case GameScreen.PlayScreen:
 
-                if(next == GameScreen.PauseMenu || next == GameScreen.StoreMenu)
+                if (next == GameScreen.PauseMenu || next == GameScreen.StoreMenu)
                 {
                     Deb("DisplayScreen(): from play screen you're going into an acceptable screen. Changing here current state and setting true the flag to manage the screen and state");
 
@@ -134,7 +83,7 @@ public class GameManager : MonoBehaviour
                     flag = true;
                 }
 
-                if(next == GameScreen.GameOver)
+                if (next == GameScreen.GameOver)
                 {
                     currentState = GameState.GameOver;
                     flag = true;
@@ -169,10 +118,68 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Manages time flow in the game
+    /// </summary>
+    /// <param name="flag">Whether time should be stopped or not</param>
+    private void Freeze(bool flag = true)
+    {
+        if (flag)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
+
+
     private void NavigateBack()
     {
         //TODO
         // fai la pop ma non la push
+    }
+
+    /// <summary>
+    /// Changes the state of the game
+    /// </summary>
+    /// <param name="state">Which new state we want to set</param>
+    private void NewState(GameState state)
+    {
+        currentState = state;
+
+        OnNewState?.Invoke(currentState);
+    }
+
+    public void OpenStore()
+    {
+        Deb("OpenStore(): Display Store menu");
+        DisplayScreen(GameScreen.StoreMenu);
+    }
+
+    /// <summary>
+    /// Pause game function accessible from UI and more
+    /// </summary>
+    /// <param name="pause"></param>
+    public void PauseGame()
+    {
+        DisplayScreen(GameScreen.PauseMenu);
+    }
+
+    /// <summary>
+    /// Resume game function accessible from UI and more
+    /// </summary>
+    public void ResumeGame()
+    {
+        Deb("ResumeGame(): Display PlayScreen");
+        DisplayScreen(GameScreen.PlayScreen);
+    }
+
+    public void SaveGame()
+    {
+        Deb("SaveGame(): saving game (TODO)");
+        //TODO
     }
 
     IEnumerator ShowingGameOver(float time)

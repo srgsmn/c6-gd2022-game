@@ -17,6 +17,13 @@ public class MCCollisionManager : MonoBehaviour
                 Deb("OnTriggerEnter(): Player collided with a store, trying to open it...");
                 GameManager.Instance.OpenStore();
                 break;
+
+            case "Checkpoint":
+                Deb("OnTriggerEnter(): Player collided with a checkpoint, trying to save...");
+                GameManager.Instance.SaveGame();
+
+                break;
+
         }
     }
 
