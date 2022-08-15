@@ -1,3 +1,6 @@
+/* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
+ *  TODO:
+ */
 using System.Collections;
 using System.Collections.Generic;
 using Globals;

@@ -206,6 +206,8 @@ public class MCCollectionManager : MonoBehaviour
             // Debug inputs
             InputManager.OnDebugValueUpdate += OnDebugValueUpdate;
 
+            Collectable.OnCollection += OnCollection;
+
             StoreItem.OnPurchase += Purchase;
         }
         else
@@ -213,11 +215,34 @@ public class MCCollectionManager : MonoBehaviour
             // Debug inputs
             InputManager.OnDebugValueUpdate -= OnDebugValueUpdate;
 
+            Collectable.OnCollection -= OnCollection;
+
             StoreItem.OnPurchase -= Purchase;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void OnCollection(CollectableType type, string id)
+    {
+        ChParam? param = null;
+
+        switch (type)
+        {
+            case CollectableType.SL:
+                param = ChParam.SL;
+
+                break;
+
+            case CollectableType.CC:
+                param = ChParam.CC;
+
+                break;
+        }
+
+        if(param != null)   IncValue((ChParam)param);
+    }
+
     private void OnDebugValueUpdate(DebValue value, DebAction action)
     {
         ChParam? parameter = null;

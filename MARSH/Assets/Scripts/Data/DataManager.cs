@@ -44,6 +44,11 @@ public class DataManager : MonoBehaviour
         {
             OnCPLoad(currentEnvironmentData.lastCheckpointID);
         }
+
+        if (currentEnvironmentData.collectablesID.Count != 0)
+        {
+            OnCollectionLoad(currentEnvironmentData.collectablesID);
+        }
     }
 
     private void Update()
@@ -67,6 +72,8 @@ public class DataManager : MonoBehaviour
     public static ValueUpdateEvent OnValueUpdate;
     public delegate void CPLoadEvent(string id);
     public static CPLoadEvent OnCPLoad;
+    public delegate void ColelctionLoadEvent(List<string> ids);
+    public static ColelctionLoadEvent OnCollectionLoad;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -79,6 +86,7 @@ public class DataManager : MonoBehaviour
             MCCollectionManager.OnValueChanged += OnValueChanged;
 
             Checkpoint.OnCheckpoint += SaveGameData;
+            Collectable.OnCollection += OnNewCollection;
         }
         else
         {
@@ -87,11 +95,16 @@ public class DataManager : MonoBehaviour
             MCCollectionManager.OnValueChanged -= OnValueChanged;
 
             Checkpoint.OnCheckpoint -= SaveGameData;
-
+            Collectable.OnCollection -= OnNewCollection;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void OnNewCollection(CollectableType type, string id)
+    {
+        currentEnvironmentData.collectablesID.Add(id);
+    }
 
     private void OnValueChanged(ChParam param, object value)
     {
