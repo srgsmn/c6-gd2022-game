@@ -6,25 +6,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using Globals;
 
-public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    [SerializeField] private ButtonActionType buttonActionType;
+    [SerializeField] private Image buttonImage;
     [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private Color defaultColor;
-    [SerializeField] private Color hoverColor;
+
+    private ButtonFeature features;
 
     private void Start()
     {
-        defaultColor = text.color;
+        features = Dicts.ButtonFeatures(buttonActionType);
+
+        text.color = features.defTxtColor;
+
+        buttonImage.color = features.bgColor;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        text.color = hoverColor;
+        text.color = features.hovTxtColor;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        text.color = defaultColor;
+        text.color = features.defTxtColor;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        GameObject.Find("EventSystem")
+            .GetComponent<UnityEngine.EventSystems.EventSystem>()
+            .SetSelectedGameObject(null);
     }
 }

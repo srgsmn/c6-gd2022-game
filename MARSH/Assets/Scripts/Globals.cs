@@ -16,7 +16,48 @@ namespace Globals
         public const float TIME_TO_CURSOR = 3.5f;
     }
 
+    // CONSTS __________________________________________________________________ CONSTS
+
+    /// <summary>
+    /// Class with useful dictionaries made with functions
+    /// </summary>
+    public static class Dicts
+    {
+        public static ButtonFeature ButtonFeatures(ButtonActionType type)
+        {
+            ButtonFeature buff = new ButtonFeature();
+
+            switch (type)
+            {
+                case ButtonActionType.Normal:
+                    buff.bgColor = new Color(0f, 0f, 0f, 1f);
+
+                    break;
+
+                case ButtonActionType.Critic:
+                    buff.bgColor = new Color(1f, .25f, .2f, 1f);
+                    buff.defTxtColor = new Color(0.7f, 0f, 0f, 1f);
+
+                    break;
+
+                case ButtonActionType.Gameover:
+                    buff.bgColor = new Color(1f, 1f, 1f, 1f);
+                    buff.defTxtColor = new Color(1f, 1f, 1f, 1f);
+                    buff.hovTxtColor = new Color(0f, 0f, 0f, 1f);
+
+                    break;
+            }
+
+            return buff;
+        }
+    }
+
     // ENUMS ___________________________________________________________________ ENUMS
+    public enum ButtonActionType
+    {
+        Normal, Critic, Gameover
+    }
+
     public enum DebAction
     {
         Inc, Dec, Max, Rst
@@ -84,6 +125,28 @@ namespace Globals
     }
 
     // CLASSES _________________________________________________________________ CLASSES
+
+    public class ButtonFeature
+    {
+        public Color bgColor;
+        public Color defTxtColor;
+        public Color hovTxtColor;
+
+        public ButtonFeature(Color bgColor, Color defTxtColor, Color hovTxtColor)
+        {
+            this.bgColor = bgColor;
+            this.defTxtColor = defTxtColor;
+            this.hovTxtColor = hovTxtColor;
+        }
+
+        public ButtonFeature()
+        {
+            bgColor = Color.white;
+            defTxtColor = new Color(.2f, .2f, .2f, 1);
+            hovTxtColor = Color.white;
+        }
+    }
+
     [Serializable]
     public class PlayerData
     {

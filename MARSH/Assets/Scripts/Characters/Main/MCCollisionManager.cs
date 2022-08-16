@@ -24,6 +24,11 @@ public class MCCollisionManager : MonoBehaviour
 
                 break;
 
+            case "SugarLump":
+            case "ChocoChip":
+                Deb("OnTriggerEnter(): Player collided with a collectable (" + other.tag + "). Delegating collection operation to collectable.");
+
+                break;
         }
     }
 

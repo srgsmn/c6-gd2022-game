@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     private Stack<GameScreen> previousScreens;
 
+    public bool isDebugMode { private set; get; }
+
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
@@ -40,6 +42,9 @@ public class GameManager : MonoBehaviour
     {
         currentState = GameState.Play;
         currentScreen = GameScreen.PlayScreen;
+
+        isDebugMode = false;
+        OnDebugModeSwitched(isDebugMode);
 
         OnNewState?.Invoke(currentState);
     }
@@ -198,6 +203,8 @@ public class GameManager : MonoBehaviour
     public static NewStateEvent OnNewState;
     public delegate void NewScreenEvent(GameScreen screen);
     public static NewScreenEvent OnNewScreen;
+    public delegate void DebugModeSwitchEvent(bool flag);
+    public static DebugModeSwitchEvent OnDebugModeSwitched;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -206,6 +213,8 @@ public class GameManager : MonoBehaviour
         if (subscribing)
         {
             // UI
+            InputManager.OnDebugModeSwitch += SwitchDebugMode;
+
             InputManager.OnPause += OnPause;
             InputManager.OnBack += OnBack;
 
@@ -216,6 +225,8 @@ public class GameManager : MonoBehaviour
         else
         {
             // UI
+            InputManager.OnDebugModeSwitch -= SwitchDebugMode;
+
             InputManager.OnPause -= OnPause;
             InputManager.OnBack -= OnBack;
 
@@ -313,6 +324,13 @@ public class GameManager : MonoBehaviour
     private void OnGameOver()
     {
         DisplayScreen(GameScreen.GameOver);
+    }
+
+    private void SwitchDebugMode()
+    {
+        isDebugMode = !isDebugMode;
+
+        OnDebugModeSwitched(isDebugMode);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
