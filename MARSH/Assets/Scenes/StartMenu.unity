@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de7f9b1f2f6b4f1db60ab5017486531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentState: 0
+  currentScreen: 0
 --- !u!4 &26189134
 Transform:
   m_ObjectHideFlags: 0
@@ -390,7 +392,6 @@ MonoBehaviour:
   debugSave: 0
   debugLoad: 0
   debugQuit: 0
-  isGUIActive: 0
 --- !u!4 &728599532
 Transform:
   m_ObjectHideFlags: 0
@@ -448,7 +449,7 @@ MonoBehaviour:
     sl: 0
     cc: 0
   currentEnvironmentData:
-    collectablesID: []
+    collectablesIDs: []
     lastCheckpointID: 
   currentGameData:
     player:
@@ -464,7 +465,7 @@ MonoBehaviour:
       sl: 0
       cc: 0
     environment:
-      collectablesID: []
+      collectablesIDs: []
       lastCheckpointID: 
   loadedGameData:
     player:
@@ -480,7 +481,7 @@ MonoBehaviour:
       sl: 0
       cc: 0
     environment:
-      collectablesID: []
+      collectablesIDs: []
       lastCheckpointID: 
 --- !u!4 &1419704976
 Transform:

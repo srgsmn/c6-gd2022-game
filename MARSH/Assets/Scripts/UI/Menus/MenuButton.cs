@@ -11,10 +11,19 @@ using Globals;
 public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private ButtonActionType buttonActionType;
+    [SerializeField] private Button button;
     [SerializeField] private Image buttonImage;
     [SerializeField] private TextMeshProUGUI text;
 
     private ButtonFeature features;
+
+    private void Awake()
+    {
+        if (button == null) button = GetComponent<Button>();
+        if (buttonImage == null) buttonImage = GetComponent<Image>();
+
+        EventSubscriber();
+    }
 
     private void Start()
     {
@@ -27,12 +36,18 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        text.color = features.hovTxtColor;
+        if (button.IsInteractable())
+        {
+            text.color = features.hovTxtColor;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        text.color = features.defTxtColor;
+        if (button.IsInteractable())
+        {
+            text.color = features.defTxtColor;
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -40,5 +55,31 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         GameObject.Find("EventSystem")
             .GetComponent<UnityEngine.EventSystems.EventSystem>()
             .SetSelectedGameObject(null);
+    }
+
+    private void OnDestroy()
+    {
+        EventSubscriber(false);
+    }
+
+    // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
+
+    private void EventSubscriber(bool subscribing = true)
+    {
+        if (subscribing)
+        {
+            MenuBackground.OnNewBGColor += ChangeHovTxtColor;
+        }
+        else
+        {
+            MenuBackground.OnNewBGColor -= ChangeHovTxtColor;
+        }
+    }
+
+    // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void ChangeHovTxtColor(Color color)
+    {
+        if(features != null)  features.hovTxtColor = color;
     }
 }

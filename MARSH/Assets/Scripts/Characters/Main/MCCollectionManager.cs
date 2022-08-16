@@ -209,6 +209,8 @@ public class MCCollectionManager : MonoBehaviour
             Collectable.OnCollection += OnCollection;
 
             StoreItem.OnPurchase += Purchase;
+
+            DataManager.OnGameLoading += LoadData;
         }
         else
         {
@@ -218,10 +220,23 @@ public class MCCollectionManager : MonoBehaviour
             Collectable.OnCollection -= OnCollection;
 
             StoreItem.OnPurchase -= Purchase;
+
+            DataManager.OnGameLoading -= LoadData;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void LoadData(PlayerData data)
+    {
+        Deb("LoadData(): Loading collection data \n{ SL: " + data.sl + ", CC: " + data.cc + "}");
+
+        SetValue(ChParam.SL, data.sl);
+        SetValue(ChParam.CC, data.cc);
+
+        Deb("LoadData(): Loaded data is { SL: " + sugarLumps + ", CC: " + chocoChips + " }");
+
+    }
 
     private void OnCollection(CollectableType type, string id)
     {

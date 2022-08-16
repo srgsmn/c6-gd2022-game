@@ -45,9 +45,9 @@ public class DataManager : MonoBehaviour
             OnCPLoad(currentEnvironmentData.lastCheckpointID);
         }
 
-        if (currentEnvironmentData.collectablesID.Count != 0)
+        if (currentEnvironmentData.collectablesIDs.Count != 0)
         {
-            OnCollectionLoad(currentEnvironmentData.collectablesID);
+            OnCollectionLoad(currentEnvironmentData.collectablesIDs);
         }
     }
 
@@ -62,9 +62,32 @@ public class DataManager : MonoBehaviour
     }
 
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
+
+    public int GetCurrentLevel()
+    {
+        return currentGameData.player.level;
+    }
+
     public PlayerData GetCurrentPlayerData()
     {
         return currentGameData.player;
+    }
+
+    public void ReloadGame()
+    {
+        currentGameData = new GameData(loadedGameData);   //FIXME
+
+        OnGameLoading?.Invoke(currentGameData.player);
+    }
+
+    public void ResetGameData()
+    {
+        currentEnvironmentData = new EnvironmentData();
+        currentPlayerData = new PlayerData();
+
+        currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
+
+        loadedGameData = null;
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
@@ -74,6 +97,12 @@ public class DataManager : MonoBehaviour
     public static CPLoadEvent OnCPLoad;
     public delegate void ColelctionLoadEvent(List<string> ids);
     public static ColelctionLoadEvent OnCollectionLoad;
+
+    public delegate void SavedDataDebugEvent(GameData data);
+    public static SavedDataDebugEvent OnSavedData;
+
+    public delegate void GameLoadingEvent(PlayerData data);
+    public static GameLoadingEvent OnGameLoading;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -103,7 +132,7 @@ public class DataManager : MonoBehaviour
 
     private void OnNewCollection(CollectableType type, string id)
     {
-        currentEnvironmentData.collectablesID.Add(id);
+        currentEnvironmentData.collectablesIDs.Add(id);
     }
 
     private void OnValueChanged(ChParam param, object value)
@@ -168,8 +197,12 @@ public class DataManager : MonoBehaviour
 
     private void SaveGameData(string id)
     {
-        //TODO
+        
         currentGameData.environment.lastCheckpointID = id;
+        //TODO
+        loadedGameData = new GameData(currentGameData); //FIXME
+
+        OnSavedData?.Invoke(loadedGameData);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

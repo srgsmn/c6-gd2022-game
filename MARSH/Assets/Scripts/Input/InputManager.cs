@@ -40,20 +40,27 @@ public class InputManager : MonoBehaviour
     [SerializeField][ReadOnlyInspector] private bool debugLoad = false;
     [SerializeField][ReadOnlyInspector] private bool debugQuit = false;
 
+    /*
     [Header("UI:")]
     [SerializeField][ReadOnlyInspector] private bool isGUIActive = false;
+    */
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
     {
+        gameObject.name += "_"+GameManager.Instance.GetSceneIndex();
+
         if (Instance == null)
         {
+            Deb("Awake(): instance is null, creating a new instance");
             Instance = this;
             DontDestroyOnLoad(Instance);
         }
         else
         {
+            Deb("Awake(): instance is NOT null, destroying the game object");
+
             Destroy(gameObject);
         }
 
@@ -67,119 +74,9 @@ public class InputManager : MonoBehaviour
         inputs.Enable();
     }
 
-    //Start()
-
-    private void Update()
-    {
-        /*
-        if (debugOn)
-        {
-            
-            if (debugSwitcher)  
-
-            if (debugHealth && debugInc)
-            {
-                Deb("Update(): Detected input command for Inc H");
-                OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Inc);
-            }
-            if (debugHealth && debugDec)
-            {
-                Deb("Update(): Detected input command for Dec H");
-                OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Dec);
-            }
-            if (debugHealth && debugMax)
-            {
-                Deb("Update(): Detected input command for Max H");
-                OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Max);
-            }
-            if (debugHealth && debugRst)
-            {
-                Deb("Update(): Detected input command for Rst H");
-                OnDebugValueUpdate?.Invoke(DebugValue.H, DebugAction.Rst);
-            }
-            if (debugArmor && debugInc)
-            {
-                Deb("Update(): Detected input command for Inc A");
-                OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Inc);
-            }
-            if (debugArmor && debugDec)
-            {
-                Deb("Update(): Detected input command for Dec A");
-                OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Dec);
-            }
-            if (debugArmor && debugMax)
-            {
-                Deb("Update(): Detected input command for Max A");
-                OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Max);
-            }
-            if (debugArmor && debugRst)
-            {
-                Deb("Update(): Detected input command for Rst A");
-                OnDebugValueUpdate?.Invoke(DebugValue.A, DebugAction.Rst);
-            }
-            if (debugSL && debugInc)
-            {
-                Deb("Update(): Detected input command for Inc SL");
-                OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Inc);
-            }
-            if (debugSL && debugDec)
-            {
-                Deb("Update(): Detected input command for Dec SL");
-                OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Dec);
-            }
-            if (debugSL && debugMax)
-            {
-                Deb("Update(): Detected input command for Max SL");
-                OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Max);
-            }
-            if (debugSL && debugRst)
-            {
-                Deb("Update(): Detected input command for Rst SL");
-                OnDebugValueUpdate?.Invoke(DebugValue.SL, DebugAction.Rst);
-            }
-            if (debugCC && debugInc)
-            {
-                Deb("Update(): Detected input command for Inc CC");
-                OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Inc);
-            }
-            if (debugCC && debugDec)
-            {
-                Deb("Update(): Detected input command for Dec CC");
-                OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Dec);
-            }
-            if (debugCC && debugMax)
-            {
-                Deb("Update(): Detected input command for Max CC");
-                OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Max);
-            }
-            if (debugCC && debugRst)
-            {
-                Deb("Update(): Detected input command for Rst CC");
-                OnDebugValueUpdate?.Invoke(DebugValue.CC, DebugAction.Rst);
-            }
-
-            if (debugSave)
-            {
-                Deb("Update(): Detected input command for Save");
-                OnDebugSave?.Invoke();
-            }
-            if (debugLoad)
-            {
-                Deb("Update(): Detected input command for Load");
-                OnDebugLoad?.Invoke();
-            }
-            if (debugQuit)
-            {
-                Deb("Update(): Detected input command for Quit");
-                OnDebugQuit?.Invoke();
-            }
-        }
-        */
-    }
-
     private void OnDisable()
     {
-        inputs.Disable();
+        if(inputs != null) inputs.Disable();
     }
 
     private void OnDestroy()
@@ -539,17 +436,17 @@ public class InputManager : MonoBehaviour
         switch (type)
         {
             case DebMsgType.log:
-                Debug.Log(this.GetType().Name + " > " + msg);
+                Debug.Log(this.GetType().Name + " > " + msg + "\n{GameObject info: Name: " + gameObject.name + ", tag: " + gameObject.tag + "}");
 
                 break;
 
             case DebMsgType.warn:
-                Debug.LogWarning(this.GetType().Name + " > " + msg);
+                Debug.LogWarning(this.GetType().Name + " > " + msg + "\n{GameObject info: Name: " + gameObject.name + ", tag: " + gameObject.tag + "}");
 
                 break;
 
             case DebMsgType.err:
-                Debug.LogError(this.GetType().Name + " > " + msg);
+                Debug.LogError(this.GetType().Name + " > " + msg + "\n{GameObject info: Name: " + gameObject.name + ", tag: " + gameObject.tag + "}");
 
 
                 break;

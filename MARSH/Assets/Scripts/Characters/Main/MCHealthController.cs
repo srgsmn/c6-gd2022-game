@@ -70,7 +70,8 @@ public class MCHealthController : HealthController
     {
         base.ResetValue(parameter);
 
-        Die();
+        if(parameter == ChParam.Health)
+            Die();
 
         EventNotifier(parameter);
     }
@@ -176,6 +177,7 @@ public class MCHealthController : HealthController
 
             StoreItem.OnPurchase += Purchase;
 
+            DataManager.OnGameLoading += LoadData;
         }
         else
         {
@@ -183,10 +185,27 @@ public class MCHealthController : HealthController
             InputManager.OnDebugValueUpdate -= OnDebugValueUpdate;
 
             StoreItem.OnPurchase -= Purchase;
+
+            DataManager.OnGameLoading -= LoadData;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void LoadData(PlayerData data)
+    {
+        Deb("LoadData(): Loading health data \n{ maxHealth: " + data.maxHealth + ", health: " + data.health + ", maxArmor: " + data.maxArmor + ", armor: " + data.armor + ", defHFactor: " + data.defHFactor + ", defAFactor: " + data.defAFactor + " }");
+
+        SetValue(ChParam.MaxHealth, data.maxHealth);
+        SetValue(ChParam.Health, data.health);
+        SetValue(ChParam.MaxArmor, data.maxArmor);
+        SetValue(ChParam.Armor, data.armor);
+        SetValue(ChParam.DefHFact, data.defHFactor);
+        SetValue(ChParam.DefAFact, data.defAFactor);
+
+        Deb("LoadData(): Loaded data is { maxHealth: " + maxHealth + ", health: " + health + ", maxArmor: " + maxArmor + ", armor: " + armor + ", defHFactor: " + defHealthFactor + ", defAFactor: " + defArmorFactor + " }");
+
+    }
 
     private void OnDebugValueUpdate(DebValue value, DebAction action)
     {

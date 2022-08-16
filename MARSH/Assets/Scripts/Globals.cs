@@ -14,6 +14,7 @@ namespace Globals
         public const int COLLECTABLE_MAX = 1000;
         public const float SHOW_TIME = 3f;
         public const float TIME_TO_CURSOR = 3.5f;
+        public const int SCREEN_HISTORY_LENGTH = 5;
     }
 
     // CONSTS __________________________________________________________________ CONSTS
@@ -50,9 +51,34 @@ namespace Globals
 
             return buff;
         }
+
+        public static AlertObject AlertProperties(AlertType type)
+        {
+            AlertObject buff = new AlertObject();
+
+            switch (type)
+            {
+                case AlertType.Quit:
+                    buff.title = "QUIT";
+                    buff.message = "Are you sure you really want to quit the game?\nEvery progress after the last checkpoint will be lost";
+                    buff.cancelText = "CANCEL";
+                    buff.confirmText = "QUIT";
+
+                    buff.background = new Color(1f, 0, 0, .75f);
+
+                    break;
+            }
+
+            return buff;
+        }
     }
 
     // ENUMS ___________________________________________________________________ ENUMS
+    public enum AlertType
+    {
+        Quit
+    }
+
     public enum ButtonActionType
     {
         Normal, Critic, Gameover
@@ -126,6 +152,20 @@ namespace Globals
 
     // CLASSES _________________________________________________________________ CLASSES
 
+    public class AlertObject
+    {
+        public string title;
+        public string message;
+        public string cancelText, confirmText;
+
+        public Color background;
+
+        public AlertObject()
+        {
+            this.background = new Color(1f, 1f, 1f, 0f);
+        }
+    }
+
     public class ButtonFeature
     {
         public Color bgColor;
@@ -162,7 +202,7 @@ namespace Globals
 
         public PlayerData()
         {
-            level = 0;
+            level = 1;
 
             position = Vector3.zero;
             rotation = Quaternion.identity;
@@ -182,12 +222,12 @@ namespace Globals
     [Serializable]
     public class EnvironmentData
     {
-        public List<string> collectablesID;
+        public List<string> collectablesIDs;
         public string lastCheckpointID;
 
         public EnvironmentData()
         {
-            collectablesID = new List<string>();
+            collectablesIDs = new List<string>();
             lastCheckpointID = null;
         }
     }
@@ -208,6 +248,26 @@ namespace Globals
         {
             this.player = player;
             this.environment = environment;
+        }
+
+        public GameData(GameData data)
+        {
+            player = new PlayerData();
+            player.level = data.player.level;
+            player.position = data.player.position;
+            player.rotation = data.player.rotation;
+            player.health = data.player.health;
+            player.maxHealth = data.player.maxHealth;
+            player.armor = data.player.armor;
+            player.maxArmor = data.player.maxArmor;
+            player.defHFactor = data.player.defHFactor;
+            player.defAFactor = data.player.defAFactor;
+            player.sl = data.player.sl;
+            player.cc = data.player.cc;
+
+            environment = new EnvironmentData();
+            environment.collectablesIDs = new List<string>(data.environment.collectablesIDs);
+            environment.lastCheckpointID = data.environment.lastCheckpointID;
         }
     }
 

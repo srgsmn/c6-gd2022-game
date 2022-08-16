@@ -40,29 +40,30 @@ public class CanvasesManager : MonoBehaviour
         EventSubscriber();
     }
 
+    private void Start()
+    {
+        OnNewState(GameManager.Instance.currentState);
+    }
+
     private void OnDestroy()
     {
         EventSubscriber(false);
     }
 
-    // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
-
-
-    // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
     private void EventSubscriber(bool subscribing = true)
     {
         if (subscribing)
         {
-            GameManager.OnDebugModeSwitched += SetDebugMode;
+            GameManager.OnDebugModeChanged += SetDebugMode;
 
             GameManager.OnNewScreen += DisplayCanvas;
             GameManager.OnNewState += OnNewState;
         }
         else
         {
-            GameManager.OnDebugModeSwitched -= SetDebugMode;
+            GameManager.OnDebugModeChanged -= SetDebugMode;
 
             GameManager.OnNewScreen -= DisplayCanvas;
             GameManager.OnNewState -= OnNewState;
@@ -75,30 +76,86 @@ public class CanvasesManager : MonoBehaviour
     {
         switch (screen)
         {
+            case GameScreen.StartMenu:
+                if (!backgroundInstance.activeSelf) backgroundInstance.SetActive(true);
+
+                if (settingsMenuInstance.activeSelf) settingsMenuInstance.SetActive(false);
+                if (creditsInstance.activeSelf) creditsInstance.SetActive(false);
+
+                if (!startMenuInstance.activeSelf) startMenuInstance.SetActive(true);
+
+                Cursor.visible = true;
+
+                break;
+
             case GameScreen.PauseMenu:
-                pauseMenuInstance.SetActive(true);
+                if (!backgroundInstance.activeSelf) backgroundInstance.SetActive(true);
+
+                if (settingsMenuInstance.activeSelf) settingsMenuInstance.SetActive(false);
+                if (creditsInstance.activeSelf) creditsInstance.SetActive(false);
+
+                if (!pauseMenuInstance.activeSelf) pauseMenuInstance.SetActive(true);
+
+                Cursor.visible = true;
 
                 break;
 
             case GameScreen.PlayScreen:
+                Deb("DisplayCanvas(): Displaying PlayScreen...");
+
+                if (backgroundInstance.activeSelf) backgroundInstance.SetActive(false);
+
                 if (pauseMenuInstance.activeSelf) pauseMenuInstance.SetActive(false);
                 if (storeMenuInstance.activeSelf) storeMenuInstance.SetActive(false);
+
                 if (!HUDInstance.activeSelf) HUDInstance.SetActive(true);
+
+                Deb("DisplayCanvas(): Current canvas status: pause canvas = " + pauseMenuInstance.activeSelf + " (expected false), store canvas = " + storeMenuInstance.activeSelf + " (expected false), HUD canvas = " + HUDInstance.activeSelf + " (expected true)");
+
+                Cursor.visible = false;
 
                 break;
 
             case GameScreen.StoreMenu:
+                if (!backgroundInstance.activeSelf) backgroundInstance.SetActive(true);
+
                 if (HUDInstance.activeSelf) HUDInstance.SetActive(false);
-                storeMenuInstance.SetActive(true);
+
+                if (!storeMenuInstance.activeSelf) storeMenuInstance.SetActive(true);
+
+                Cursor.visible = true;
+
+                break;
+
+            case GameScreen.SettingsMenu:
+                if (!backgroundInstance.activeSelf) backgroundInstance.SetActive(true);
+
+                if (HUDInstance.activeSelf) HUDInstance.SetActive(false);
+
+                if (!settingsMenuInstance.activeSelf) settingsMenuInstance.SetActive(true);
+
+                Cursor.visible = true;
+
+                break;
+
+            case GameScreen.CreditsMenu:
+                if (!backgroundInstance.activeSelf) backgroundInstance.SetActive(true);
+
+                if (HUDInstance.activeSelf) HUDInstance.SetActive(false);
+
+                if (!creditsInstance.activeSelf) creditsInstance.SetActive(true);
+
+                Cursor.visible = true;
 
                 break;
 
             case GameScreen.GameOver:
                 if (HUDInstance.activeSelf) HUDInstance.SetActive(false);
-                gameoverInstance.SetActive(true);
+                if (backgroundInstance.activeSelf) backgroundInstance.SetActive(false);
+
+                if (!gameoverInstance.activeSelf) gameoverInstance.SetActive(true);
 
                 break;
-
         }
     }
 
@@ -107,7 +164,7 @@ public class CanvasesManager : MonoBehaviour
         if (state == GameState.Start)
         {
             if (backgroundInstance == null) backgroundInstance = Instantiate(backgroundCanvasP, transform);
-            backgroundInstance.SetActive(true);
+            //backgroundInstance.SetActive(true);
 
             if (HUDInstance != null) Destroy(HUDInstance);
             if (pauseMenuInstance != null) Destroy(pauseMenuInstance);
@@ -116,7 +173,7 @@ public class CanvasesManager : MonoBehaviour
             if (debugInstance != null) Destroy(debugInstance);
 
             if (startMenuInstance == null) startMenuInstance = Instantiate(startMenuCanvasP, transform);
-            startMenuInstance.SetActive(true);
+            //startMenuInstance.SetActive(true);
 
             //if (settingsMenuInstance == null) settingsMenuInstance = Instantiate(settingsMenuCanvasP, transform);
             //settingsMenuInstance.SetActive(false);
@@ -137,7 +194,7 @@ public class CanvasesManager : MonoBehaviour
 
 
             if (gameoverInstance == null) gameoverInstance = Instantiate(gameoverCanvasP, transform);
-            gameoverInstance.SetActive(true);
+            //gameoverInstance.SetActive(true);
         }
         else
         {

@@ -6,14 +6,25 @@ using System.Collections.Generic;
 using Globals;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.CullingGroup;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private GameState currentState;
-    private GameScreen currentScreen;
+    [SerializeField][ReadOnlyInspector] private GameState _currentState;
+    [SerializeField][ReadOnlyInspector] private GameScreen currentScreen;
+
+    public GameState currentState
+    {
+        private set
+        {
+            _currentState = value;
+        }
+        get
+        {
+            return _currentState;
+        }
+    }
 
     private Stack<GameScreen> previousScreens;
 
@@ -33,25 +44,28 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        previousScreens = new Stack<GameScreen>(5);
+        previousScreens = new Stack<GameScreen>(Consts.SCREEN_HISTORY_LENGTH);
 
         EventSubscriber();
     }
 
     private void Start()
     {
-        currentState = GameState.Play;
-        currentScreen = GameScreen.PlayScreen;
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            currentState = GameState.Start;
+            currentScreen = GameScreen.StartMenu;
+        }
+        else
+        {
+            currentState = GameState.Play;
+            currentScreen = GameScreen.PlayScreen;
+        }
 
         isDebugMode = false;
-        OnDebugModeSwitched(isDebugMode);
+        OnDebugModeChanged?.Invoke(isDebugMode);
 
         OnNewState?.Invoke(currentState);
-    }
-
-    private void Update()
-    {
-        
     }
 
     private void OnDestroy()
@@ -75,7 +89,15 @@ public class GameManager : MonoBehaviour
         switch (currentScreen)
         {
             case GameScreen.StartMenu:
-                //TODO
+
+                if (next == GameScreen.PlayScreen)
+                {
+                    Deb("DisplayScreen(): from start screen you're going into play screen. Changing here current state and setting true the flag to manage the screen and state");
+
+                    currentState = GameState.Play;
+                    flag = true;
+                }
+
                 break;
 
             case GameScreen.PlayScreen:
@@ -118,7 +140,7 @@ public class GameManager : MonoBehaviour
             Deb("DisplayScreen(): now current state is " + currentState + ", current screen is " + currentScreen);
 
 
-            OnNewState?.Invoke(currentState);
+            //OnNewState?.Invoke(currentState);
             OnNewScreen?.Invoke(currentScreen);
         }
     }
@@ -139,6 +161,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int GetSceneIndex()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
+    }
 
     private void NavigateBack()
     {
@@ -172,6 +198,32 @@ public class GameManager : MonoBehaviour
         DisplayScreen(GameScreen.PauseMenu);
     }
 
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+    }
+
+    public void ReloadGame()
+    {
+        //TODO
+        DataManager.Instance.ReloadGame();
+
+        int level = DataManager.Instance.GetCurrentLevel();
+
+        if (level != SceneManager.GetActiveScene().buildIndex)
+        {
+            SceneManager.LoadScene(level);
+        }
+
+        currentState = GameState.Play;
+        NewState(currentState);
+
+        DisplayScreen(GameScreen.PlayScreen);
+    }
+
     /// <summary>
     /// Resume game function accessible from UI and more
     /// </summary>
@@ -181,10 +233,32 @@ public class GameManager : MonoBehaviour
         DisplayScreen(GameScreen.PlayScreen);
     }
 
+    /// <summary>
+    /// Start game operations: resetting existing data and loading first scene.
+    /// </summary>
+    public void StartGame()
+    {
+        DataManager.Instance.ResetGameData();
+
+        SceneManager.LoadScene(1);
+
+        Deb("######");
+        NewState(GameState.Play);
+        DisplayScreen(GameScreen.PlayScreen);
+    }
+
     public void SaveGame()
     {
         Deb("SaveGame(): saving game (TODO)");
         //TODO
+    }
+
+    public void ShowStartMenu()
+    {
+        SceneManager.LoadScene(0);
+
+        NewState(GameState.Start);
+        DisplayScreen(GameScreen.StartMenu);
     }
 
     IEnumerator ShowingGameOver(float time)
@@ -204,7 +278,7 @@ public class GameManager : MonoBehaviour
     public delegate void NewScreenEvent(GameScreen screen);
     public static NewScreenEvent OnNewScreen;
     public delegate void DebugModeSwitchEvent(bool flag);
-    public static DebugModeSwitchEvent OnDebugModeSwitched;
+    public static DebugModeSwitchEvent OnDebugModeChanged;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -300,7 +374,6 @@ public class GameManager : MonoBehaviour
                 Deb("OnStateChanged(): cursor should NOT be visible now");
 
                 Freeze(false);
-                Cursor.visible = false;
 
                 break;
 
@@ -315,7 +388,6 @@ public class GameManager : MonoBehaviour
                 Deb("OnStateChanged(): cursor should be visible now");
 
                 Freeze();
-                Cursor.visible = true;
 
                 break;
         }
@@ -323,6 +395,9 @@ public class GameManager : MonoBehaviour
 
     private void OnGameOver()
     {
+        currentState = GameState.GameOver;
+        NewState(currentState);
+
         DisplayScreen(GameScreen.GameOver);
     }
 
@@ -330,7 +405,7 @@ public class GameManager : MonoBehaviour
     {
         isDebugMode = !isDebugMode;
 
-        OnDebugModeSwitched(isDebugMode);
+        OnDebugModeChanged?.Invoke(isDebugMode);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

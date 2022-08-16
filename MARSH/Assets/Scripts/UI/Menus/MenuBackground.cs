@@ -13,9 +13,9 @@ public class MenuBackground : MonoBehaviour
     [SerializeField][Range(.1f, 1f)] private float lerpTime;
     [SerializeField] private Color[] colors;
 
-    private int index;
-
-    private float t = 0f;
+    [Header("Debug values:")]
+    [SerializeField][ReadOnlyInspector] private int index;
+    [SerializeField][ReadOnlyInspector] private float t = 0f;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -38,9 +38,11 @@ public class MenuBackground : MonoBehaviour
     {
         if (colors.Length > 0)
         {
-            background.color = Color.Lerp(background.color, colors[index], lerpTime * Time.deltaTime);
+            background.color = Color.Lerp(background.color, colors[index], lerpTime * Time.unscaledDeltaTime);
 
-            t = Mathf.Lerp(t, 1f, lerpTime * Time.deltaTime);
+            OnNewBGColor?.Invoke(background.color);
+
+            t = Mathf.Lerp(t, 1f, lerpTime * Time.unscaledDeltaTime);
 
             if (t > .9f)
             {
@@ -50,6 +52,10 @@ public class MenuBackground : MonoBehaviour
             }
         }
     }
+
+    // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
+    public delegate void NewBGColorEvent(Color color);
+    public static NewBGColorEvent OnNewBGColor;
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
 

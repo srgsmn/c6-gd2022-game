@@ -36,15 +36,30 @@ public class DebugCanvas : MonoBehaviour
             // Debug inputs
             DataManager.OnValueUpdate += UpdateText;
 
+            DataManager.OnSavedData += UpdateSavedData;
         }
         else
         {
             DataManager.OnValueUpdate -= UpdateText;
 
+            DataManager.OnSavedData -= UpdateSavedData;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void UpdateSavedData(GameData data)
+    {
+        UpdateText(true, ChParam.Pos, data.player.position);
+        UpdateText(true, ChParam.Rot, data.player.rotation);
+        UpdateText(true, ChParam.Health, data.player.health);
+        UpdateText(true, ChParam.MaxHealth, data.player.maxHealth);
+        UpdateText(true, ChParam.Armor, data.player.armor);
+        UpdateText(true, ChParam.MaxArmor, data.player.maxArmor);
+        UpdateText(true, ChParam.SL, data.player.sl);
+        UpdateText(true, ChParam.CC, data.player.cc);
+    }
+
     private void UpdateText(bool saved, ChParam param, object value)
     {
         Deb("UpdateText() ###");

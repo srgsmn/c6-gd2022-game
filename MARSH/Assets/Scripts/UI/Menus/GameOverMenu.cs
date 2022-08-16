@@ -1,18 +1,20 @@
+/* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
+ *  TODO:
+ *      - Alert implementation
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOverMenu : MonoBehaviour
+public class GameOverMenu : Menu
 {
-    // Start is called before the first frame update
-    void Start()
+    public void ReloadBtn()
     {
-        
+        ReloadGame();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ReloadGame()
     {
-        
+        GameManager.Instance.ReloadGame();
     }
 }

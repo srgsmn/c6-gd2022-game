@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonActionType: 0
+  button: {fileID: 0}
   buttonImage: {fileID: 8614696182296510627}
   text: {fileID: 8614696182639614312}
 --- !u!1 &8614696182639614314
