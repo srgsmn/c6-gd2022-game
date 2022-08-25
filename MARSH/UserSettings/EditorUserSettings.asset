@@ -9,13 +9,13 @@ EditorUserSettings:
       value: 0602035506545e020b5a5f214377074341164b782a7c7f322e7c1966b0b3323b
       flags: 0
     RecentlyUsedSceneGuid-1:
-      value: 5a5757560101590a5d0c0e24427b5d44434e4c7a7b7a23677f2b4565b7b5353a
-      flags: 0
-    RecentlyUsedSceneGuid-2:
       value: 5604520354045f020e5c087a49775a1446161e792e7a23322c7c4836e0e43760
       flags: 0
-    RecentlyUsedSceneGuid-3:
+    RecentlyUsedSceneGuid-2:
       value: 5605520404030b0b0b56587b46775d464f4f4e7f7c7f25357e704a6be3b1366b
+      flags: 0
+    RecentlyUsedSceneGuid-3:
+      value: 5a5757560101590a5d0c0e24427b5d44434e4c7a7b7a23677f2b4565b7b5353a
       flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650
