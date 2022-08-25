@@ -4,9 +4,13 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using Globals;
 using UnityEngine;
 
 public class PauseMenu : Menu
 {
-    //TODO
+    public void SettingsBtn()
+    {
+        GameManager.Instance.DisplayScreen(GameScreen.SettingsMenu);
+    }
 }

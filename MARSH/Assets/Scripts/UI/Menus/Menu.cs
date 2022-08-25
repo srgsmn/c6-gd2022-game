@@ -1,6 +1,5 @@
 /* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
  *  TODO:
- *      - Alert implementation
  */
 
 using System.Collections;
@@ -10,9 +9,25 @@ using Globals;
 
 public class Menu : MonoBehaviour
 {
-    //[SerializeField] private GameObject AlertPrefab;
+    [SerializeField] private GameObject AlertPrefab;
+    private GameObject alertInstance;
+
+    private void Awake()
+    {
+        EventSubscriber();
+    }
+
+    private void OnDestroy()
+    {
+        EventSubscriber(false);
+    }
 
     // BUTTONS
+    public void BackBtn()
+    {
+        GameManager.Instance.OnBack();
+    }
+
     public void CloseBtn()
     {
         ResumeGame();
@@ -20,8 +35,8 @@ public class Menu : MonoBehaviour
 
     public void QuitBtn()
     {
-        GameManager.Instance.QuitGame();
-        //OpenAlert();
+        //GameManager.Instance.QuitGame();
+        OpenAlert(AlertType.Quit);
     }
 
     public void ResumeBtn()
@@ -50,10 +65,30 @@ public class Menu : MonoBehaviour
         GameManager.Instance.ShowStartMenu();
     }
 
-    /*
-    private void OpenAlert()
+    public void OpenAlert(AlertType type)
     {
-        Instantiate(AlertPrefab, transform.parent);
+        alertInstance = Instantiate(AlertPrefab, transform.parent);
+
+        alertInstance.GetComponent<Alert>().SetAlertType(type);
     }
-    */
+
+    public void CloseAlert()
+    {
+        if(alertInstance!=null)
+            Destroy(alertInstance.gameObject);
+    }
+
+    // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
+
+    private void EventSubscriber(bool subscribing = true)
+    {
+        if (subscribing)
+        {
+            GameManager.BeforeUnpause += CloseAlert;
+        }
+        else
+        {
+            GameManager.BeforeUnpause -= CloseAlert;
+        }
+    }
 }

@@ -26,9 +26,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private Stack<GameScreen> previousScreens;
+    //private Stack<GameScreen> previousScreens;
 
-    public bool isDebugMode { private set; get; }
+    [SerializeField][ReadOnlyInspector] private bool _isDebugMode = false;
+    [SerializeField][ReadOnlyInspector] private bool _isTutorialOn = false;
+
+    public bool isDebugMode
+    {
+        private set
+        {
+            _isDebugMode = value;
+        }
+        get
+        {
+            return _isDebugMode;
+        }
+    }
+
+    public bool isTutorialOn
+    {
+        private set
+        {
+            _isTutorialOn = value;
+        }
+        get
+        {
+            return _isTutorialOn;
+        }
+    }
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -44,7 +69,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        previousScreens = new Stack<GameScreen>(Consts.SCREEN_HISTORY_LENGTH);
+        //previousScreens = new Stack<GameScreen>(Consts.SCREEN_HISTORY_LENGTH);
 
         EventSubscriber();
     }
@@ -79,7 +104,7 @@ public class GameManager : MonoBehaviour
     /// Displays the next sceen
     /// </summary>
     /// <param name="next">Which screen should be shown next</param>
-    private void DisplayScreen(GameScreen next)
+    public void DisplayScreen(GameScreen next)
     {
         Deb("DisplayScreen() #####");
         Deb("DisplayScreen(): current state: " + currentState + ", current screen: " + currentScreen + ", next screen: " + next);
@@ -94,7 +119,14 @@ public class GameManager : MonoBehaviour
                 {
                     Deb("DisplayScreen(): from start screen you're going into play screen. Changing here current state and setting true the flag to manage the screen and state");
 
-                    currentState = GameState.Play;
+                    //currentState = GameState.Play;
+                    NewState(GameState.Play);
+                    flag = true;
+                }
+                else if(next == GameScreen.SettingsMenu)
+                {
+                    Deb("DisplayScreen(): from start screen you're going into settings screen. Setting true the flag to manage the screen and state");
+
                     flag = true;
                 }
 
@@ -106,24 +138,82 @@ public class GameManager : MonoBehaviour
                 {
                     Deb("DisplayScreen(): from play screen you're going into an acceptable screen. Changing here current state and setting true the flag to manage the screen and state");
 
-                    currentState = GameState.Pause;
+                    //currentState = GameState.Pause;
+                    NewState(GameState.Pause);
                     flag = true;
                 }
 
                 if (next == GameScreen.GameOver)
                 {
-                    currentState = GameState.GameOver;
+                    //currentState = GameState.GameOver;
+                    NewState(GameState.GameOver);
                     flag = true;
                 }
 
                 break;
 
             case GameScreen.PauseMenu:
+                if (next == GameScreen.PlayScreen)
+                {
+                    //currentState = GameState.Play;
+                    NewState(GameState.Play);
+                    flag = true;
+                }
+                else if (next == GameScreen.SettingsMenu)
+                {
+                    flag = true;
+                }
+
+                break;
+
             case GameScreen.StoreMenu:
 
                 if (next == GameScreen.PlayScreen)
                 {
-                    currentState = GameState.Play;
+                    //currentState = GameState.Play;
+                    NewState(GameState.Play);
+                    flag = true;
+                }
+
+                break;
+
+            case GameScreen.SettingsMenu:
+                if (next == GameScreen.PlayScreen)
+                {
+                    //currentState = GameState.Play;
+                    NewState(GameState.Play);
+                    flag = true;
+                }
+                else if (next == GameScreen.StartMenu || next == GameScreen.CreditsMenu || next == GameScreen.PauseMenu)
+                {
+                    flag = true;
+                }
+
+
+                break;
+
+            case GameScreen.CreditsMenu:
+
+                if (next == GameScreen.PlayScreen)
+                {
+                    //currentState = GameState.Play;
+                    NewState(GameState.Play);
+                    flag = true;
+                }
+                else if(next == GameScreen.StartMenu || next == GameScreen.SettingsMenu)
+                {
+                    flag = true;
+                }
+
+                break;
+
+            case GameScreen.GameOver:
+                if (next == GameScreen.PlayScreen)
+                {
+                    Deb("DisplayScreen(): from game over screen you're going into play screen. Changing here current state and setting true the flag to manage the screen and state");
+
+                    //currentState = GameState.Play;
+                    NewState(GameState.Play);
                     flag = true;
                 }
 
@@ -134,7 +224,7 @@ public class GameManager : MonoBehaviour
         {
             Deb("DisplayScreen(): flag is true => updating previous screens stack, current scene, and sending event on new screen and new state");
 
-            previousScreens.Push(currentScreen);
+            //previousScreens.Push(currentScreen);
             currentScreen = next;
 
             Deb("DisplayScreen(): now current state is " + currentState + ", current screen is " + currentScreen);
@@ -149,7 +239,7 @@ public class GameManager : MonoBehaviour
     /// Manages time flow in the game
     /// </summary>
     /// <param name="flag">Whether time should be stopped or not</param>
-    private void Freeze(bool flag = true)
+    public void Freeze(bool flag = true)
     {
         if (flag)
         {
@@ -178,6 +268,11 @@ public class GameManager : MonoBehaviour
     /// <param name="state">Which new state we want to set</param>
     private void NewState(GameState state)
     {
+        if(currentState==GameState.GameOver && state == GameState.Play)
+        {
+            ResetParameters();
+        }
+
         currentState = state;
 
         OnNewState?.Invoke(currentState);
@@ -192,7 +287,6 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Pause game function accessible from UI and more
     /// </summary>
-    /// <param name="pause"></param>
     public void PauseGame()
     {
         DisplayScreen(GameScreen.PauseMenu);
@@ -209,19 +303,45 @@ public class GameManager : MonoBehaviour
     public void ReloadGame()
     {
         //TODO
-        DataManager.Instance.ReloadGame();
-
-        int level = DataManager.Instance.GetCurrentLevel();
-
-        if (level != SceneManager.GetActiveScene().buildIndex)
+        if (DataManager.Instance.ReloadGame())
         {
-            SceneManager.LoadScene(level);
+            int level = DataManager.Instance.GetCurrentLevel();
+
+            if (level != SceneManager.GetActiveScene().buildIndex)
+            {
+                SceneManager.LoadScene(level);
+            }
+
+            currentState = GameState.Play;
+            NewState(currentState);
+
+            DisplayScreen(GameScreen.PlayScreen);
         }
+        else
+        {
+            StartGame();
+        }
+        
+    }
 
-        currentState = GameState.Play;
-        NewState(currentState);
+    private void ResetParameters()
+    {
+        EventSubscriber(false);
+        EventSubscriber();
 
-        DisplayScreen(GameScreen.PlayScreen);
+        OnParamsReset?.Invoke();
+    }
+
+    public void ResetGame()
+    {
+        if (GetSceneIndex() == 0)
+        {
+            DataManager.Instance.ResetGameData();
+        }
+        else
+        {
+            StartGame();
+        }
     }
 
     /// <summary>
@@ -240,11 +360,23 @@ public class GameManager : MonoBehaviour
     {
         DataManager.Instance.ResetGameData();
 
+        isTutorialOn = true;
+
         SceneManager.LoadScene(1);
 
         Deb("######");
-        NewState(GameState.Play);
-        DisplayScreen(GameScreen.PlayScreen);
+        //NewState(GameState.Play);
+        //DisplayScreen(GameScreen.PlayScreen);
+    }
+
+    public void StartTutorial()
+    {
+        isTutorialOn = true;
+
+        if(currentState == GameState.Pause)
+        {
+            ResumeGame();
+        }
     }
 
     public void SaveGame()
@@ -280,6 +412,14 @@ public class GameManager : MonoBehaviour
     public delegate void DebugModeSwitchEvent(bool flag);
     public static DebugModeSwitchEvent OnDebugModeChanged;
 
+    public delegate void UnpauseEvent();
+    public static UnpauseEvent BeforeUnpause;
+    public delegate void StartTutoriaEvent();
+    public static StartTutoriaEvent OnStartTutorial;
+
+    public delegate void ParamsResetEvent();
+    public static ParamsResetEvent OnParamsReset;
+
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
     private void EventSubscriber(bool subscribing = true)
@@ -295,6 +435,10 @@ public class GameManager : MonoBehaviour
             OnNewState += OnStateChanged;
 
             MCHealthController.OnDeath += OnGameOver;
+
+            Tutorial.OnTutorialEnd += OnTutorialEnd;
+
+            SceneManager.sceneLoaded += OnNewScene;
         }
         else
         {
@@ -307,10 +451,30 @@ public class GameManager : MonoBehaviour
             OnNewState -= OnStateChanged;
 
             MCHealthController.OnDeath -= OnGameOver;
+
+            Tutorial.OnTutorialEnd -= OnTutorialEnd;
+
+            SceneManager.sceneLoaded -= OnNewScene;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void OnTutorialEnd()
+    {
+        isTutorialOn = false;
+        Freeze(false);
+    }
+
+    private void OnNewScene(Scene scene, LoadSceneMode mode)
+    {
+        Deb("OnNewScene(): Loaded a new scene\n{Scene name: " + scene.name + "; Scene index: " + scene.buildIndex + "; Load mode: " + mode + "}");
+
+        if (scene.buildIndex != 0)
+        {
+            DisplayScreen(GameScreen.PlayScreen);
+        }
+    }
 
     private void OnPause()
     {
@@ -319,18 +483,22 @@ public class GameManager : MonoBehaviour
         switch (currentScreen)
         {
             case GameScreen.PlayScreen:
-                DisplayScreen(GameScreen.PauseMenu);
+                if(!isTutorialOn)
+                    DisplayScreen(GameScreen.PauseMenu);
 
                 break;
 
             case GameScreen.PauseMenu:
             case GameScreen.StoreMenu:
+                BeforeUnpause?.Invoke();
+
                 DisplayScreen(GameScreen.PlayScreen);
 
                 break;
 
             case GameScreen.SettingsMenu:
             case GameScreen.CreditsMenu:
+                BeforeUnpause?.Invoke();
 
                 if (currentState == GameState.Pause)
                 {
@@ -345,21 +513,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnBack()
+    public void OnBack()
     {
         switch (currentScreen)
         {
             case GameScreen.PauseMenu:
                 DisplayScreen(GameScreen.PlayScreen);
                 NewState(GameState.Play);
-                previousScreens.Pop();
+                //previousScreens.Pop();
 
                 break;
 
             case GameScreen.StoreMenu:
                 DisplayScreen(GameScreen.PlayScreen);
                 NewState(GameState.Play);
-                previousScreens.Pop();
+                //previousScreens.Pop();
+
+                break;
+
+            case GameScreen.SettingsMenu:
+                if (currentState == GameState.Pause)
+                {
+                    DisplayScreen(GameScreen.PauseMenu);
+                }
+                else if (currentState == GameState.Start)
+                {
+                    DisplayScreen(GameScreen.StartMenu);
+                }
+                
+                break;
+
+            case GameScreen.CreditsMenu:
+                DisplayScreen(GameScreen.SettingsMenu);
 
                 break;
         }
@@ -404,6 +589,13 @@ public class GameManager : MonoBehaviour
     private void SwitchDebugMode()
     {
         isDebugMode = !isDebugMode;
+
+        OnDebugModeChanged?.Invoke(isDebugMode);
+    }
+
+    public void SwitchDebugMode(bool flag)
+    {
+        isDebugMode = flag;
 
         OnDebugModeChanged?.Invoke(isDebugMode);
     }

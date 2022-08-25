@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentState: 0
   currentScreen: 0
+  _isDebugMode: 0
+  _isTutorialOn: 0
 --- !u!4 &26189134
 Transform:
   m_ObjectHideFlags: 0
@@ -438,6 +440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPlayerData:
     level: 0
+    camPos: {x: 0, y: 0, z: 0}
+    camRot: {x: 0, y: 0, z: 0, w: 0}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
     health: 0
@@ -454,6 +458,8 @@ MonoBehaviour:
   currentGameData:
     player:
       level: 0
+      camPos: {x: 0, y: 0, z: 0}
+      camRot: {x: 0, y: 0, z: 0, w: 0}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       health: 0
@@ -470,6 +476,8 @@ MonoBehaviour:
   loadedGameData:
     player:
       level: 0
+      camPos: {x: 0, y: 0, z: 0}
+      camRot: {x: 0, y: 0, z: 0, w: 0}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       health: 0

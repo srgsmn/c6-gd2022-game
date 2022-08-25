@@ -521,6 +521,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""51a581df-73ef-4fa9-b82a-26910df1b0ef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -556,6 +565,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Info"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d689564-f75a-431f-bf4c-7e58e73ba616"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -587,6 +607,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_Info = m_UI.FindAction("Info", throwIfNotFound: true);
+        m_UI_Enter = m_UI.FindAction("Enter", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -827,6 +848,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Back;
     private readonly InputAction m_UI_Pause;
     private readonly InputAction m_UI_Info;
+    private readonly InputAction m_UI_Enter;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
@@ -834,6 +856,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Back => m_Wrapper.m_UI_Back;
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputAction @Info => m_Wrapper.m_UI_Info;
+        public InputAction @Enter => m_Wrapper.m_UI_Enter;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -852,6 +875,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Info.started -= m_Wrapper.m_UIActionsCallbackInterface.OnInfo;
                 @Info.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnInfo;
                 @Info.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnInfo;
+                @Enter.started -= m_Wrapper.m_UIActionsCallbackInterface.OnEnter;
+                @Enter.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnEnter;
+                @Enter.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnEnter;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -865,6 +891,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Info.started += instance.OnInfo;
                 @Info.performed += instance.OnInfo;
                 @Info.canceled += instance.OnInfo;
+                @Enter.started += instance.OnEnter;
+                @Enter.performed += instance.OnEnter;
+                @Enter.canceled += instance.OnEnter;
             }
         }
     }
@@ -896,5 +925,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnBack(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnInfo(InputAction.CallbackContext context);
+        void OnEnter(InputAction.CallbackContext context);
     }
 }

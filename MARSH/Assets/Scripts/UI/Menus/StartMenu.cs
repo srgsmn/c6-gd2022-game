@@ -1,10 +1,10 @@
 /* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
  *  TODO:
- *      - ALL
  */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Globals;
 
 public class StartMenu : Menu
 {
@@ -12,5 +12,10 @@ public class StartMenu : Menu
     public void StartBtn()
     {
         GameManager.Instance.StartGame();
+    }
+
+    public void SettingsBtn()
+    {
+        GameManager.Instance.DisplayScreen(GameScreen.SettingsMenu);
     }
 }

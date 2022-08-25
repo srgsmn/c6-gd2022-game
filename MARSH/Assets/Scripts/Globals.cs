@@ -14,6 +14,7 @@ namespace Globals
         public const int COLLECTABLE_MAX = 1000;
         public const float SHOW_TIME = 3f;
         public const float TIME_TO_CURSOR = 3.5f;
+        public const float TIME_TO_TUTORIAL = 2.5f;
         public const int SCREEN_HISTORY_LENGTH = 5;
     }
 
@@ -58,13 +59,43 @@ namespace Globals
 
             switch (type)
             {
+                case AlertType.None:
+                    buff.title = "{TITLE}";
+                    buff.message = "{message}";
+                    buff.cancelText = "{CANCEL}";
+                    buff.confirmText = "{CONFIRM}";
+
+                    buff.background = new Color(1f, 0, 0, .5f);
+
+                    break;
+
                 case AlertType.Quit:
                     buff.title = "QUIT";
                     buff.message = "Are you sure you really want to quit the game?\nEvery progress after the last checkpoint will be lost";
                     buff.cancelText = "CANCEL";
                     buff.confirmText = "QUIT";
 
-                    buff.background = new Color(1f, 0, 0, .75f);
+                    buff.background = new Color(1f, 0, 0, .5f);
+
+                    break;
+
+                case AlertType.Reset:
+                    buff.title = "RESET";
+                    buff.message = "Are you sure you really want to reset the game?\nThis operation will erase all your saved data from the disk";
+                    buff.cancelText = "CANCEL";
+                    buff.confirmText = "RESET";
+
+                    buff.background = new Color(1f, 0, 0, .5f);
+
+                    break;
+
+                case AlertType.StartMenu:
+                    buff.title = "RETURNING TO START MENU";
+                    buff.message = "Are you sure you really want to return to the start menu?\nEvery progress after the last checkpoint will be lost";
+                    buff.cancelText = "CANCEL";
+                    buff.confirmText = "START MENU";
+
+                    buff.background = new Color(1f, 0, 0, .5f);
 
                     break;
             }
@@ -76,7 +107,7 @@ namespace Globals
     // ENUMS ___________________________________________________________________ ENUMS
     public enum AlertType
     {
-        Quit
+        None, Quit, Reset, StartMenu
     }
 
     public enum ButtonActionType
@@ -150,6 +181,11 @@ namespace Globals
         GameOver
     }
 
+    public enum TutorialPhase
+    {
+        Welcome, Movement, Jump, Sprint, Collectables, Places, Pause, Final, None
+    }
+
     // CLASSES _________________________________________________________________ CLASSES
 
     public class AlertObject
@@ -192,6 +228,9 @@ namespace Globals
     {
         public int level;
 
+        public Vector3 camPos;
+        public Quaternion camRot;
+
         public Vector3 position;
         public Quaternion rotation;
 
@@ -203,6 +242,9 @@ namespace Globals
         public PlayerData()
         {
             level = 1;
+
+            camPos = Vector3.zero;
+            camRot = Quaternion.identity;
 
             position = Vector3.zero;
             rotation = Quaternion.identity;
@@ -254,6 +296,10 @@ namespace Globals
         {
             player = new PlayerData();
             player.level = data.player.level;
+
+            player.camPos = data.player.camPos;
+            player.camRot = data.player.camRot;
+
             player.position = data.player.position;
             player.rotation = data.player.rotation;
             player.health = data.player.health;

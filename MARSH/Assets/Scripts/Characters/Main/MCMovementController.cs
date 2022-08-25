@@ -46,6 +46,8 @@ public class MCMovementController : MonoBehaviour
     [ReadOnlyInspector] private Vector3 camRt;
 
     [Header("Movement:")]
+    [SerializeField]
+    [ReadOnlyInspector] private bool isMoving;
     [SerializeField] private float speed;
     [SerializeField] private float runMultiplier;
     [SerializeField]
@@ -168,6 +170,11 @@ public class MCMovementController : MonoBehaviour
     public delegate void TransformChangedEvent(ChParam parameter, object value);
     public static TransformChangedEvent OnTransformChanged;
 
+    public delegate void MoveEvent(bool isMoving);
+    public static MoveEvent OnMove;
+    public delegate void JumpEvent(bool isJumping);
+    public static JumpEvent OnJump;
+
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
     private void EventSubscriber(bool subscribing = true)
@@ -197,6 +204,10 @@ public class MCMovementController : MonoBehaviour
         currentMovementInput.x = inputValue.x;
         currentMovementInput.y = 0;
         currentMovementInput.z = inputValue.y;
+
+        isMoving = isMovementPressed;
+
+        OnMove?.Invoke(isMoving);
     }
 
     private void OnJumpInput(bool inputValue)
@@ -269,8 +280,10 @@ public class MCMovementController : MonoBehaviour
         }
         else if (!isJumpPressed && isJumping && characterController.isGrounded)
         {
-            isJumping = false;
+            isJumping = false;    
         }
+
+        OnJump?.Invoke(isJumping);
     }
 
     private void HandleGravity()

@@ -50,8 +50,11 @@ MonoBehaviour:
   HUDCanvasP: {fileID: 1576250334147315371, guid: f608513b543c14e7eb83a2fec2c12cf5, type: 3}
   pauseMenuCanvasP: {fileID: 2238509341815840169, guid: bf5b01bb3751543d3b7ad374371922ad, type: 3}
   storeMenuCanvasP: {fileID: 2996456634517394983, guid: 4d4057dbc94974f8099bb7b367e43f06, type: 3}
+  settingsMenuCanvasP: {fileID: 5308727006036361705, guid: 55ce6076d90e841d48c3a7a520a93ef8, type: 3}
+  creditsCanvasP: {fileID: 3958032354415952439, guid: f7255afe2d2e749a5b660f276367a03c, type: 3}
   gameoverCanvasP: {fileID: 7878553101473102679, guid: dd991e8ba4ad54d48a87704f417acbd7, type: 3}
   debugCanvasP: {fileID: 8967334536515828845, guid: 495d79373f42647b4bc4a3912e747af3, type: 3}
+  tutorialCanvasP: {fileID: 9113848223110186409, guid: 3901410034c894de0b3f7ddde422c82a, type: 3}
   backgroundInstance: {fileID: 0}
   startMenuInstance: {fileID: 0}
   HUDInstance: {fileID: 0}
@@ -61,6 +64,9 @@ MonoBehaviour:
   creditsInstance: {fileID: 0}
   gameoverInstance: {fileID: 0}
   debugInstance: {fileID: 0}
+  tutorialInstance: {fileID: 0}
+  currentState: 0
+  currentScreen: 0
 --- !u!1 &8459906069363962343
 GameObject:
   m_ObjectHideFlags: 0

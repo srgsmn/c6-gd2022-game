@@ -84,6 +84,24 @@ public class InputManager : MonoBehaviour
         EventSubscriber(false);
     }
 
+    private void ResetFlags()
+    {
+        debugOn = false;
+        debugOn = false;
+        debugSwitcher = false;
+        debugHealth = false;
+        debugArmor = false;
+        debugSL = false;
+        debugCC = false;
+        debugInc = false;
+        debugDec = false;
+        debugMax = false;
+        debugRst = false;
+        debugSave = false;
+        debugLoad = false;
+        debugQuit = false;
+    }
+
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
 
     // Debug
@@ -117,6 +135,8 @@ public class InputManager : MonoBehaviour
     public static BackInputEvent OnBack;
     public delegate void InfoInputEvent();
     public static InfoInputEvent OnInfo;
+    public delegate void EnterInputEvent();
+    public static EnterInputEvent OnEnter;
 
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
@@ -127,30 +147,43 @@ public class InputManager : MonoBehaviour
         {
             // Debug inputs
             inputs.Debug.IsDebug.started += OnDebugPressed;
+            inputs.Debug.IsDebug.performed += OnDebugPressed;
             inputs.Debug.IsDebug.canceled += OnDebugPressed;
             inputs.Debug.DebugSwitcher.started += OnDebugSwitcherPressed;
+            inputs.Debug.DebugSwitcher.performed += OnDebugSwitcherPressed;
             inputs.Debug.DebugSwitcher.canceled += OnDebugSwitcherPressed;
             inputs.Debug.Health.started += OnDebugHealthPressed;
+            inputs.Debug.Health.performed += OnDebugHealthPressed;
             inputs.Debug.Health.canceled += OnDebugHealthPressed;
             inputs.Debug.Armor.started += OnDebugArmorPressed;
+            inputs.Debug.Armor.performed += OnDebugArmorPressed;
             inputs.Debug.Armor.canceled += OnDebugArmorPressed;
             inputs.Debug.SL.started += OnDebugSLPressed;
+            inputs.Debug.SL.performed += OnDebugSLPressed;
             inputs.Debug.SL.canceled += OnDebugSLPressed;
             inputs.Debug.CC.started += OnDebugCCPressed;
+            inputs.Debug.CC.performed += OnDebugCCPressed;
             inputs.Debug.CC.canceled += OnDebugCCPressed;
             inputs.Debug.Inc.started += OnDebugIncPressed;
+            inputs.Debug.Inc.performed += OnDebugIncPressed;
             inputs.Debug.Inc.canceled += OnDebugIncPressed;
             inputs.Debug.Dec.started += OnDebugDecPressed;
+            inputs.Debug.Dec.performed += OnDebugDecPressed;
             inputs.Debug.Dec.canceled += OnDebugDecPressed;
             inputs.Debug.Max.started += OnDebugMaxPressed;
+            inputs.Debug.Max.performed += OnDebugMaxPressed;
             inputs.Debug.Max.canceled += OnDebugMaxPressed;
             inputs.Debug.Reset.started += OnDebugResetPressed;
+            inputs.Debug.Reset.performed += OnDebugResetPressed;
             inputs.Debug.Reset.canceled += OnDebugResetPressed;
             inputs.Debug.Save.started += OnDebugSavePressed;
+            inputs.Debug.Save.performed += OnDebugSavePressed;
             inputs.Debug.Save.canceled += OnDebugSavePressed;
             inputs.Debug.Load.started += OnDebugLoadPressed;
+            inputs.Debug.Load.performed += OnDebugLoadPressed;
             inputs.Debug.Load.canceled += OnDebugLoadPressed;
             inputs.Debug.Quit.started += OnDebugQuitPressed;
+            inputs.Debug.Quit.performed += OnDebugQuitPressed;
             inputs.Debug.Quit.canceled += OnDebugQuitPressed;
 
             inputs.CharacterControls.Move.started += OnMovementInputPressed;
@@ -164,36 +197,51 @@ public class InputManager : MonoBehaviour
             inputs.UI.Pause.started += OnPausePressed;
             inputs.UI.Back.performed += OnBackPressed;
             inputs.UI.Info.performed += OnInfoPressed;
+            inputs.UI.Enter.performed += OnEnterPressed;
+
+            GameManager.OnParamsReset += OnParamsReset;
 
         }
         else
         {
             // Debug inputs
-            inputs.Debug.IsDebug.started -= OnDebugPressed;
+            inputs.Debug.IsDebug.performed -= OnDebugPressed;
             inputs.Debug.IsDebug.canceled -= OnDebugPressed;
             inputs.Debug.DebugSwitcher.started -= OnDebugSwitcherPressed;
+            inputs.Debug.DebugSwitcher.performed -= OnDebugSwitcherPressed;
             inputs.Debug.DebugSwitcher.canceled -= OnDebugSwitcherPressed;
             inputs.Debug.Health.started -= OnDebugHealthPressed;
+            inputs.Debug.Health.performed -= OnDebugHealthPressed;
             inputs.Debug.Health.canceled -= OnDebugHealthPressed;
             inputs.Debug.Armor.started -= OnDebugArmorPressed;
+            inputs.Debug.Armor.performed -= OnDebugArmorPressed;
             inputs.Debug.Armor.canceled -= OnDebugArmorPressed;
             inputs.Debug.SL.started -= OnDebugSLPressed;
+            inputs.Debug.SL.performed -= OnDebugSLPressed;
             inputs.Debug.SL.canceled -= OnDebugSLPressed;
             inputs.Debug.CC.started -= OnDebugCCPressed;
+            inputs.Debug.CC.performed -= OnDebugCCPressed;
             inputs.Debug.CC.canceled -= OnDebugCCPressed;
             inputs.Debug.Inc.started -= OnDebugIncPressed;
+            inputs.Debug.Inc.performed -= OnDebugIncPressed;
             inputs.Debug.Inc.canceled -= OnDebugIncPressed;
             inputs.Debug.Dec.started -= OnDebugDecPressed;
+            inputs.Debug.Dec.performed -= OnDebugDecPressed;
             inputs.Debug.Dec.canceled -= OnDebugDecPressed;
             inputs.Debug.Max.started -= OnDebugMaxPressed;
+            inputs.Debug.Max.performed -= OnDebugMaxPressed;
             inputs.Debug.Max.canceled -= OnDebugMaxPressed;
             inputs.Debug.Reset.started -= OnDebugResetPressed;
+            inputs.Debug.Reset.performed -= OnDebugResetPressed;
             inputs.Debug.Reset.canceled -= OnDebugResetPressed;
             inputs.Debug.Save.started -= OnDebugSavePressed;
+            inputs.Debug.Save.performed -= OnDebugSavePressed;
             inputs.Debug.Save.canceled -= OnDebugSavePressed;
             inputs.Debug.Load.started -= OnDebugLoadPressed;
+            inputs.Debug.Load.performed -= OnDebugLoadPressed;
             inputs.Debug.Load.canceled -= OnDebugLoadPressed;
             inputs.Debug.Quit.started -= OnDebugQuitPressed;
+            inputs.Debug.Quit.performed -= OnDebugQuitPressed;
             inputs.Debug.Quit.canceled -= OnDebugQuitPressed;
 
             inputs.CharacterControls.Move.started -= OnMovementInputPressed;
@@ -207,10 +255,21 @@ public class InputManager : MonoBehaviour
             inputs.UI.Pause.started -= OnPausePressed;
             inputs.UI.Back.performed -= OnBackPressed;
             inputs.UI.Info.performed -= OnInfoPressed;
+            inputs.UI.Enter.performed -= OnEnterPressed;
+
+            GameManager.OnParamsReset += OnParamsReset;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void OnParamsReset()
+    {
+        EventSubscriber(false);
+        EventSubscriber();
+
+        ResetFlags();
+    }
 
     // Debug
 
@@ -410,6 +469,15 @@ public class InputManager : MonoBehaviour
         if (context.ReadValueAsButton())
         {
             OnPause?.Invoke();
+        }
+    }
+
+    private void OnEnterPressed(InputAction.CallbackContext context)
+    {
+        Deb("### ENTER PRESSED ###");
+        if (context.ReadValueAsButton())
+        {
+            OnEnter?.Invoke();
         }
     }
 

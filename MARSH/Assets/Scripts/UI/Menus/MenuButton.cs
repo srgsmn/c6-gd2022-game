@@ -14,15 +14,22 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private Button button;
     [SerializeField] private Image buttonImage;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private bool changeWithBg = true;
+    [SerializeField][ReadOnlyInspector] private Color bgColor;
 
     private ButtonFeature features;
-
+    
     private void Awake()
     {
         if (button == null) button = GetComponent<Button>();
         if (buttonImage == null) buttonImage = GetComponent<Image>();
 
         EventSubscriber();
+    }
+
+    private void Update()
+    {
+        if (features != null && changeWithBg) features.hovTxtColor = bgColor;
     }
 
     private void Start()
@@ -36,9 +43,13 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (button.IsInteractable())
+        if (button.IsInteractable() && changeWithBg)
         {
             text.color = features.hovTxtColor;
+        }
+        if (!changeWithBg)
+        {
+            text.color = Color.white;
         }
     }
 
@@ -55,6 +66,8 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         GameObject.Find("EventSystem")
             .GetComponent<UnityEngine.EventSystems.EventSystem>()
             .SetSelectedGameObject(null);
+
+        text.color = features.defTxtColor;
     }
 
     private void OnDestroy()
@@ -80,6 +93,6 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void ChangeHovTxtColor(Color color)
     {
-        if(features != null)  features.hovTxtColor = color;
+        bgColor = color;
     }
 }

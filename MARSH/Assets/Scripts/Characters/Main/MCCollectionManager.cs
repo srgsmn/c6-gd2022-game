@@ -210,6 +210,8 @@ public class MCCollectionManager : MonoBehaviour
             StoreItem.OnPurchase += Purchase;
 
             DataManager.OnGameLoading += LoadData;
+
+            CollectablesGUIManager.OnGUIStartup += ReplyWithData;
         }
         else
         {
@@ -221,10 +223,18 @@ public class MCCollectionManager : MonoBehaviour
             StoreItem.OnPurchase -= Purchase;
 
             DataManager.OnGameLoading -= LoadData;
+
+            CollectablesGUIManager.OnGUIStartup -= ReplyWithData;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void ReplyWithData()
+    {
+        OnValueChanged?.Invoke(ChParam.SL, sugarLumps);
+        OnValueChanged?.Invoke(ChParam.CC, chocoChips);
+    }
 
     private void LoadData(PlayerData data)
     {

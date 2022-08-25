@@ -6819,7 +6819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8614696182296510628, guid: 875b63f7bb9c64297bbb4c4d6cf07cf9, type: 3}
       propertyPath: m_Name
-      value: Button
+      value: CloseBtn
       objectReference: {fileID: 0}
     - target: {fileID: 8614696182296510629, guid: 875b63f7bb9c64297bbb4c4d6cf07cf9, type: 3}
       propertyPath: m_Pivot.x

@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Globals;
 using UnityEngine;
-using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
+//using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 public class CanvasesManager : MonoBehaviour
 {
@@ -17,10 +17,11 @@ public class CanvasesManager : MonoBehaviour
     [SerializeField] private GameObject HUDCanvasP;
     [SerializeField] private GameObject pauseMenuCanvasP;
     [SerializeField] private GameObject storeMenuCanvasP;
-    //[SerializeField] private GameObject settingsMenuCanvasP;
-    //[SerializeField] private GameObject creditsCanvasP;
+    [SerializeField] private GameObject settingsMenuCanvasP;
+    [SerializeField] private GameObject creditsCanvasP;
     [SerializeField] private GameObject gameoverCanvasP;
     [SerializeField] private GameObject debugCanvasP;
+    [SerializeField] private GameObject tutorialCanvasP;
 
     [Header("Canvases instances:")]
     [SerializeField][ReadOnlyInspector] private GameObject backgroundInstance;
@@ -32,17 +33,34 @@ public class CanvasesManager : MonoBehaviour
     [SerializeField][ReadOnlyInspector] private GameObject creditsInstance;
     [SerializeField][ReadOnlyInspector] private GameObject gameoverInstance;
     [SerializeField][ReadOnlyInspector] private GameObject debugInstance;
+    [SerializeField][ReadOnlyInspector] private GameObject tutorialInstance;
+
+    [Header("Current values:")]
+    [SerializeField][ReadOnlyInspector] private GameState currentState;
+    [SerializeField][ReadOnlyInspector] private GameScreen currentScreen;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
     {
+        gameObject.name += "_" + GameManager.Instance.GetSceneIndex();
+
         EventSubscriber();
     }
 
     private void Start()
     {
         OnNewState(GameManager.Instance.currentState);
+    }
+
+    private void Update()
+    {
+        //Deb("Update(): current state: " + currentState + "; current screen: " + currentScreen);
+        if(currentScreen==GameScreen.PlayScreen && !HUDInstance.activeSelf)
+        {
+            // FIXME: I've used this method even if is not the best because I can't understand why without it and while prepearing the scene it doesn't show the HUD properly
+            HUDInstance.SetActive(true);
+        }
     }
 
     private void OnDestroy()
@@ -60,6 +78,8 @@ public class CanvasesManager : MonoBehaviour
 
             GameManager.OnNewScreen += DisplayCanvas;
             GameManager.OnNewState += OnNewState;
+
+            GameManager.OnStartTutorial += DisplayTutorial;
         }
         else
         {
@@ -67,10 +87,18 @@ public class CanvasesManager : MonoBehaviour
 
             GameManager.OnNewScreen -= DisplayCanvas;
             GameManager.OnNewState -= OnNewState;
+
+            GameManager.OnStartTutorial -= DisplayTutorial;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void DisplayTutorial()
+    {
+        Deb("DISPLAYING TUTORIAL");
+        tutorialInstance.SetActive(true);
+    }
 
     private void DisplayCanvas(GameScreen screen)
     {
@@ -107,10 +135,26 @@ public class CanvasesManager : MonoBehaviour
 
                 if (pauseMenuInstance.activeSelf) pauseMenuInstance.SetActive(false);
                 if (storeMenuInstance.activeSelf) storeMenuInstance.SetActive(false);
+                if (settingsMenuInstance.activeSelf) settingsMenuInstance.SetActive(false);
+                if (creditsInstance.activeSelf) creditsInstance.SetActive(false);
 
+                Deb("DisplayCanvas(): Now displaying specifically HUD (instance is " + (HUDInstance.activeSelf ? "" : "NOT " ) + "active)");
                 if (!HUDInstance.activeSelf) HUDInstance.SetActive(true);
+                Deb("DisplayCanvas(): Now HUD instance is " + (HUDInstance.activeSelf ? "" : "NOT ") + "active");
 
                 Deb("DisplayCanvas(): Current canvas status: pause canvas = " + pauseMenuInstance.activeSelf + " (expected false), store canvas = " + storeMenuInstance.activeSelf + " (expected false), HUD canvas = " + HUDInstance.activeSelf + " (expected true)");
+
+                Deb("DisplayCanvas(): Basing on Game Manager tutorial is " + (GameManager.Instance.isTutorialOn ? "ON" : "OFF"));
+                if (GameManager.Instance.isTutorialOn)
+                {
+                    Deb("DisplayCanvas(): Setting tutorial canvas to true");
+                    tutorialInstance.SetActive(true);
+                }
+                else
+                {
+                    Deb("DisplayCanvas(): Setting tutorial canvas to false");
+                    tutorialInstance.SetActive(false);
+                }
 
                 Cursor.visible = false;
 
@@ -130,7 +174,10 @@ public class CanvasesManager : MonoBehaviour
             case GameScreen.SettingsMenu:
                 if (!backgroundInstance.activeSelf) backgroundInstance.SetActive(true);
 
-                if (HUDInstance.activeSelf) HUDInstance.SetActive(false);
+                if (startMenuInstance != null && startMenuInstance.activeSelf) startMenuInstance.SetActive(false);
+                if (pauseMenuInstance != null && pauseMenuInstance.activeSelf) pauseMenuInstance.SetActive(false);
+                if (HUDInstance != null && HUDInstance.activeSelf) HUDInstance.SetActive(false);
+                if (creditsInstance != null && creditsInstance.activeSelf) creditsInstance.SetActive(false);
 
                 if (!settingsMenuInstance.activeSelf) settingsMenuInstance.SetActive(true);
 
@@ -141,7 +188,9 @@ public class CanvasesManager : MonoBehaviour
             case GameScreen.CreditsMenu:
                 if (!backgroundInstance.activeSelf) backgroundInstance.SetActive(true);
 
-                if (HUDInstance.activeSelf) HUDInstance.SetActive(false);
+                if (startMenuInstance != null && startMenuInstance.activeSelf) startMenuInstance.SetActive(false);
+                if (HUDInstance != null && HUDInstance.activeSelf) HUDInstance.SetActive(false);
+                if (settingsMenuInstance != null && settingsMenuInstance.activeSelf) settingsMenuInstance.SetActive(false);
 
                 if (!creditsInstance.activeSelf) creditsInstance.SetActive(true);
 
@@ -157,73 +206,86 @@ public class CanvasesManager : MonoBehaviour
 
                 break;
         }
+
+        Deb("DisplayCanvas(): changing current screen to " + screen);
+        currentScreen = screen;
+        Deb("DisplayCanvas(): now current screen is " + currentScreen);
     }
 
     private void OnNewState(GameState state)
     {
-        if (state == GameState.Start)
+        switch (state)
         {
-            if (backgroundInstance == null) backgroundInstance = Instantiate(backgroundCanvasP, transform);
-            //backgroundInstance.SetActive(true);
+            case GameState.Start:
+                if (backgroundInstance == null) backgroundInstance = Instantiate(backgroundCanvasP, transform);
+                //backgroundInstance.SetActive(true);
 
-            if (HUDInstance != null) Destroy(HUDInstance);
-            if (pauseMenuInstance != null) Destroy(pauseMenuInstance);
-            if (storeMenuInstance != null) Destroy(storeMenuInstance);
-            if (gameoverInstance != null) Destroy(gameoverInstance);
-            if (debugInstance != null) Destroy(debugInstance);
+                if (HUDInstance != null) Destroy(HUDInstance);
+                if (pauseMenuInstance != null) Destroy(pauseMenuInstance);
+                if (storeMenuInstance != null) Destroy(storeMenuInstance);
+                if (gameoverInstance != null) Destroy(gameoverInstance);
+                if (debugInstance != null) Destroy(debugInstance);
 
-            if (startMenuInstance == null) startMenuInstance = Instantiate(startMenuCanvasP, transform);
-            //startMenuInstance.SetActive(true);
+                if (startMenuInstance == null) startMenuInstance = Instantiate(startMenuCanvasP, transform);
+                //startMenuInstance.SetActive(true);
 
-            //if (settingsMenuInstance == null) settingsMenuInstance = Instantiate(settingsMenuCanvasP, transform);
-            //settingsMenuInstance.SetActive(false);
+                if (settingsMenuInstance == null) settingsMenuInstance = Instantiate(settingsMenuCanvasP, transform);
+                settingsMenuInstance.SetActive(false);
 
-            //if (creditsInstance != null) creditsInstance = Instantiate(creditsCanvasP, transform);
-            //creditsInstance.SetActive(false);
+                if (creditsInstance == null) creditsInstance = Instantiate(creditsCanvasP, transform);
+                creditsInstance.SetActive(false);
+
+                break;
+
+            case GameState.Play:
+            case GameState.Pause:
+                if (HUDInstance == null) HUDInstance = Instantiate(HUDCanvasP, transform);
+                HUDInstance.SetActive(false);
+
+                if (debugInstance == null) debugInstance = Instantiate(debugCanvasP, transform);
+                debugInstance.SetActive(GameManager.Instance.isDebugMode);
+
+                if (tutorialInstance == null) tutorialInstance = Instantiate(tutorialCanvasP, transform);
+                tutorialInstance.SetActive(GameManager.Instance.isTutorialOn);
+
+                if (backgroundInstance == null) backgroundInstance = Instantiate(backgroundCanvasP, transform);
+                backgroundInstance.SetActive(false);
+
+                if (pauseMenuInstance == null) pauseMenuInstance = Instantiate(pauseMenuCanvasP, transform);
+                pauseMenuInstance.SetActive(false);
+
+                if (storeMenuInstance == null) storeMenuInstance = Instantiate(storeMenuCanvasP, transform);
+                storeMenuInstance.SetActive(false);
+
+                if (settingsMenuInstance == null) settingsMenuInstance = Instantiate(settingsMenuCanvasP, transform);
+                settingsMenuInstance.SetActive(false);
+
+                if (creditsInstance == null) creditsInstance = Instantiate(creditsCanvasP, transform);
+                creditsInstance.SetActive(false);
+
+                if (startMenuInstance != null) Destroy(startMenuInstance);
+                if (gameoverInstance != null) Destroy(gameoverInstance);
+
+                break;
+
+            case GameState.GameOver:
+                if (backgroundInstance != null) Destroy(backgroundInstance);
+                if (startMenuInstance != null) Destroy(startMenuInstance);
+                if (HUDInstance != null) Destroy(HUDInstance);
+                if (pauseMenuInstance != null) Destroy(pauseMenuInstance);
+                if (storeMenuInstance != null) Destroy(storeMenuInstance);
+                if (settingsMenuInstance != null) Destroy(settingsMenuInstance);
+                if (creditsInstance != null) Destroy(creditsInstance);
+                if (debugInstance != null) Destroy(debugInstance);
+
+
+                if (gameoverInstance == null) gameoverInstance = Instantiate(gameoverCanvasP, transform);
+                //gameoverInstance.SetActive(true);
+
+                break;
         }
-        else if(state == GameState.GameOver)
-        {
-            if (backgroundInstance != null) Destroy(backgroundInstance);
-            if (startMenuInstance != null) Destroy(startMenuInstance);
-            if (HUDInstance != null) Destroy(HUDInstance);
-            if (pauseMenuInstance != null) Destroy(pauseMenuInstance);
-            if (storeMenuInstance != null) Destroy(storeMenuInstance);
-            if (settingsMenuInstance != null) Destroy(settingsMenuInstance);
-            if (creditsInstance != null) Destroy(creditsInstance);
-            if (debugInstance != null) Destroy(debugInstance);
 
-
-            if (gameoverInstance == null) gameoverInstance = Instantiate(gameoverCanvasP, transform);
-            //gameoverInstance.SetActive(true);
-        }
-        else
-        {
-            if (HUDInstance == null) HUDInstance = Instantiate(HUDCanvasP, transform);
-            HUDInstance.SetActive(true);
-
-            if (backgroundInstance == null) backgroundInstance = Instantiate(backgroundCanvasP, transform);
-
-            if (state == GameState.Play) backgroundInstance.SetActive(false);
-            if (state == GameState.Pause) backgroundInstance.SetActive(true);
-
-            if (pauseMenuInstance == null) pauseMenuInstance = Instantiate(pauseMenuCanvasP, transform);
-            pauseMenuInstance.SetActive(false);
-
-            if (storeMenuInstance == null) storeMenuInstance = Instantiate(storeMenuCanvasP, transform);
-            storeMenuInstance.SetActive(false);
-
-            //if (settingsMenuInstance == null) settingsMenuInstance = Instantiate(settingsMenuCanvasP, transform);
-            //settingsMenuInstance.SetActive(true);
-
-            //if (creditsInstance == null) creditsInstance = Instantiate(creditsCanvasP, transform);
-            //creditsInstance.SetActive(true);
-
-            if (debugInstance == null) debugInstance = Instantiate(debugCanvasP, transform);
-            debugInstance.SetActive(GameManager.Instance.isDebugMode);
-
-            if (startMenuInstance != null) Destroy(startMenuInstance);
-            if (gameoverInstance != null) Destroy(gameoverInstance);
-        }
+        currentState = state;
     }
 
     private void SetDebugMode(bool flag)
@@ -238,15 +300,17 @@ public class CanvasesManager : MonoBehaviour
         switch (type)
         {
             case DebMsgType.log:
-                Debug.Log(this.GetType().Name + " > " + msg);
+                Debug.Log(this.GetType().Name + " > " + msg + "\n{GameObject info: Name: " + gameObject.name + ", tag: " + gameObject.tag + "}");
+
                 break;
 
             case DebMsgType.warn:
-                Debug.LogWarning(this.GetType().Name + " > " + msg);
+                Debug.LogWarning(this.GetType().Name + " > " + msg + "\n{GameObject info: Name: " + gameObject.name + ", tag: " + gameObject.tag + "}");
+
                 break;
 
             case DebMsgType.err:
-                Debug.LogError(this.GetType().Name + " > " + msg);
+                Debug.LogError(this.GetType().Name + " > " + msg + "\n{GameObject info: Name: " + gameObject.name + ", tag: " + gameObject.tag + "}");
 
 
                 break;

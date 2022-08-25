@@ -6,11 +6,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
+//using UnityEngine.EventSystems;
 using Globals;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class Alert : Menu, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Alert : Menu //, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private AlertType alertType;
     [SerializeField] private Image background;
@@ -35,17 +36,18 @@ public class Alert : Menu, IPointerEnterHandler, IPointerExitHandler, IPointerCl
         confirmTxt.text = alertObject.confirmText;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    //public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick()
     {
         CancelAction();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter()
     {
         background.color = new Color(1f, 1f, 1f, 0f);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit()
     {
         background.color = defaultBg;
     }
@@ -63,6 +65,23 @@ public class Alert : Menu, IPointerEnterHandler, IPointerExitHandler, IPointerCl
                 QuitGame();
 
                 break;
+
+            case AlertType.Reset:
+                GameManager.Instance.ResetGame();
+
+                Destroy(gameObject);
+
+                break;
+
+            case AlertType.StartMenu:
+                StartMenu();
+
+                break;
         }
+    }
+
+    public void SetAlertType(AlertType type)
+    {
+        this.alertType = type;
     }
 }

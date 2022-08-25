@@ -73,11 +73,20 @@ public class DataManager : MonoBehaviour
         return currentGameData.player;
     }
 
-    public void ReloadGame()
+    public bool ReloadGame()
     {
-        currentGameData = new GameData(loadedGameData);   //FIXME
+        if (loadedGameData == null)
+        {
+            return false;
+        }
+
+        currentGameData = new GameData(loadedGameData);
+
+        Camera.main.transform.SetPositionAndRotation(currentGameData.player.camPos, currentGameData.player.camRot);
 
         OnGameLoading?.Invoke(currentGameData.player);
+
+        return true;
     }
 
     public void ResetGameData()
@@ -91,6 +100,7 @@ public class DataManager : MonoBehaviour
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
+
     public delegate void ValueUpdateEvent(bool saved, ChParam param, object value);
     public static ValueUpdateEvent OnValueUpdate;
     public delegate void CPLoadEvent(string id);
@@ -116,6 +126,8 @@ public class DataManager : MonoBehaviour
 
             Checkpoint.OnCheckpoint += SaveGameData;
             Collectable.OnCollection += OnNewCollection;
+
+            GameManager.OnParamsReset += OnParamsReset;
         }
         else
         {
@@ -125,10 +137,18 @@ public class DataManager : MonoBehaviour
 
             Checkpoint.OnCheckpoint -= SaveGameData;
             Collectable.OnCollection -= OnNewCollection;
+
+            GameManager.OnParamsReset -= OnParamsReset;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void OnParamsReset()
+    {
+        EventSubscriber(false);
+        EventSubscriber(true);
+    }
 
     private void OnNewCollection(CollectableType type, string id)
     {
@@ -143,11 +163,15 @@ public class DataManager : MonoBehaviour
         {
             case ChParam.Pos:
                 currentPlayerData.position = (Vector3)value;
+                currentPlayerData.camPos = Camera.main.transform.position;
+                currentPlayerData.camRot = Camera.main.transform.rotation;
 
                 break;
 
             case ChParam.Rot:
                 currentPlayerData.rotation = (Quaternion)value;
+                currentPlayerData.camPos = Camera.main.transform.position;
+                currentPlayerData.camRot = Camera.main.transform.rotation;
 
                 break;
 

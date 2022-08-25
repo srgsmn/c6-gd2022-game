@@ -49,6 +49,11 @@ public class HealthBarGUIManager : MonoBehaviour
         EventSubscriber();
     }
 
+    private void Start()
+    {
+        OnGUIStartup?.Invoke();
+    }
+
     private void OnDestroy()
     {
         EventSubscriber(false);
@@ -104,6 +109,9 @@ public class HealthBarGUIManager : MonoBehaviour
 
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
+    public delegate void GUIDataCheck();
+    public static GUIDataCheck OnGUIStartup;
+
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
     private void EventSubscriber(bool subscribing = true)

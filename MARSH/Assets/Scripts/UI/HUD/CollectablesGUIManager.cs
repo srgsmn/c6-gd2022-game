@@ -76,6 +76,7 @@ public class CollectablesGUIManager : MonoBehaviour
 
     private void Start()
     {
+        OnGUIStartup?.Invoke();
         ShowAll();
     }
 
@@ -172,6 +173,11 @@ public class CollectablesGUIManager : MonoBehaviour
         HideText(CollectableType.SL);
         HideText(CollectableType.CC);
     }
+
+    // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
+
+    public delegate void GUIDataCheck();
+    public static GUIDataCheck OnGUIStartup;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 

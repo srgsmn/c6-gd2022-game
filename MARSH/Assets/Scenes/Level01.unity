@@ -326,7 +326,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390091084}
-  m_LocalRotation: {x: 0.12218307, y: 0.0017452519, z: -0.0002148503, w: 0.992506}
+  m_LocalRotation: {x: 0.12218311, y: 0.0017452149, z: -0.00021484583, w: 0.992506}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -798,6 +798,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPlayerData:
     level: 0
+    camPos: {x: 0, y: 0, z: 0}
+    camRot: {x: 0, y: 0, z: 0, w: 1}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
     health: 0
@@ -809,11 +811,13 @@ MonoBehaviour:
     sl: 0
     cc: 0
   currentEnvironmentData:
-    collectablesID: []
+    collectablesIDs: []
     lastCheckpointID: 
   currentGameData:
     player:
       level: 0
+      camPos: {x: 0, y: 0, z: 0}
+      camRot: {x: 0, y: 0, z: 0, w: 1}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       health: 0
@@ -825,11 +829,13 @@ MonoBehaviour:
       sl: 0
       cc: 0
     environment:
-      collectablesID: []
+      collectablesIDs: []
       lastCheckpointID: 
   loadedGameData:
     player:
       level: 0
+      camPos: {x: 0, y: 0, z: 0}
+      camRot: {x: 0, y: 0, z: 0, w: 1}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       health: 0
@@ -841,7 +847,7 @@ MonoBehaviour:
       sl: 0
       cc: 0
     environment:
-      collectablesID: []
+      collectablesIDs: []
       lastCheckpointID: 
 --- !u!4 &895336283
 Transform:
@@ -1091,7 +1097,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.10410968, y: 0.0017488791, z: -0.00018307034, w: 0.99456424}
+  m_LocalRotation: {x: 0.10410968, y: 0.0017488619, z: -0.00018306861, w: 0.99456424}
   m_LocalPosition: {x: -0.03516847, y: 3, z: -9.999938}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1666,7 +1672,6 @@ MonoBehaviour:
   debugSave: 0
   debugLoad: 0
   debugQuit: 0
-  isGUIActive: 0
 --- !u!4 &1512007857
 Transform:
   m_ObjectHideFlags: 0
@@ -2183,6 +2188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de7f9b1f2f6b4f1db60ab5017486531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentState: 0
+  currentScreen: 0
+  _isDebugMode: 0
+  _isTutorialOn: 0
 --- !u!4 &1797412715
 Transform:
   m_ObjectHideFlags: 0
@@ -2394,7 +2403,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927946286}
-  m_LocalRotation: {x: 0.104109675, y: 0.001748879, z: -0.00018307035, w: 0.9945643}
+  m_LocalRotation: {x: 0.104109675, y: 0.0017488617, z: -0.00018306855, w: 0.9945643}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

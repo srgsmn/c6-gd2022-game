@@ -24,7 +24,7 @@ public class MCHealthController : HealthController
 
         EventSubscriber();
 
-        NotifyStart();
+        NotifyAll();
     }
 
     private void Update()
@@ -147,7 +147,7 @@ public class MCHealthController : HealthController
         }
     }
 
-    private void NotifyStart()
+    private void NotifyAll()
     {
         Deb("NotifyStart(): Component is active and communicating initial parameters. DataManager is supposed to update inspector data.");
 
@@ -178,6 +178,8 @@ public class MCHealthController : HealthController
             StoreItem.OnPurchase += Purchase;
 
             DataManager.OnGameLoading += LoadData;
+
+            HealthBarGUIManager.OnGUIStartup += ReplyWithData;
         }
         else
         {
@@ -187,6 +189,8 @@ public class MCHealthController : HealthController
             StoreItem.OnPurchase -= Purchase;
 
             DataManager.OnGameLoading -= LoadData;
+
+            HealthBarGUIManager.OnGUIStartup -= ReplyWithData;
         }
     }
 
@@ -294,6 +298,11 @@ public class MCHealthController : HealthController
             if (transaction.defHFactor != 0) SetValue(ChParam.DefHFact, transaction.defHFactor);
             if (transaction.defAFactor != 0) SetValue(ChParam.DefAFact, transaction.defAFactor);
         }
+    }
+
+    private void ReplyWithData()
+    {
+        NotifyAll();
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
