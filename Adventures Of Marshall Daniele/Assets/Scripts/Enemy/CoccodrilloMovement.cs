@@ -8,6 +8,7 @@ public class CoccodrilloMovement : MonoBehaviour
     [SerializeField] GameObject[] waypoints;
     int currentWaypointIndex = 0;
     [SerializeField] float speed = 2f;
+    public float smooth = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -28,5 +29,7 @@ public class CoccodrilloMovement : MonoBehaviour
          }
 
         transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speed * Time.deltaTime);
+        
+
     }
 }

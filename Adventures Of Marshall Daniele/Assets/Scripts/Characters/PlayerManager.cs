@@ -18,11 +18,13 @@ using UnityEngine;
 [RequireComponent(typeof(CollisionManager))]
 public class PlayerManager : MonoBehaviour
 {
+
     [Header("Debug purpose readonly fields")]
     [SerializeField][ReadOnlyInspector] private PlayerController playerController;
     [SerializeField][ReadOnlyInspector] private PlayerHealthController playerHealthController;
     [SerializeField][ReadOnlyInspector] private CollectablesManager collectablesManager;
     [SerializeField][ReadOnlyInspector] private CollisionManager collisionManager;
+
 
     private void Awake()
     {

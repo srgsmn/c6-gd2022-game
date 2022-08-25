@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private bool isMovementPressed;
     private bool isRunPressed;
 
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float speed = 10f;
     [SerializeField] private float rotationFactorPerFrame = 1.0f;
     [SerializeField] private float runMultiplier = 3.0f;
 
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     //jumping vars
     private bool isJumpPressed = false;
     private float initialJumpVelocity;
-    [SerializeField] private float maxJumpHeight = 2f;
+    [SerializeField] private float maxJumpHeight = 3f;
     [SerializeField] private float maxJumpTime = .75f;
     private bool isJumping = false;
 
@@ -80,6 +80,15 @@ public class PlayerController : MonoBehaviour
     public static event PositionUpdateEvent OnPositionUpdate;
     public delegate void RotationUpdateEvent(Quaternion value);
     public static event RotationUpdateEvent OnRotationUpdate;
+
+    // ANIMATION WALKING
+    [SerializeField] private float _speed = 5.0f;
+    private Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Awake()
     {
@@ -145,7 +154,7 @@ public class PlayerController : MonoBehaviour
     
     void OnMovementInput(InputAction.CallbackContext context)
     {
-        Debug.Log(context.ReadValue<Vector2>());
+        //Debug.Log(context.ReadValue<Vector2>());
         currMovementInput = context.ReadValue<Vector2>();
 
         Vector3 camFw = Camera.main.transform.forward;
@@ -329,6 +338,14 @@ public class PlayerController : MonoBehaviour
         //MovePlayerRelativeToCamera();
         //HandleAnimation();    TODO
         
+        var velocityV = Vector3.forward * Input.GetAxis("Vertical") * _speed;
+        var velocityH = Vector3.forward * Input.GetAxis("Horizontal") * _speed;
+        if(velocityH.magnitude > velocityV.magnitude) {
+            animator.SetFloat("speed", velocityH.magnitude);
+        } else {
+            animator.SetFloat("speed", velocityV.magnitude);
+        }
+    
 
         if (isRunPressed)
         {
@@ -344,6 +361,10 @@ public class PlayerController : MonoBehaviour
         }
 
         characterController.Move(appliedMovement * Time.deltaTime);
+
+        if(Input.GetKey("x")){
+            animator.SetTrigger("attack");
+        }
 
         HandleGravity();
         HandleJump();

@@ -47,6 +47,7 @@ public class CollisionManager : MonoBehaviour
                 collectablesManager.IncrementItem(Globals.CollectableType.CC, collider);
 
                 break;
+                
         }
     }
 }

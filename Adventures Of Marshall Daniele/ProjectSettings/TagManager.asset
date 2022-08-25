@@ -12,6 +12,8 @@ TagManager:
   - Shop
   - GM
   - CheckPoint
+  - BulletOrsettoVerde
+  - ExplosionOrsettoRosso
   layers:
   - Default
   - TransparentFX
