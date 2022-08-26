@@ -24,7 +24,7 @@ public class MCMovementController : MonoBehaviour
     // COMPONENT ATTRIBUTES ____________________________________________________ COMPONENT ATTRIBUTES
 
     [Header("Required components:")]
-    //[SerializeField] private Animator animator;
+    private Animator animator;
     [SerializeField] private CharacterController characterController;
     [SerializeField]
     [ReadOnlyInspector] private Transform cam;
@@ -118,6 +118,8 @@ public class MCMovementController : MonoBehaviour
         cam = Camera.main.transform;
 
         SetupJumpVariables();
+
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -128,12 +130,16 @@ public class MCMovementController : MonoBehaviour
         {
             HandleMovement();
             HandleRotation();
-            //HandleAnimation();
+
+            animator.SetBool("camminata", false);
 
             if (isRunPressed)
             {
                 appliedMovement *= runMultiplier;
             }
+        }
+        else {
+            animator.SetBool("camminata", true);
         }
 
         HandleGravity();
@@ -143,6 +149,7 @@ public class MCMovementController : MonoBehaviour
             characterController.Move(appliedMovement * Time.deltaTime);
 
         appliedMovement = Vector3.zero;
+
     }
 
     private void LateUpdate()
@@ -251,6 +258,7 @@ public class MCMovementController : MonoBehaviour
         currentMovement.z = camRelMovement.z;
 
         appliedMovement = currentMovement;
+
     }
 
     private void HandleRotation()
@@ -309,9 +317,11 @@ public class MCMovementController : MonoBehaviour
         }
     }
 
-    /*
+
+    /*    
     void HandleAnimation()  //TODO Solo da desilenziare quando si hanno le animazioni
     {
+
         bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunningHash);
 
