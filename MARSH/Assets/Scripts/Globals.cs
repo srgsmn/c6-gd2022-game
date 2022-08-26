@@ -186,6 +186,19 @@ namespace Globals
         Welcome, Movement, Jump, Sprint, Collectables, Places, Pause, Final, None
     }
 
+    public enum PlayerAudioType
+    {
+        Jump, Landing, SL_Collection, CC_Collection, Death, Damage
+    }   
+
+    // STRUCTS _________________________________________________________________ STRUCTS
+    [Serializable]
+    public struct AudioEffect
+    {
+        public PlayerAudioType type;
+        public AudioSource source;
+    }
+
     // CLASSES _________________________________________________________________ CLASSES
 
     public class AlertObject

@@ -10,26 +10,19 @@ using Globals;
 using UnityEngine;
 
 public class MCHealthController : HealthController
-{ 
+{
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
     {
-
+        EventSubscriber();
     }
 
     public override void Start()
     {
         base.Start();
 
-        EventSubscriber();
-
         NotifyAll();
-    }
-
-    private void Update()
-    {
-        
     }
 
     private void OnDestroy()
@@ -49,6 +42,10 @@ public class MCHealthController : HealthController
         if (!isAlive)
         {
             Die();
+        }
+        else
+        {
+            OnDamage?.Invoke();
         }
     }
 
@@ -165,6 +162,9 @@ public class MCHealthController : HealthController
 
     public delegate void DeathEvent();
     public static DeathEvent OnDeath;
+
+    public delegate void DamageEvent();
+    public static DamageEvent OnDamage;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 

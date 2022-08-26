@@ -17,6 +17,9 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private bool changeWithBg = true;
     [SerializeField][ReadOnlyInspector] private Color bgColor;
 
+    [Header("SFX:")]
+    [SerializeField] private AudioSource hoverSound;
+
     private ButtonFeature features;
     
     private void Awake()
@@ -51,6 +54,8 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             text.color = Color.white;
         }
+
+        if(hoverSound!=null)    hoverSound.Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -63,6 +68,8 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        OnButtonClicked?.Invoke();
+
         GameObject.Find("EventSystem")
             .GetComponent<UnityEngine.EventSystems.EventSystem>()
             .SetSelectedGameObject(null);
@@ -74,6 +81,9 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         EventSubscriber(false);
     }
+
+    public delegate void ButtonClickedEvent();
+    public static ButtonClickedEvent OnButtonClicked;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 

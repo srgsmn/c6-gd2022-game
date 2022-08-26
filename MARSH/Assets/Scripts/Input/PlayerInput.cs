@@ -53,6 +53,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""7daea5c2-9ecc-4e51-832c-6378cd637e5f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -218,6 +227,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5acb22e6-8e2b-4abb-b9e5-58c3df8484bd"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -587,6 +607,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControls_Move = m_CharacterControls.FindAction("Move", throwIfNotFound: true);
         m_CharacterControls_Jump = m_CharacterControls.FindAction("Jump", throwIfNotFound: true);
         m_CharacterControls_Run = m_CharacterControls.FindAction("Run", throwIfNotFound: true);
+        m_CharacterControls_Attack = m_CharacterControls.FindAction("Attack", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_IsDebug = m_Debug.FindAction("IsDebug", throwIfNotFound: true);
@@ -670,6 +691,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Move;
     private readonly InputAction m_CharacterControls_Jump;
     private readonly InputAction m_CharacterControls_Run;
+    private readonly InputAction m_CharacterControls_Attack;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -677,6 +699,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_CharacterControls_Move;
         public InputAction @Jump => m_Wrapper.m_CharacterControls_Jump;
         public InputAction @Run => m_Wrapper.m_CharacterControls_Run;
+        public InputAction @Attack => m_Wrapper.m_CharacterControls_Attack;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -695,6 +718,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Run.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnRun;
                 @Run.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnRun;
                 @Run.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnRun;
+                @Attack.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -708,6 +734,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
         }
     }
@@ -903,6 +932,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {

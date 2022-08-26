@@ -179,8 +179,12 @@ public class MCMovementController : MonoBehaviour
 
     public delegate void MoveEvent(bool isMoving);
     public static MoveEvent OnMove;
-    public delegate void JumpEvent(bool isJumping);
+    public delegate void JumpFlagEvent(bool isJumping);
+    public static JumpFlagEvent OnJumpFlag;
+    public delegate void JumpEvent();
     public static JumpEvent OnJump;
+    public delegate void LandingEvent();
+    public static LandingEvent OnLanding;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -282,16 +286,21 @@ public class MCMovementController : MonoBehaviour
         if (!isJumping && characterController.isGrounded && isJumpPressed)
         {
             isJumping = true;
+
+            OnJump?.Invoke();
+
             //Altra roba qui per più tipi di salto e animazioni da video #3
             currentMovement.y = initialJumpVelocity;   //Se stai guardando il video #3 di I<3Gamedev e non tornano le cose, è perché ha sbagliato e le ha corrette in #4
             appliedMovement.y = initialJumpVelocity;
         }
         else if (!isJumpPressed && isJumping && characterController.isGrounded)
         {
-            isJumping = false;    
+            isJumping = false;
+
+            OnLanding?.Invoke();
         }
 
-        OnJump?.Invoke(isJumping);
+        OnJumpFlag?.Invoke(isJumping);
     }
 
     private void HandleGravity()

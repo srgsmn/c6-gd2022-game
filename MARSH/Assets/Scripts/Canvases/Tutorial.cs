@@ -205,7 +205,7 @@ public class Tutorial : MonoBehaviour
         {
             InputManager.OnJumpInput -= OnJumpInput;
 
-            MCMovementController.OnJump += OnJumpDone;
+            MCMovementController.OnJumpFlag += OnJumpDone;
         }
     }
 
@@ -213,7 +213,7 @@ public class Tutorial : MonoBehaviour
     {
         if (!input)
         {
-            MCMovementController.OnJump -= OnJumpDone;
+            MCMovementController.OnJumpFlag -= OnJumpDone;
 
             awaiting = false;
             panels[3].SetActive(true);

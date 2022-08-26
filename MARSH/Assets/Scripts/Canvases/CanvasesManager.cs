@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Globals;
+using Unity.VisualScripting;
 using UnityEngine;
 //using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
@@ -34,6 +35,9 @@ public class CanvasesManager : MonoBehaviour
     [SerializeField][ReadOnlyInspector] private GameObject gameoverInstance;
     [SerializeField][ReadOnlyInspector] private GameObject debugInstance;
     [SerializeField][ReadOnlyInspector] private GameObject tutorialInstance;
+
+    [Header("SFX:")]
+    [SerializeField] private AudioSource selectSound;
 
     [Header("Current values:")]
     [SerializeField][ReadOnlyInspector] private GameState currentState;
@@ -80,6 +84,8 @@ public class CanvasesManager : MonoBehaviour
             GameManager.OnNewState += OnNewState;
 
             GameManager.OnStartTutorial += DisplayTutorial;
+
+            MenuButton.OnButtonClicked += OnButtonClicked;
         }
         else
         {
@@ -89,6 +95,8 @@ public class CanvasesManager : MonoBehaviour
             GameManager.OnNewState -= OnNewState;
 
             GameManager.OnStartTutorial -= DisplayTutorial;
+
+            MenuButton.OnButtonClicked -= OnButtonClicked;
         }
     }
 
@@ -210,6 +218,11 @@ public class CanvasesManager : MonoBehaviour
         Deb("DisplayCanvas(): changing current screen to " + screen);
         currentScreen = screen;
         Deb("DisplayCanvas(): now current screen is " + currentScreen);
+    }
+
+    private void OnButtonClicked()
+    {
+        if (selectSound != null) selectSound.Play();
     }
 
     private void OnNewState(GameState state)

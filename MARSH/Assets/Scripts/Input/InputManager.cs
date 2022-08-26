@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
     [SerializeField][ReadOnlyInspector] private Vector2 movementInput;
     [SerializeField][ReadOnlyInspector] private bool jumpInput;
     [SerializeField][ReadOnlyInspector] private bool runInput;
+    [SerializeField][ReadOnlyInspector] private bool attackInput;
 
     [Header("Debug:")]
     [SerializeField][ReadOnlyInspector] private bool debugOn = false;
@@ -127,6 +128,8 @@ public class InputManager : MonoBehaviour
     public static JumpInputEvent OnJumpInput;
     public delegate void RunInputEvent(bool isPressed);
     public static RunInputEvent OnRunInput;
+    public delegate void AttackInputEvent(bool isPressed);
+    public static AttackInputEvent OnAttackInput;
 
     // GameState and UI
     public delegate void PauseInputEvent();
@@ -193,6 +196,8 @@ public class InputManager : MonoBehaviour
             inputs.CharacterControls.Run.canceled += OnRunInputPressed;
             inputs.CharacterControls.Jump.started += OnJumpInputPressed;
             inputs.CharacterControls.Jump.canceled += OnJumpInputPressed;
+            inputs.CharacterControls.Attack.started += OnAttackInputPressed;
+            inputs.CharacterControls.Attack.canceled += OnAttackInputPressed;
 
             inputs.UI.Pause.started += OnPausePressed;
             inputs.UI.Back.performed += OnBackPressed;
@@ -251,6 +256,8 @@ public class InputManager : MonoBehaviour
             inputs.CharacterControls.Run.canceled -= OnRunInputPressed;
             inputs.CharacterControls.Jump.started -= OnJumpInputPressed;
             inputs.CharacterControls.Jump.canceled -= OnJumpInputPressed;
+            inputs.CharacterControls.Attack.started -= OnAttackInputPressed;
+            inputs.CharacterControls.Attack.canceled -= OnAttackInputPressed;
 
             inputs.UI.Pause.started -= OnPausePressed;
             inputs.UI.Back.performed -= OnBackPressed;
@@ -461,6 +468,16 @@ public class InputManager : MonoBehaviour
             jumpInput = context.ReadValueAsButton();
 
             OnJumpInput?.Invoke(jumpInput);
+        }
+    }
+
+    private void OnAttackInputPressed(InputAction.CallbackContext context)
+    {
+        if (!debugOn)
+        {
+            attackInput = context.ReadValueAsButton();
+
+            OnAttackInput?.Invoke(attackInput);
         }
     }
 
