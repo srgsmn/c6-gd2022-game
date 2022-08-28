@@ -381,6 +381,7 @@ MonoBehaviour:
   movementInput: {x: 0, y: 0}
   jumpInput: 0
   runInput: 0
+  attackInput: 0
   debugOn: 0
   debugSwitcher: 0
   debugHealth: 0

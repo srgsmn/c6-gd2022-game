@@ -11,6 +11,7 @@ public class Tutorial : MonoBehaviour
     // COMPONENT ATTRIBUTES ____________________________________________________ COMPONENT ATTRIBUTES
 
     [SerializeField] private GameObject[] panels;
+    [SerializeField][ReadOnlyInspector] private int panelIndex;
     [SerializeField][ReadOnlyInspector] private TutorialPhase phase;
     [SerializeField][ReadOnlyInspector] private bool awaiting = false;
     [SerializeField][ReadOnlyInspector][Tooltip("Only eventually true if tutorial phase is Sprint")] private bool moving = false;
@@ -44,7 +45,8 @@ public class Tutorial : MonoBehaviour
 
     private void StartTutorial()
     {
-        panels[0].SetActive(true);
+        panelIndex = 0;
+        panels[panelIndex].SetActive(true);
         phase = TutorialPhase.Welcome;
         Freeze();
     }
@@ -77,8 +79,8 @@ public class Tutorial : MonoBehaviour
         switch (phase)
         {
             case TutorialPhase.Welcome:
-                panels[0].SetActive(false);
-                panels[1].SetActive(true);
+                panels[panelIndex++].SetActive(false);
+                panels[panelIndex].SetActive(true);
                 phase = TutorialPhase.Movement;
 
                 break;
@@ -86,7 +88,7 @@ public class Tutorial : MonoBehaviour
             case TutorialPhase.Movement:
                 if (!awaiting)
                 {
-                    panels[1].SetActive(false);
+                    panels[panelIndex++].SetActive(false);
                     InputManager.OnMovementInput += OnMovementInput;
                     Freeze(false);
 
@@ -98,7 +100,7 @@ public class Tutorial : MonoBehaviour
             case TutorialPhase.Jump:
                 if (!awaiting)
                 {
-                    panels[2].SetActive(false);
+                    panels[panelIndex++].SetActive(false);
                     InputManager.OnJumpInput += OnJumpInput;
                     Freeze(false);
 
@@ -110,7 +112,7 @@ public class Tutorial : MonoBehaviour
             case TutorialPhase.Sprint:
                 if (!awaiting)
                 {
-                    panels[3].SetActive(false);
+                    panels[panelIndex++].SetActive(false);
                     InputManager.OnMovementInput += OnMovementInput;
                     InputManager.OnRunInput += OnRunInput;
 
@@ -121,29 +123,42 @@ public class Tutorial : MonoBehaviour
 
                 break;
 
+            case TutorialPhase.Attack:
+                if (!awaiting)
+                {
+                    panels[panelIndex++].SetActive(false);
+                    InputManager.OnAttackInput += OnAttackInput;
+
+                    Freeze(false);
+
+                    awaiting = true;
+                }
+
+                break;
+
             case TutorialPhase.Collectables:
-                panels[4].SetActive(false);
+                panels[panelIndex++].SetActive(false);
                 phase = TutorialPhase.Places;
-                panels[5].SetActive(true);
+                panels[panelIndex].SetActive(true);
 
                 break;
 
             case TutorialPhase.Places:
-                panels[5].SetActive(false);
+                panels[panelIndex++].SetActive(false);
                 phase = TutorialPhase.Pause;
-                panels[6].SetActive(true);
+                panels[panelIndex].SetActive(true);
 
                 break;
 
             case TutorialPhase.Pause:
-                panels[6].SetActive(false);
+                panels[panelIndex++].SetActive(false);
                 phase = TutorialPhase.Final;
-                panels[7].SetActive(true);
+                panels[panelIndex].SetActive(true);
 
                 break;
 
             case TutorialPhase.Final:
-                panels[7].SetActive(false);
+                panels[panelIndex].SetActive(false);
                 phase = TutorialPhase.None;
 
                 gameObject.SetActive(false);
@@ -184,6 +199,23 @@ public class Tutorial : MonoBehaviour
         }
     }
 
+    private void OnAttackInput(bool flag)
+    {
+        Deb("OnAttackInput(): flag =" + flag + ", awaiting =: " + awaiting + ", phase = " + phase);
+
+        if(awaiting && phase == TutorialPhase.Attack && flag)
+        {
+            InputManager.OnAttackInput -= OnAttackInput;
+
+            awaiting = false;
+
+            panels[panelIndex].SetActive(true);
+            Freeze();
+
+            phase = TutorialPhase.Collectables;
+        }
+    }
+
     private void OnMoveDone(bool flag)
     {
         if(awaiting && phase == TutorialPhase.Movement && !flag)
@@ -192,7 +224,7 @@ public class Tutorial : MonoBehaviour
 
             awaiting = false;
 
-            panels[2].SetActive(true);
+            panels[panelIndex].SetActive(true);
             Freeze();
 
             phase = TutorialPhase.Jump;
@@ -216,7 +248,7 @@ public class Tutorial : MonoBehaviour
             MCMovementController.OnJumpFlag -= OnJumpDone;
 
             awaiting = false;
-            panels[3].SetActive(true);
+            panels[panelIndex].SetActive(true);
             Freeze();
 
             phase = TutorialPhase.Sprint;
@@ -243,10 +275,10 @@ public class Tutorial : MonoBehaviour
 
             awaiting = false;
 
-            panels[4].SetActive(true);
+            panels[panelIndex].SetActive(true);
             Freeze();
 
-            phase = TutorialPhase.Collectables;
+            phase = TutorialPhase.Attack;
         }
     }
 
