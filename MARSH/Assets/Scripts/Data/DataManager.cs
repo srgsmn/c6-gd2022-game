@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Globals;
+using Cinemachine;
 
 public class DataManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class DataManager : MonoBehaviour
     [SerializeField] private EnvironmentData currentEnvironmentData;
     [SerializeField] private GameData currentGameData, loadedGameData;
 
+    public SettingsData settingsData;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -40,6 +42,8 @@ public class DataManager : MonoBehaviour
 
         currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
 
+        LoadSettingsData();
+
         if (currentEnvironmentData.lastCheckpointID != null)
         {
             OnCPLoad(currentEnvironmentData.lastCheckpointID);
@@ -62,6 +66,21 @@ public class DataManager : MonoBehaviour
     }
 
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
+
+    private void LoadSettingsData()
+    {
+        settingsData = new SettingsData();
+
+        CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
+
+        if (cfl != null)
+        {
+            settingsData.invertYAxis = cfl.m_YAxis.m_InvertInput;
+            settingsData.invertXAxis = cfl.m_XAxis.m_InvertInput;
+
+            settingsData.mouseSensitivity = 1f;
+        }
+    }
 
     public int GetCurrentLevel()
     {

@@ -10,6 +10,11 @@ using Globals;
 public class SettingsMenu : Menu
 {
     [SerializeField] private Toggle debugToggle;
+    [SerializeField] private Toggle invertXAxisToggle;
+    [SerializeField] private Toggle invertYAxisToggle;
+    [SerializeField] private GameObject mouseSensitivity;
+    [SerializeField]
+    [ReadOnlyInspector] private Slider mouseSlider;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -19,9 +24,29 @@ public class SettingsMenu : Menu
         debugToggle.isOn = GameManager.Instance.isDebugMode;
         Deb("Start(): Toggle value is now " + debugToggle.isOn);
 
+        invertXAxisToggle.isOn = DataManager.Instance.settingsData.invertXAxis;
+        invertYAxisToggle.isOn = DataManager.Instance.settingsData.invertYAxis;
+
+        mouseSlider = mouseSensitivity.transform.GetComponentInChildren<Slider>();
+
         debugToggle.onValueChanged.AddListener(delegate
         {
-            ToggleValueChangedOccured(debugToggle);
+            DebugToggleChanged(debugToggle);
+        });
+
+        invertYAxisToggle.onValueChanged.AddListener(delegate
+        {
+            InvertYAxisToggleChanged(invertYAxisToggle);
+        });
+
+        invertXAxisToggle.onValueChanged.AddListener(delegate
+        {
+            InvertXAxisToggleChanged(invertXAxisToggle);
+        });
+
+        mouseSlider.onValueChanged.AddListener(delegate
+        {
+            MouseSliderChanged(mouseSlider);
         });
     }
 
@@ -29,9 +54,27 @@ public class SettingsMenu : Menu
     {
         debugToggle.onValueChanged.RemoveListener(delegate
         {
-            ToggleValueChangedOccured(debugToggle);
+            DebugToggleChanged(debugToggle);
+        });
+
+        invertYAxisToggle.onValueChanged.RemoveListener(delegate
+        {
+            InvertYAxisToggleChanged(invertYAxisToggle);
+        });
+
+        invertXAxisToggle.onValueChanged.RemoveListener(delegate
+        {
+            InvertXAxisToggleChanged(invertXAxisToggle);
+        });
+
+        mouseSlider.onValueChanged.RemoveListener(delegate
+        {
+            MouseSliderChanged(mouseSlider);
         });
     }
+
+    public delegate void SettingsChangeEvent(SettingsValue value);
+    public static SettingsChangeEvent OnSettingsChanged;
 
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
 
@@ -54,9 +97,30 @@ public class SettingsMenu : Menu
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
 
-    private void ToggleValueChangedOccured(Toggle tglValue)
+    private void DebugToggleChanged(Toggle tglValue)
     {
         GameManager.Instance.SwitchDebugMode(tglValue.isOn);
+    }
+
+    private void InvertYAxisToggleChanged(Toggle tglValue)
+    {
+        DataManager.Instance.settingsData.invertYAxis = !DataManager.Instance.settingsData.invertYAxis;
+
+        OnSettingsChanged?.Invoke(SettingsValue.invertYAxis);
+    }
+
+    private void InvertXAxisToggleChanged(Toggle tglValue)
+    {
+        DataManager.Instance.settingsData.invertXAxis = !DataManager.Instance.settingsData.invertXAxis;
+
+        OnSettingsChanged?.Invoke(SettingsValue.invertXAxis);
+    }
+
+    private void MouseSliderChanged(Slider slider)
+    {
+        DataManager.Instance.settingsData.mouseSensitivity = slider.value;
+
+        OnSettingsChanged?.Invoke(SettingsValue.mouseSensitivity);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
@@ -67,15 +131,16 @@ public class SettingsMenu : Menu
         {
             case DebMsgType.log:
                 Debug.Log(this.GetType().Name + " > " + msg);
+
                 break;
 
             case DebMsgType.warn:
                 Debug.LogWarning(this.GetType().Name + " > " + msg);
+
                 break;
 
             case DebMsgType.err:
                 Debug.LogError(this.GetType().Name + " > " + msg);
-
 
                 break;
         }

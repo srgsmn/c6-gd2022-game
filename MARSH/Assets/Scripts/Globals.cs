@@ -144,6 +144,11 @@ namespace Globals
         SL, CC
     }
 
+    public enum SettingsValue
+    {
+        invertXAxis, invertYAxis, mouseSensitivity
+    }
+
     /// <summary>
     /// State of the game (NOT the screen to display!)
     /// </summary>
@@ -327,6 +332,21 @@ namespace Globals
             environment = new EnvironmentData();
             environment.collectablesIDs = new List<string>(data.environment.collectablesIDs);
             environment.lastCheckpointID = data.environment.lastCheckpointID;
+        }
+    }
+
+    [Serializable]
+    public class SettingsData
+    {
+        public bool invertYAxis;
+        public bool invertXAxis;
+        public float mouseSensitivity;
+
+        public SettingsData()
+        {
+            invertYAxis = false;
+            invertXAxis = false;
+            mouseSensitivity = 1f;
         }
     }
 
