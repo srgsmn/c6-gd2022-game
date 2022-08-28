@@ -195,16 +195,25 @@ public class MCMovementController : MonoBehaviour
             InputManager.OnMovementInput += OnMovementInput;
             InputManager.OnJumpInput += OnJumpInput;
             InputManager.OnRunInput += OnRunInput;
+            InputManager.OnAttackInput += OnAttackInput;
         }
         else
         {
             InputManager.OnMovementInput -= OnMovementInput;
             InputManager.OnJumpInput -= OnJumpInput;
             InputManager.OnRunInput -= OnRunInput;
+            InputManager.OnAttackInput -= OnAttackInput;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void OnAttackInput(bool input)
+    {
+        if(input) {
+            animator.SetTrigger("attack");
+        }
+    }
 
     private void OnMovementInput(Vector2 inputValue)
     {

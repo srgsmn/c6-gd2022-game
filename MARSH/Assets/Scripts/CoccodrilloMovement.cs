@@ -29,7 +29,6 @@ public class CoccodrilloMovement : MonoBehaviour
          }
 
         transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speed * Time.deltaTime);
-        
-
+    
     }
 }

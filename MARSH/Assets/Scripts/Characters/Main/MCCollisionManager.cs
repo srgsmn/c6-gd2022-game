@@ -7,6 +7,9 @@ using Globals;
 
 public class MCCollisionManager : MonoBehaviour
 {
+
+    private MCHealthController MCHealthController;
+
     private void OnTriggerEnter(Collider other)
     {
         Deb("OnTriggerEnter(): Player collided with object with name " + other.gameObject.name + " and tag " + other.gameObject.tag);
@@ -29,8 +32,14 @@ public class MCCollisionManager : MonoBehaviour
                 Deb("OnTriggerEnter(): Player collided with a collectable (" + other.tag + "). Delegating collection operation to collectable.");
 
                 break;
+            case "AcquaFiume":
+                MCHealthController = gameObject.GetComponent<MCHealthController>();
+                MCHealthController.Die();
+                
+                break;
         }
     }
+
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
 

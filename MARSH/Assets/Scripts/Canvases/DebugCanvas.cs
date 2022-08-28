@@ -62,7 +62,7 @@ public class DebugCanvas : MonoBehaviour
 
     private void UpdateText(bool saved, ChParam param, object value)
     {
-        Deb("UpdateText() ###");
+        //Deb("UpdateText() ###");
 
         switch (param)
         {

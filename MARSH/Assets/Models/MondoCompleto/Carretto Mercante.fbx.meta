@@ -3,7 +3,22 @@ guid: 895e8c4bfe61f8c4e8164aaa6683f43c
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Canvas_A
+    second: {fileID: 2800000, guid: 55314a3eb3800a1459bd42ae90de1051, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Frame_A
+    second: {fileID: 2800000, guid: 9aab8f09dbaec63469273b3a9e565320, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Wheel_A
+    second: {fileID: 2800000, guid: a50ec651c13b7144b94a9f4a01731fa8, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

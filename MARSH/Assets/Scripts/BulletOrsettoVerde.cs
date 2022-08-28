@@ -6,7 +6,7 @@ public class BulletOrsettoVerde : MonoBehaviour
 {
     public float life = 20;
 
-    //private PlayerHealthController playerHealthController;
+    private MCHealthController MCHealthController;
 
     void Awake()
     {
@@ -17,8 +17,8 @@ public class BulletOrsettoVerde : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            //playerHealthController = collision.gameObject.GetComponent<PlayerHealthController>();
-            //playerHealthController.TakeDamage(20f);
+            MCHealthController = collision.gameObject.GetComponent<MCHealthController>();
+            MCHealthController.TakeDamage(20f);
             Destroy(gameObject);
         }
     }

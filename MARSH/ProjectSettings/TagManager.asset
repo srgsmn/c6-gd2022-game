@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Store
   - Checkpoint
+  - ExplosionOrsettoRosso
+  - BulletOrsettoVerde
+  - SugarLump
+  - ChocoChip
+  - AcquaFiume
+  - Coccodrillo
   layers:
   - Default
   - TransparentFX

@@ -225,7 +225,7 @@ public class Tutorial : MonoBehaviour
 
     private void OnRunInput(bool input)
     {
-        if(input && moving && !awaiting && phase == TutorialPhase.Sprint)
+        if(input && !awaiting && phase == TutorialPhase.Sprint)
         {
             InputManager.OnMovementInput -= OnMovementInput;
             InputManager.OnRunInput -= OnRunInput;

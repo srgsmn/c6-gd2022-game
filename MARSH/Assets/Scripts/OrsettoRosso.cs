@@ -14,7 +14,7 @@ public class OrsettoRosso : MonoBehaviour
 
     public GameObject explosionEffect;
 
-    //private PlayerHealthController playerHealthController;
+    private MCHealthController MCHealthController;
 
     void Start()
     {
@@ -68,8 +68,8 @@ public class OrsettoRosso : MonoBehaviour
             {
                 rb.AddExplosionForce(explosionForce, transform.position, radius);
                 
-                //playerHealthController = rb.gameObject.GetComponent<PlayerHealthController>();
-                //playerHealthController.TakeDamage(50f);
+                MCHealthController = rb.gameObject.GetComponent<MCHealthController>();
+                MCHealthController.TakeDamage(30f);
             }
         }
 

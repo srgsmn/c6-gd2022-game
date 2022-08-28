@@ -37,6 +37,7 @@ public class Player: MonoBehaviour
         }
     }
 
+
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
 
     private void LoadData(PlayerData data)
