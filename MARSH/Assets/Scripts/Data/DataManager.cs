@@ -75,8 +75,14 @@ public class DataManager : MonoBehaviour
 
         if (cfl != null)
         {
+            cfl.m_YAxis.m_InvertInput = false;
+            cfl.m_XAxis.m_InvertInput = false;
+
             settingsData.invertYAxis = cfl.m_YAxis.m_InvertInput;
             settingsData.invertXAxis = cfl.m_XAxis.m_InvertInput;
+
+            cfl.m_YAxis.m_MaxSpeed = 1f;
+            cfl.m_XAxis.m_MaxSpeed = 100f;
 
             settingsData.mouseSensitivity = 1f;
         }

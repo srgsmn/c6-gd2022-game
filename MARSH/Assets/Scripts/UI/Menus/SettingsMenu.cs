@@ -44,6 +44,8 @@ public class SettingsMenu : Menu
             InvertXAxisToggleChanged(invertXAxisToggle);
         });
 
+        mouseSlider.value = 1;
+
         mouseSlider.onValueChanged.AddListener(delegate
         {
             MouseSliderChanged(mouseSlider);
