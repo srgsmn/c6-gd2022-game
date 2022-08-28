@@ -188,7 +188,7 @@ namespace Globals
 
     public enum TutorialPhase
     {
-        Welcome, Movement, Jump, Sprint, Attack, Collectables, Places, Pause, Final, None
+        Welcome, View, Movement, Jump, Sprint, Attack, Collectables, Places, Pause, Final, None
     }
 
     public enum PlayerAudioType
