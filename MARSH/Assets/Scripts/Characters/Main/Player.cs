@@ -7,10 +7,14 @@ using Globals;
 
 [RequireComponent(typeof(MCMovementController))]
 [RequireComponent(typeof(MCHealthController))]
+[RequireComponent(typeof(MCCollectionManager))]
+[RequireComponent(typeof(MCCollisionManager))]
 public class Player: MonoBehaviour
 {
     [SerializeField] private MCMovementController movement;
     [SerializeField] private MCHealthController health;
+    [SerializeField] private MCCollectionManager collection;
+    [SerializeField] private MCCollisionManager collisions;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
     private void Awake()
