@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3958032353737672876
 MonoBehaviour:
@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f8f2825cccc4da3b545e611af8c946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlertPrefab: {fileID: 0}
 --- !u!1 &3958032353982605554
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,9 +793,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Worldbuilding and
-
-    programmer'
+  m_text: Programmer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a617d0af591124d4da46a3102650393c, type: 2}
   m_sharedMaterial: {fileID: -2947287406734156521, guid: a617d0af591124d4da46a3102650393c, type: 2}
@@ -2844,7 +2843,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Programmer, UI, QA
+  m_text: Programmer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a617d0af591124d4da46a3102650393c, type: 2}
   m_sharedMaterial: {fileID: -2947287406734156521, guid: a617d0af591124d4da46a3102650393c, type: 2}
