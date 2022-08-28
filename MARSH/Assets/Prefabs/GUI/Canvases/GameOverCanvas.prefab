@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55421767fa42945218cff00d903ac6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlertPrefab: {fileID: 0}
 --- !u!1 &7878553102375136786
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55421767fa42945218cff00d903ac6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlertPrefab: {fileID: 0}
 --- !u!1001 &7878553101170136176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -822,7 +824,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8614696182296510626, guid: 875b63f7bb9c64297bbb4c4d6cf07cf9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitBtn
+      value: QuitGame
       objectReference: {fileID: 0}
     - target: {fileID: 8614696182296510626, guid: 875b63f7bb9c64297bbb4c4d6cf07cf9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
