@@ -81,13 +81,6 @@ public class Tutorial : MonoBehaviour
             case TutorialPhase.Welcome:
                 panels[panelIndex++].SetActive(false);
                 panels[panelIndex].SetActive(true);
-                phase = TutorialPhase.View;
-
-                break;
-
-            case TutorialPhase.View:
-                panels[panelIndex++].SetActive(false);
-                panels[panelIndex].SetActive(true);
                 phase = TutorialPhase.Movement;
 
                 break;
@@ -159,8 +152,15 @@ public class Tutorial : MonoBehaviour
 
             case TutorialPhase.Pause:
                 panels[panelIndex++].SetActive(false);
-                phase = TutorialPhase.Final;
+                phase = TutorialPhase.View;
                 panels[panelIndex].SetActive(true);
+
+                break;
+
+            case TutorialPhase.View:
+                panels[panelIndex++].SetActive(false);
+                panels[panelIndex].SetActive(true);
+                phase = TutorialPhase.Final;
 
                 break;
 

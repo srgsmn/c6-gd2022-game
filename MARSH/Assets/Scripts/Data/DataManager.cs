@@ -42,7 +42,10 @@ public class DataManager : MonoBehaviour
 
         currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
 
-        LoadSettingsData();
+        if (GameManager.Instance.GetSceneIndex() != 0)
+        {
+            LoadSettingsData();
+        }
 
         if (currentEnvironmentData.lastCheckpointID != null)
         {
@@ -67,7 +70,7 @@ public class DataManager : MonoBehaviour
 
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
 
-    private void LoadSettingsData()
+    public void LoadSettingsData()
     {
         settingsData = new SettingsData();
 

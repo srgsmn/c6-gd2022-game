@@ -429,8 +429,8 @@ public class GameManager : MonoBehaviour
             // UI
             InputManager.OnDebugModeSwitch += SwitchDebugMode;
 
-            InputManager.OnPause += OnPause;
-            InputManager.OnBack += OnBack;
+            InputManager.OnPause += OnPauseInput;
+            InputManager.OnBack += OnBackInput;
 
             OnNewState += OnStateChanged;
 
@@ -445,8 +445,8 @@ public class GameManager : MonoBehaviour
             // UI
             InputManager.OnDebugModeSwitch -= SwitchDebugMode;
 
-            InputManager.OnPause -= OnPause;
-            InputManager.OnBack -= OnBack;
+            InputManager.OnPause -= OnPauseInput;
+            InputManager.OnBack -= OnBackInput;
 
             OnNewState -= OnStateChanged;
 
@@ -473,10 +473,12 @@ public class GameManager : MonoBehaviour
         if (scene.buildIndex != 0)
         {
             DisplayScreen(GameScreen.PlayScreen);
+
+            DataManager.Instance.LoadSettingsData();
         }
     }
 
-    private void OnPause()
+    private void OnPauseInput()
     {
         Deb("OnPause(): #####");
 
@@ -513,7 +515,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnBack()
+    public void OnBackInput()
     {
         switch (currentScreen)
         {

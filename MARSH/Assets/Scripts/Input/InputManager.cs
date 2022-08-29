@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
 
     private PlayerInput inputs;
 
-
+    private bool isPaused = false;
 
     // DEBUG VARIABLES _________________________________________________________ DEBUG VARIABLES
 
@@ -205,6 +205,7 @@ public class InputManager : MonoBehaviour
             inputs.UI.Enter.performed += OnEnterPressed;
 
             GameManager.OnParamsReset += OnParamsReset;
+            GameManager.OnNewState += OnNewState;
 
         }
         else
@@ -264,11 +265,20 @@ public class InputManager : MonoBehaviour
             inputs.UI.Info.performed -= OnInfoPressed;
             inputs.UI.Enter.performed -= OnEnterPressed;
 
-            GameManager.OnParamsReset += OnParamsReset;
+            GameManager.OnParamsReset -= OnParamsReset;
+            GameManager.OnNewState -= OnNewState;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void OnNewState(GameState state)
+    {
+        if (state == GameState.Pause)
+            isPaused = true;
+        else
+            isPaused = false;
+    }
 
     private void OnParamsReset()
     {
@@ -439,7 +449,7 @@ public class InputManager : MonoBehaviour
     {
         //Deb("OnMovementInput(): " + context.ReadValue<Vector2>());
 
-        if (!debugOn)
+        if (!debugOn && !isPaused)
         {
             movementInput = context.ReadValue<Vector2>();
 
@@ -451,7 +461,7 @@ public class InputManager : MonoBehaviour
     {
         //Deb("OnMovementInput(): " + context.ReadValueAsButton());
 
-        if (!debugOn)
+        if (!debugOn && !isPaused)
         {
             runInput = context.ReadValueAsButton();
 
@@ -463,7 +473,7 @@ public class InputManager : MonoBehaviour
     {
         //Deb("OnMovementInput(): " + context.ReadValueAsButton());
 
-        if (!debugOn)
+        if (!debugOn && !isPaused)
         {
             jumpInput = context.ReadValueAsButton();
 
@@ -473,7 +483,7 @@ public class InputManager : MonoBehaviour
 
     private void OnAttackInputPressed(InputAction.CallbackContext context)
     {
-        if (!debugOn)
+        if (!debugOn && !isPaused)
         {
             attackInput = context.ReadValueAsButton();
 

@@ -705,8 +705,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sometimes life looks better under different perspectives. You can change
-    your point of view moving the virtual camera by moving your mouse.
+  m_text: Sometimes life looks better under different perspectives. As you may have
+    already seen, you can change your view by moving your mouse around.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a617d0af591124d4da46a3102650393c, type: 2}
   m_sharedMaterial: {fileID: -2947287406734156521, guid: a617d0af591124d4da46a3102650393c, type: 2}
@@ -888,7 +888,7 @@ RectTransform:
   - {fileID: 7952945596508136974}
   - {fileID: 5663508587380990116}
   m_Father: {fileID: 9113848223110186325}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1162,7 +1162,7 @@ RectTransform:
   - {fileID: 8127055399609979563}
   - {fileID: 5050200770989652854}
   m_Father: {fileID: 9113848223110186325}
-  m_RootOrder: 1
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2271,7 +2271,7 @@ RectTransform:
   - {fileID: 6625617627196599003}
   - {fileID: 7651249951121686724}
   m_Father: {fileID: 9113848223110186325}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3104,7 +3104,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: THIS GUY IS GOING PLACES
+  m_text: THIS KID IS GOING PLACES
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a617d0af591124d4da46a3102650393c, type: 2}
   m_sharedMaterial: {fileID: -2947287406734156521, guid: a617d0af591124d4da46a3102650393c, type: 2}
@@ -3443,7 +3443,7 @@ RectTransform:
   - {fileID: 9113848221364177346}
   - {fileID: 9113848221437496397}
   m_Father: {fileID: 9113848223110186325}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4960,7 +4960,7 @@ RectTransform:
   - {fileID: 9113848223023218292}
   - {fileID: 9113848222943445261}
   m_Father: {fileID: 9113848223110186325}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5233,7 +5233,7 @@ RectTransform:
   - {fileID: 9113848222814424311}
   - {fileID: 9113848221799426288}
   m_Father: {fileID: 9113848223110186325}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5815,7 +5815,7 @@ RectTransform:
   - {fileID: 9113848221936785496}
   - {fileID: 9113848222031950244}
   m_Father: {fileID: 9113848223110186325}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6032,7 +6032,7 @@ RectTransform:
   - {fileID: 9113848222614092666}
   - {fileID: 9113848222115677388}
   m_Father: {fileID: 9113848223110186325}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7043,7 +7043,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9113848221428750887}
-  - {fileID: 6075368485974701204}
   - {fileID: 9113848222518132170}
   - {fileID: 9113848222859537297}
   - {fileID: 9113848221628348685}
@@ -7051,6 +7050,7 @@ RectTransform:
   - {fileID: 9113848222616343473}
   - {fileID: 9113848221199578823}
   - {fileID: 9113848222332482607}
+  - {fileID: 6075368485974701204}
   - {fileID: 7137774816253609595}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -7135,7 +7135,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panels:
   - {fileID: 9113848221428750904}
-  - {fileID: 5303696639729500655}
   - {fileID: 9113848222518132171}
   - {fileID: 9113848222859537298}
   - {fileID: 9113848221628348686}
@@ -7143,6 +7142,7 @@ MonoBehaviour:
   - {fileID: 9113848222616343474}
   - {fileID: 9113848221199578840}
   - {fileID: 9113848222332482592}
+  - {fileID: 5303696639729500655}
   - {fileID: 2768501806413353931}
   panelIndex: 0
   phase: 0

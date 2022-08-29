@@ -18,15 +18,8 @@ public class SettingsMenu : Menu
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
-    private void Start()
+    private void Awake()
     {
-        Deb("Start(): Debug mode is " + GameManager.Instance.isDebugMode + ". Changing toggle value to same value.");
-        debugToggle.isOn = GameManager.Instance.isDebugMode;
-        Deb("Start(): Toggle value is now " + debugToggle.isOn);
-
-        invertXAxisToggle.isOn = DataManager.Instance.settingsData.invertXAxis;
-        invertYAxisToggle.isOn = DataManager.Instance.settingsData.invertYAxis;
-
         mouseSlider = mouseSensitivity.transform.GetComponentInChildren<Slider>();
 
         debugToggle.onValueChanged.AddListener(delegate
@@ -44,12 +37,22 @@ public class SettingsMenu : Menu
             InvertXAxisToggleChanged(invertXAxisToggle);
         });
 
-        mouseSlider.value = 1;
-
         mouseSlider.onValueChanged.AddListener(delegate
         {
             MouseSliderChanged(mouseSlider);
         });
+    }
+
+    private void Start()
+    {
+        Deb("Start(): Debug mode is " + GameManager.Instance.isDebugMode + ". Changing toggle value to same value.");
+        debugToggle.isOn = GameManager.Instance.isDebugMode;
+        Deb("Start(): Toggle value is now " + debugToggle.isOn);
+
+        invertXAxisToggle.isOn = DataManager.Instance.settingsData.invertXAxis;
+        invertYAxisToggle.isOn = DataManager.Instance.settingsData.invertYAxis;
+
+        mouseSlider.value = DataManager.Instance.settingsData.mouseSensitivity;
     }
 
     private void OnDestroy()

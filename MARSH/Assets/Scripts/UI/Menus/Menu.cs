@@ -25,7 +25,7 @@ public class Menu : MonoBehaviour
     // BUTTONS
     public void BackBtn()
     {
-        GameManager.Instance.OnBack();
+        GameManager.Instance.OnBackInput();
     }
 
     public void CloseBtn()
