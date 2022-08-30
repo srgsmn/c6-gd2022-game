@@ -191,6 +191,16 @@ namespace Globals
         Welcome, View, Movement, Jump, Sprint, Attack, Collectables, Places, Pause, Final, None
     }
 
+    public enum ProximityObject
+    {
+        Checkpoint, Store, Ladder, None
+    }
+
+    public enum ProximityInfo
+    {
+        Memo, Tutorial, None
+    }
+
     public enum PlayerAudioType
     {
         Jump, Landing, SL_Collection, CC_Collection, Death, Damage

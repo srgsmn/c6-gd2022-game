@@ -196,6 +196,8 @@ public class MCMovementController : MonoBehaviour
             InputManager.OnJumpInput += OnJumpInput;
             InputManager.OnRunInput += OnRunInput;
             InputManager.OnAttackInput += OnAttackInput;
+
+            GameManager.OnNewState += OnNewState;
         }
         else
         {
@@ -203,6 +205,8 @@ public class MCMovementController : MonoBehaviour
             InputManager.OnJumpInput -= OnJumpInput;
             InputManager.OnRunInput -= OnRunInput;
             InputManager.OnAttackInput -= OnAttackInput;
+
+            GameManager.OnNewState -= OnNewState;
         }
     }
 
@@ -228,6 +232,21 @@ public class MCMovementController : MonoBehaviour
         isMoving = isMovementPressed;
 
         OnMove?.Invoke(isMoving);
+    }
+
+    private void OnNewState(GameState state)
+    {
+        if (state == GameState.Pause)
+        {
+            currentMovementInput = Vector3.zero;
+            /*
+            if (currentMovement.y <= 0.1f) currentMovement.y = 0;
+            currentMovement.x = 0;
+            currentMovement.z = 0;
+            */
+            currentMovement = Vector3.zero;
+            appliedMovement = Vector3.zero;
+        }
     }
 
     private void OnJumpInput(bool inputValue)
