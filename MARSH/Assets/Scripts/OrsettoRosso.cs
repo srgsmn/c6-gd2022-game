@@ -6,15 +6,18 @@ public class OrsettoRosso : MonoBehaviour
 {
     public bool hasStarted = false;
     public float delay = 3f;
-    public float radius = 2f;
+    public float radius = 5f;
     public float explosionForce = 300f;
 
     float countdown;
     bool hasExploded = false;
 
     public GameObject explosionEffect;
+    public GameObject meshOrsetto;
 
     private MCHealthController MCHealthController;
+
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -38,15 +41,12 @@ public class OrsettoRosso : MonoBehaviour
             foreach (Collider nearbyObject in colliders)
             {
                 Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-                if(rb != null && rb.gameObject.name == "Player")
+                if(rb != null && rb.gameObject.tag == "Player")
                 {
                     StartCountdown();
                 }
             }
         }
-    }
-    void OnCollisionEnter(Collision collision) {
-        Debug.Log(collision.gameObject.name);
     }
 
     void StartCountdown()
@@ -54,6 +54,7 @@ public class OrsettoRosso : MonoBehaviour
         countdown = delay;
         hasStarted = true;
         Debug.Log("STARTED !!!!!");
+        audioSource.Play();
     }
 
     void Explode()
@@ -64,7 +65,7 @@ public class OrsettoRosso : MonoBehaviour
         foreach (Collider nearbyObject in colliders)
         {
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-            if(rb != null && rb.gameObject.name == "Player")
+            if(rb != null && rb.gameObject.tag == "Player")
             {
                 rb.AddExplosionForce(explosionForce, transform.position, radius);
                 
@@ -73,6 +74,6 @@ public class OrsettoRosso : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        Destroy(meshOrsetto);
     }
 }

@@ -37,6 +37,21 @@ public class MCCollisionManager : MonoBehaviour
                 MCHealthController.Die();
                 
                 break;
+            case "Coccodrillo":
+                transform.SetParent(other.gameObject.transform);
+                
+                break;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Coccodrillo":
+                transform.SetParent(null);
+                
+                break;
         }
     }
 

@@ -31,4 +31,25 @@ public class CoccodrilloMovement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speed * Time.deltaTime);
     
     }
+/*
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.name == "Player") {
+            Debug.Log("ECCOCI");
+        }
+    }
+    
+    
+    private void OnCollisionEnter(Collision collider) {
+        if(collider.gameObject.name == "Player") {
+            Debug.Log("ECCOCI");
+            collider.gameObject.transform.SetParent(transform);
+        }
+    }
+    private void OnCollisionExit(Collision collider) {
+        if(collider.gameObject.name == "Player") {
+            collider.gameObject.transform.SetParent(null);
+        }
+    }
+    */
 }

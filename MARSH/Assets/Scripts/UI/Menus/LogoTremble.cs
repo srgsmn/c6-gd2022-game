@@ -7,13 +7,13 @@ using UnityEngine;
 
 public class LogoTremble : MonoBehaviour
 {
-    private const float TIMING_VALUE = 10f;
+    private const float TIMING_VALUE = 6f;
 
     [SerializeField] private GameObject[] letters;
     [SerializeField]
     [ReadOnlyInspector] private float timer;
     [SerializeField]
-    [ReadOnlyInspector] private int index;
+    [ReadOnlyInspector] private int currentIndex, previousIndex;
 
     void Start()
     {
@@ -29,9 +29,15 @@ public class LogoTremble : MonoBehaviour
         {
             timer = TIMING_VALUE;
 
-            index = Random.Range(0, letters.Length);
+            do
+            {
+                currentIndex = Random.Range(0, letters.Length);
+            }
+            while (currentIndex == previousIndex);
 
-            letters[index].GetComponent<Animator>().SetTrigger("LetterTremble");
+            letters[currentIndex].GetComponent<Animator>().SetTrigger("LetterTremble");
+
+            previousIndex = currentIndex;
         }
     }
 }
