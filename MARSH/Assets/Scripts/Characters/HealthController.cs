@@ -327,6 +327,11 @@ public class HealthController : MonoBehaviour
         }
     }
 
+    public virtual float GetHealth()
+    {
+        return _health;
+    }
+
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 

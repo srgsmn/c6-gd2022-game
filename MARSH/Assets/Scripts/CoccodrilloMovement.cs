@@ -7,7 +7,7 @@ public class CoccodrilloMovement : MonoBehaviour
 
     [SerializeField] GameObject[] waypoints;
     int currentWaypointIndex = 0;
-    [SerializeField] float speed = 2f;
+    [SerializeField] float speed = 3f;
     public float smooth = 2f;
 
     // Start is called before the first frame update

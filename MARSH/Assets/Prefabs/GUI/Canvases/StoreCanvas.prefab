@@ -1898,8 +1898,8 @@ MonoBehaviour:
   itemDescription: Life is hard, isn't it? What about hardening your skin to face
     everyday adversity with some good chocolate?
   levelAvailability: 1
-  SLPrice: 25
-  CCPrice: 150
+  SLPrice: 10
+  CCPrice: 20
   isIncremental: 0
   health: 0
   armor: 100
@@ -3607,7 +3607,7 @@ MonoBehaviour:
     and gain +15 AP!
   levelAvailability: 1
   SLPrice: 0
-  CCPrice: 100
+  CCPrice: 10
   isIncremental: 1
   health: 0
   armor: 15
@@ -5095,7 +5095,7 @@ MonoBehaviour:
   itemName: GLUCOSE SYRUP
   itemDescription: Need more energy? Try our glucose syrup and gain +15 HP!
   levelAvailability: 1
-  SLPrice: 25
+  SLPrice: 5
   CCPrice: 0
   isIncremental: 1
   health: 15

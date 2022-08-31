@@ -17,6 +17,7 @@ public class OrsettoVerde : MonoBehaviour
 
     private HealthController healthController;
 
+
     void Start()
     {
         var rendum = Random.Range(1F,3F);
@@ -29,12 +30,17 @@ public class OrsettoVerde : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
             foreach (Collider nearbyObject in colliders)
             {
+                //Debug.Log(nearbyObject);
                 Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
                 if(rb != null && rb.gameObject.tag == "Player")
                 {
+                    Debug.Log("DEFINITIVO");
                     transform.LookAt(target);
                 }
             }
+        if(healthController.GetHealth() <= 0) {
+            Destroy(gameObject);
+        }
     }
     void Shuut()
     {
@@ -51,12 +57,17 @@ public class OrsettoVerde : MonoBehaviour
             }
     }
 
+
     void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.tag == "Stuzzicadenti")
+        if(collider.tag == "Stuzzicadenti")
         {
-            Debug.Log("COLLISO");
-            healthController.TakeDamage(100);
+            healthController.TakeDamage(50);
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
     }
 }
