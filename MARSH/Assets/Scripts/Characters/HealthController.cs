@@ -163,7 +163,7 @@ public class HealthController : MonoBehaviour
         health = 100;
         defHealthFactor = 1;
         maxArmor = 100;
-        armor = 100;
+        armor = 0;
         defArmorFactor = 1;
     }
 
