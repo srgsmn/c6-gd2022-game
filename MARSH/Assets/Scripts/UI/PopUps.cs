@@ -9,6 +9,7 @@ public class PopUps : MonoBehaviour
 {
     [SerializeField] private GameObject checkpoint;
     [SerializeField] private GameObject store;
+    [SerializeField] private GameObject ladder;
 
     private void Awake()
     {
@@ -55,12 +56,18 @@ public class PopUps : MonoBehaviour
                     store.SetActive(true);
 
                     break;
+
+                case ProximityObject.Ladder:
+                    ladder.SetActive(true);
+
+                    break;
             }
         }
         else if (info == ProximityInfo.None || info == ProximityInfo.Tutorial)
         {
             checkpoint.SetActive(false);
             store.SetActive(false);
+            ladder.SetActive(false);
         }
     }
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

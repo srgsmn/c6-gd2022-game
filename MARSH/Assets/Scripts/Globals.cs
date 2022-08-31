@@ -356,7 +356,7 @@ namespace Globals
         {
             invertYAxis = false;
             invertXAxis = false;
-            mouseSensitivity = 1f;
+            mouseSensitivity = 0f;
         }
     }
 

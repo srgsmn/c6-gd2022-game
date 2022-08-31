@@ -1,28 +1,35 @@
 /* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
  */
-
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Globals;
-using Cinemachine;
+using UnityEngine;
 
-public class CameraSettings : MonoBehaviour
+public class GameEnd : MonoBehaviour
 {
-
-    CinemachineFreeLook CFL;
+    [SerializeField] private Canvas gameEndCanvas;
+    private Canvas instance;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
     {
         EventSubscriber();
+    }
 
-        CFL = GetComponent<CinemachineFreeLook>();
+    private void Start()
+    {
+
+    }
+
+    private void Update()
+    {
+
     }
 
     private void OnDestroy()
     {
+        Destroy(instance);
         EventSubscriber(false);
     }
 
@@ -32,43 +39,22 @@ public class CameraSettings : MonoBehaviour
     {
         if (subscribing)
         {
-            SettingsMenu.OnSettingsChanged += ChangeValue;
-
+            MCCollisionManager.OnGameEnd += OnGameEnd;
         }
         else
         {
-            SettingsMenu.OnSettingsChanged -= ChangeValue;
-
+            MCCollisionManager.OnGameEnd -= OnGameEnd;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
 
-    private void ChangeValue(SettingsValue value)
+    private void OnGameEnd()
     {
-        if (CFL != null)
-        {
-            switch (value)
-            {
-                case SettingsValue.invertXAxis:
-                    CFL.m_XAxis.m_InvertInput = !CFL.m_XAxis.m_InvertInput;
+        GameManager.Instance.Freeze();
+        Cursor.visible = true;
 
-                    break;
-
-                case SettingsValue.invertYAxis:
-                    CFL.m_YAxis.m_InvertInput = !CFL.m_YAxis.m_InvertInput;
-
-                    break;
-
-                case SettingsValue.mouseSensitivity:
-                    float sensitivityValue = DataManager.Instance.settingsData.mouseSensitivity;
-
-                    CFL.m_YAxis.m_MaxSpeed = Mathf.Pow(2f, sensitivityValue) * 1f;
-                    CFL.m_XAxis.m_MaxSpeed = Mathf.Pow(2f, sensitivityValue) * 100f;
-
-                    break;
-            }
-        }
+        instance = Instantiate(gameEndCanvas, this.transform);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
@@ -92,5 +78,4 @@ public class CameraSettings : MonoBehaviour
                 break;
         }
     }
-
 }

@@ -87,7 +87,7 @@ public class DataManager : MonoBehaviour
             cfl.m_YAxis.m_MaxSpeed = 1f;
             cfl.m_XAxis.m_MaxSpeed = 100f;
 
-            settingsData.mouseSensitivity = 1f;
+            settingsData.mouseSensitivity = 0f;
         }
     }
 

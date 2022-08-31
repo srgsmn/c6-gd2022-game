@@ -15,6 +15,9 @@ TagManager:
   - Stuzzicadenti
   - StoreNearby
   - CheckpointNearby
+  - Ladder
+  - LadderEndpoint
+  - GameEnd
   layers:
   - Default
   - TransparentFX

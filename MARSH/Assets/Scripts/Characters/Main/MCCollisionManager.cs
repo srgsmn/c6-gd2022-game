@@ -10,7 +10,7 @@ public class MCCollisionManager : MonoBehaviour
 
     private MCHealthController MCHealthController;
     [SerializeField]
-    [ReadOnlyInspector] private bool storeNearby = false, checkpointNearby = false, atStore = false, atCheckpoint = false;
+    [ReadOnlyInspector] private bool storeNearby = false, checkpointNearby = false, atStore = false, atCheckpoint = false, atLadder = false;
 
     private void Awake()
     {
@@ -67,6 +67,18 @@ public class MCCollisionManager : MonoBehaviour
                 Deb("OnTriggerEnter(): Player collided with a collectable (" + other.tag + "). Delegating collection operation to collectable.");
 
                 break;
+
+            case "LadderEndpoint":
+                atLadder = true;
+                OnProximity?.Invoke(ProximityObject.Ladder, ProximityInfo.Memo);
+
+                break;
+
+            case "GameEnd":
+                OnGameEnd?.Invoke();
+
+                break;
+
             case "AcquaFiume":
                 MCHealthController = gameObject.GetComponent<MCHealthController>();
                 MCHealthController.Die();
@@ -117,6 +129,13 @@ public class MCCollisionManager : MonoBehaviour
 
                 break;
 
+            case "LadderEndpoint":
+                atLadder = false;
+
+                OnProximity?.Invoke(ProximityObject.Ladder, ProximityInfo.None);
+
+                break;
+
             case "Coccodrillo":
                 transform.SetParent(null);
                 
@@ -128,6 +147,12 @@ public class MCCollisionManager : MonoBehaviour
 
     public delegate void ProximityEvent(ProximityObject item, ProximityInfo info);
     public static ProximityEvent OnProximity;
+
+    public delegate void TeleportEvent(Transform position);
+    public static TeleportEvent OnTeleport;
+
+    public delegate void GameEndEvent();
+    public static GameEndEvent OnGameEnd;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -161,6 +186,11 @@ public class MCCollisionManager : MonoBehaviour
             GameManager.Instance.SaveGame();
 
             flag = false;
+        }
+
+        if(atLadder && flag)
+        {
+            OnTeleport(transform);
         }
     }
 
