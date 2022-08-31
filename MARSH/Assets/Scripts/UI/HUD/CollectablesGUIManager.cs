@@ -58,6 +58,9 @@ public class CollectablesGUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI CCText;
     [SerializeField] private Animator CCIcon;
 
+    [SerializeField]
+    [ReadOnlyInspector] private bool keep = false;
+
 
     private Dictionary<CollectableType, UIElement> items = new Dictionary<CollectableType, UIElement>();
 
@@ -84,11 +87,11 @@ public class CollectablesGUIManager : MonoBehaviour
     {
         foreach (Indicator indicator in indicators)
         {
-            if (indicator.timer > 0)
+            if (indicator.timer > 0 && !keep)
             {
                 indicator.timer -= Time.deltaTime;
             }
-            else
+            else if (!keep)
             {
                 Deb("Update(): Time out, hiding text...");
                 HideText(indicator.collectableType);
@@ -162,6 +165,13 @@ public class CollectablesGUIManager : MonoBehaviour
         }
     }
 
+    private void ShowAllAndKeep(bool flag)
+    {
+        keep = flag;
+
+        ShowAll();
+    }
+
     private void ShowAll()
     {
         ShowText(CollectableType.SL);
@@ -187,15 +197,31 @@ public class CollectablesGUIManager : MonoBehaviour
         {
             MCCollectionManager.OnValueChanged += UpdateValue;
             InputManager.OnInfo += ShowAll;
+
+            GameManager.OnNewScreen += ShowInfoOnPause;
         }
         else
         {
             MCCollectionManager.OnValueChanged -= UpdateValue;
             InputManager.OnInfo -= ShowAll;
+
+            GameManager.OnNewScreen -= ShowInfoOnPause;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void ShowInfoOnPause(GameScreen screen)
+    {
+        if(screen == GameScreen.PauseMenu && screen == GameScreen.StoreMenu)
+        {
+            ShowAllAndKeep(true);
+        }
+        else
+        {
+            ShowAllAndKeep(false);
+        }
+    }
 
     private void UpdateValue(ChParam param, object value)
     {

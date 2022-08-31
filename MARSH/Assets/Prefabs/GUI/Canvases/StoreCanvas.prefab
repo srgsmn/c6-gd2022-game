@@ -4071,6 +4071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb80814ab44b48fe9de712e945abfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlertPrefab: {fileID: 0}
 --- !u!1 &2996456634065310950
 GameObject:
   m_ObjectHideFlags: 0
@@ -5258,7 +5259,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2996456634517394976
 MonoBehaviour:

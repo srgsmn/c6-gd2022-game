@@ -132,6 +132,8 @@ public class CanvasesManager : MonoBehaviour
 
                 if (!pauseMenuInstance.activeSelf) pauseMenuInstance.SetActive(true);
 
+                if (HUDInstance.activeSelf) HUDInstance.SetActive(true);
+
                 Cursor.visible = true;
 
                 break;
@@ -146,9 +148,7 @@ public class CanvasesManager : MonoBehaviour
                 if (settingsMenuInstance.activeSelf) settingsMenuInstance.SetActive(false);
                 if (creditsInstance.activeSelf) creditsInstance.SetActive(false);
 
-                Deb("DisplayCanvas(): Now displaying specifically HUD (instance is " + (HUDInstance.activeSelf ? "" : "NOT " ) + "active)");
-                if (!HUDInstance.activeSelf) HUDInstance.SetActive(true);
-                Deb("DisplayCanvas(): Now HUD instance is " + (HUDInstance.activeSelf ? "" : "NOT ") + "active");
+                
 
                 Deb("DisplayCanvas(): Current canvas status: pause canvas = " + pauseMenuInstance.activeSelf + " (expected false), store canvas = " + storeMenuInstance.activeSelf + " (expected false), HUD canvas = " + HUDInstance.activeSelf + " (expected true)");
 
@@ -164,6 +164,10 @@ public class CanvasesManager : MonoBehaviour
                     tutorialInstance.SetActive(false);
                 }
 
+                Deb("DisplayCanvas(): Now displaying specifically HUD (instance is " + (HUDInstance.activeSelf ? "" : "NOT ") + "active)");
+                if (!HUDInstance.activeSelf) HUDInstance.SetActive(true);
+                Deb("DisplayCanvas(): Now HUD instance is " + (HUDInstance.activeSelf ? "" : "NOT ") + "active");
+
                 Cursor.visible = false;
 
                 break;
@@ -171,9 +175,9 @@ public class CanvasesManager : MonoBehaviour
             case GameScreen.StoreMenu:
                 if (!backgroundInstance.activeSelf) backgroundInstance.SetActive(true);
 
-                if (HUDInstance.activeSelf) HUDInstance.SetActive(false);
-
                 if (!storeMenuInstance.activeSelf) storeMenuInstance.SetActive(true);
+
+                if (HUDInstance.activeSelf) HUDInstance.SetActive(true);
 
                 Cursor.visible = true;
 
@@ -252,8 +256,7 @@ public class CanvasesManager : MonoBehaviour
 
             case GameState.Play:
             case GameState.Pause:
-                if (HUDInstance == null) HUDInstance = Instantiate(HUDCanvasP, transform);
-                HUDInstance.SetActive(false);
+                
 
                 if (debugInstance == null) debugInstance = Instantiate(debugCanvasP, transform);
                 debugInstance.SetActive(GameManager.Instance.isDebugMode);
@@ -278,6 +281,9 @@ public class CanvasesManager : MonoBehaviour
 
                 if (startMenuInstance != null) Destroy(startMenuInstance);
                 if (gameoverInstance != null) Destroy(gameoverInstance);
+
+                if (HUDInstance == null) HUDInstance = Instantiate(HUDCanvasP, transform);
+                HUDInstance.SetActive(true);
 
                 break;
 
