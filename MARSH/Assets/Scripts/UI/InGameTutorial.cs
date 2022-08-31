@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Globals;
 
-public class StoreTutorial : MonoBehaviour
+public class InGameTutorial : MonoBehaviour
 {
+    [SerializeField] private GameObject checkpoint;
+    [SerializeField] private GameObject store;
+
     private void Awake()
     {
         EventSubscriber();
@@ -23,11 +26,13 @@ public class StoreTutorial : MonoBehaviour
     {
         if (subscribing)
         {
+            Deb("EventSubscriber(): subscribing...");
             MCCollisionManager.OnProximity += OnProximity;
 
         }
         else
         {
+            Deb("EventSubscriber(): unsubscribing...");
             MCCollisionManager.OnProximity -= OnProximity;
         }
     }
@@ -37,14 +42,25 @@ public class StoreTutorial : MonoBehaviour
     {
         Deb("###"+obj+" "+info);
 
-        if (obj==ProximityObject.Store && info == ProximityInfo.Tutorial)
+        if (info == ProximityInfo.Tutorial)
         {
-            gameObject.SetActive(true);
-        }
+            switch (obj)
+            {
+                case ProximityObject.Checkpoint:
+                    checkpoint.SetActive(true);
 
-        if (obj == ProximityObject.Store && (info == ProximityInfo.None || info == ProximityInfo.Memo))
+                    break;
+
+                case ProximityObject.Store:
+                    store.SetActive(true);
+
+                    break;
+            }
+        }
+        else if(info == ProximityInfo.None || info == ProximityInfo.Memo)
         {
-            gameObject.SetActive(false);
+            checkpoint.SetActive(false);
+            store.SetActive(false);
         }
     }
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

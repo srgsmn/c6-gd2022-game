@@ -87,7 +87,7 @@ public class MCCollisionManager : MonoBehaviour
                 //TODO
                 storeNearby = false;
 
-                OnProximity?.Invoke(ProximityObject.None, ProximityInfo.Tutorial);
+                OnProximity?.Invoke(ProximityObject.Store, ProximityInfo.None);
 
                 break;
 
@@ -95,7 +95,7 @@ public class MCCollisionManager : MonoBehaviour
                 //TODO
                 checkpointNearby = false;
 
-                OnProximity?.Invoke(ProximityObject.None, ProximityInfo.Tutorial);
+                OnProximity?.Invoke(ProximityObject.Checkpoint, ProximityInfo.None);
 
                 break;
 
@@ -104,12 +104,16 @@ public class MCCollisionManager : MonoBehaviour
 
                 atStore = false;
 
+                OnProximity?.Invoke(ProximityObject.Store, ProximityInfo.None);
+
                 break;
 
             case "Checkpoint":
                 Deb("OnTriggerExit(): Player no more near to a checkpoint...");
 
                 atCheckpoint = false;
+
+                OnProximity?.Invoke(ProximityObject.Checkpoint, ProximityInfo.None);
 
                 break;
 
@@ -143,6 +147,8 @@ public class MCCollisionManager : MonoBehaviour
 
     private void OnAction(bool flag)
     {
+        Deb("OnAction(): flag = " + flag);
+
         if (atStore && flag)
         {
             GameManager.Instance.OpenStore();
