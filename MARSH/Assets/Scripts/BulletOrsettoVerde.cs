@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletOrsettoVerde : MonoBehaviour
 {
-    public float life = 20;
+    public float life = 7;
 
     private MCHealthController MCHealthController;
 

@@ -4121,7 +4121,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Along your path you can find some object that you can collect: sugar lumps
-    anc choco chips. Those are the currency you need use in Marsh''s world to purchase
+    and choco chips. Those are the currency you need use in Marsh''s world to purchase
     armors and weapons. They look like this:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a617d0af591124d4da46a3102650393c, type: 2}
