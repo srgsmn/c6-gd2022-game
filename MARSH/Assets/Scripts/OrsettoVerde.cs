@@ -20,7 +20,7 @@ public class OrsettoVerde : MonoBehaviour
 
     void Start()
     {
-        var rendum = Random.Range(1F,3F);
+        var rendum = Random.Range(2F,4F);
         InvokeRepeating("Shuut", 3, rendum);
         healthController = gameObject.GetComponent<HealthController>();
     }
@@ -34,13 +34,14 @@ public class OrsettoVerde : MonoBehaviour
                 Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
                 if(rb != null && rb.gameObject.tag == "Player")
                 {
-                    Debug.Log("DEFINITIVO");
                     transform.LookAt(target);
                 }
             }
+            
         if(healthController.GetHealth() <= 0) {
             Destroy(gameObject);
         }
+        
     }
     void Shuut()
     {
@@ -64,10 +65,5 @@ public class OrsettoVerde : MonoBehaviour
         {
             healthController.TakeDamage(50);
         }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision.gameObject.name);
     }
 }
