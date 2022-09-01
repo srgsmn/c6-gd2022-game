@@ -145,11 +145,6 @@ public class HealthController : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-
-    }
-
     private void OnDestroy()
     {
         //EventSubscriber(false);
@@ -162,7 +157,7 @@ public class HealthController : MonoBehaviour
         maxHealth = 100;
         health = 100;
         defHealthFactor = 1;
-        maxArmor = 100;
+        maxArmor = 0;
         armor = 0;
         defArmorFactor = 1;
     }

@@ -45,10 +45,13 @@ public class Tutorial : MonoBehaviour
 
     private void StartTutorial()
     {
-        panelIndex = 0;
-        panels[panelIndex].SetActive(true);
-        phase = TutorialPhase.Welcome;
-        Freeze();
+        if (!GameManager.Instance.isTutorialDone)
+        {
+            panelIndex = 0;
+            panels[panelIndex].SetActive(true);
+            phase = TutorialPhase.Welcome;
+            Freeze();
+        }
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
@@ -169,6 +172,8 @@ public class Tutorial : MonoBehaviour
                 phase = TutorialPhase.None;
 
                 gameObject.SetActive(false);
+
+                GameManager.Instance.isTutorialDone = true;
 
                 OnTutorialEnd?.Invoke();
                 //Unfreezed in game manager

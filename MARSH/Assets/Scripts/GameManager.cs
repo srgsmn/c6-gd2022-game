@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool isTutorialDone = false;
+
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
@@ -371,6 +373,7 @@ public class GameManager : MonoBehaviour
 
     public void StartTutorial()
     {
+        isTutorialDone = false;
         isTutorialOn = true;
 
         if(currentState == GameState.Pause)

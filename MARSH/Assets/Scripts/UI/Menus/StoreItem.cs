@@ -72,7 +72,12 @@ public class StoreItem : MonoBehaviour
             }
 
 
-            if (armor != 0 && health == 0 && current.armor < current.maxArmor)
+            if (armor != 0 && health == 0 && current.armor <= current.maxArmor && !isIncremental)
+            {
+                flag = true;
+            }
+
+            if (armor != 0 && health == 0 && current.armor < current.maxArmor && isIncremental)
             {
                 flag = true;
             }
