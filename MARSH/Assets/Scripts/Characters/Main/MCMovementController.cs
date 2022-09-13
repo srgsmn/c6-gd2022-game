@@ -145,7 +145,7 @@ public class MCMovementController : MonoBehaviour
         HandleGravity();
         HandleJump();
 
-        if (isMovementPressed || isJumping)
+        if (isMovementPressed || isJumping || !characterController.isGrounded)
             characterController.Move(appliedMovement * Time.deltaTime);
 
         appliedMovement = Vector3.zero;

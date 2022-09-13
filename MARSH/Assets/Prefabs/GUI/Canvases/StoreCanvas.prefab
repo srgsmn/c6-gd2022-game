@@ -5777,8 +5777,8 @@ MonoBehaviour:
   itemName: DARK CHOCO ARMOR
   itemDescription: Life is getting harder and harder? Try this strongest darker armor!
   levelAvailability: 5
-  SLPrice: 125
-  CCPrice: 500
+  SLPrice: 20
+  CCPrice: 40
   isIncremental: 0
   health: 0
   armor: 150

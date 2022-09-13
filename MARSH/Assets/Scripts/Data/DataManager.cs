@@ -72,22 +72,25 @@ public class DataManager : MonoBehaviour
 
     public void LoadSettingsData()
     {
-        settingsData = new SettingsData();
-
-        CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
-
-        if (cfl != null)
+        if(settingsData == null)
         {
-            cfl.m_YAxis.m_InvertInput = false;
-            cfl.m_XAxis.m_InvertInput = false;
+            settingsData = new SettingsData();
 
-            settingsData.invertYAxis = cfl.m_YAxis.m_InvertInput;
-            settingsData.invertXAxis = cfl.m_XAxis.m_InvertInput;
+            CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
 
-            cfl.m_YAxis.m_MaxSpeed = 1f;
-            cfl.m_XAxis.m_MaxSpeed = 100f;
+            if (cfl != null)
+            {
+                cfl.m_YAxis.m_InvertInput = false;
+                cfl.m_XAxis.m_InvertInput = false;
 
-            settingsData.mouseSensitivity = 0f;
+                settingsData.invertYAxis = cfl.m_YAxis.m_InvertInput;
+                settingsData.invertXAxis = cfl.m_XAxis.m_InvertInput;
+
+                cfl.m_YAxis.m_MaxSpeed = 1f;
+                cfl.m_XAxis.m_MaxSpeed = 100f;
+
+                settingsData.mouseSensitivity = 0f;
+            }
         }
     }
 
