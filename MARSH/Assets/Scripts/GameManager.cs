@@ -217,6 +217,13 @@ public class GameManager : MonoBehaviour
                     //currentState = GameState.Play;
                     NewState(GameState.Play);
                     flag = true;
+                } else if (next == GameScreen.StartMenu)
+                {
+                    Deb("DisplayScreen(): from game over screen you're going into start screen. Changing here current state and setting true the flag to manage the screen and state");
+
+                    //currentState = GameState.Play;
+                    NewState(GameState.Start);
+                    flag = true;
                 }
 
                 break;
@@ -326,7 +333,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void ResetParameters()
+    private void ResetParameters()  //FIXME
     {
         EventSubscriber(false);
         EventSubscriber();
