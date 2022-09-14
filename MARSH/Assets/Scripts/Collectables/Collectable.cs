@@ -10,12 +10,13 @@ public class Collectable : MonoBehaviour
 {
     // COMPONENT ATTRIBUTES ____________________________________________________ COMPONENT ATTRIBUTES
 
+    [SerializeField] private bool needsID = true;
     [SerializeField]
     [ReadOnlyInspector] private string id = null;
     [SerializeField] private CollectableType type;
 
     [Header("Model movement parameters:")]
-    [SerializeField] private GameObject targetObject;
+    [SerializeField] private GameObject objectModel;
     [SerializeField] private Vector3 spinSpeed = Vector3.one;
     [SerializeField] private Vector3 translationSpeed = Vector3.zero;
 
@@ -46,16 +47,16 @@ public class Collectable : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            OnCollection(type, id);
+            OnCollection?.Invoke(type, id);
             Destroy(gameObject)
 ;        }
     }
 
     private void Start()
     {
-        positionOnStart = targetObject.transform.localPosition;
+        positionOnStart = objectModel.transform.localPosition;
 
-        if (id == null || id == "")
+        if (needsID && (id == null || id == ""))
         {
             Deb("Start(): COLLECTABLE NAMED " + gameObject.name + " DOESN'T HAVE AN ID! THIS MAY BE THE CAUSE OF FUTURE ISSUES!" +
                 "\nTo give an ID to the GO all you need to do is to go over the script that manages the go, open the context menu right-clicking on the component name and select the relative voice (\"Generate guid for ID\")", DebMsgType.warn);
@@ -65,12 +66,12 @@ public class Collectable : MonoBehaviour
 
     private void Update()
     {
-        targetObject.transform.Rotate(360 * spinSpeed.x * Time.deltaTime, 360 * spinSpeed.y * Time.deltaTime, 360 * spinSpeed.z * Time.deltaTime);
+        objectModel.transform.Rotate(360 * spinSpeed.x * Time.deltaTime, 360 * spinSpeed.y * Time.deltaTime, 360 * spinSpeed.z * Time.deltaTime);
         /*transform.position = new Vector3(positionOnStart.x + .125f * Mathf.Sin(translationSpeed.x * Time.time),
                                          positionOnStart.y + .125f * Mathf.Sin(translationSpeed.y * Time.time),
                                          positionOnStart.z + .125f * Mathf.Sin(translationSpeed.z * Time.time));
         */
-        targetObject.transform.localPosition = new Vector3(positionOnStart.x + .125f * Mathf.Sin(translationSpeed.x * Time.time),
+        objectModel.transform.localPosition = new Vector3(positionOnStart.x + .125f * Mathf.Sin(translationSpeed.x * Time.time),
                                          positionOnStart.y + .125f * Mathf.Sin(translationSpeed.y * Time.time),
                                          positionOnStart.z + .125f * Mathf.Sin(translationSpeed.z * Time.time));
     }
@@ -78,6 +79,12 @@ public class Collectable : MonoBehaviour
     private void OnDestroy()
     {
         EventSubscriber(false);
+    }
+
+
+    public void NeedsID(bool flag)
+    {
+        needsID = flag;
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
@@ -104,8 +111,11 @@ public class Collectable : MonoBehaviour
     {
         Deb("CollectionCheck(): detected a new checkpoint. Comparing the IDs");
 
-        if (ids.Contains(id))
-            Destroy(gameObject);
+        if (needsID)
+        {
+            if (ids.Contains(id))
+                Destroy(gameObject);
+        }
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

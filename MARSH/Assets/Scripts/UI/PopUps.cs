@@ -10,6 +10,7 @@ public class PopUps : MonoBehaviour
     [SerializeField] private GameObject checkpoint;
     [SerializeField] private GameObject store;
     [SerializeField] private GameObject ladder;
+    [SerializeField] private GameObject spawner;
 
     private void Awake()
     {
@@ -61,6 +62,11 @@ public class PopUps : MonoBehaviour
                     ladder.SetActive(true);
 
                     break;
+
+                case ProximityObject.Spawner:
+                    spawner.SetActive(true);
+
+                    break;
             }
         }
         else if (info == ProximityInfo.None || info == ProximityInfo.Tutorial)
@@ -68,6 +74,7 @@ public class PopUps : MonoBehaviour
             checkpoint.SetActive(false);
             store.SetActive(false);
             ladder.SetActive(false);
+            spawner.SetActive(false);
         }
     }
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

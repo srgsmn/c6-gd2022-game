@@ -193,7 +193,7 @@ namespace Globals
 
     public enum ProximityObject
     {
-        Checkpoint, Store, Ladder, None
+        Checkpoint, Store, Ladder, Spawner, None
     }
 
     public enum ProximityInfo
@@ -212,6 +212,13 @@ namespace Globals
     {
         public PlayerAudioType type;
         public AudioSource source;
+    }
+
+    [Serializable]
+    public struct Reward
+    {
+        public GameObject prefab;
+        public int quantity;
     }
 
     // CLASSES _________________________________________________________________ CLASSES

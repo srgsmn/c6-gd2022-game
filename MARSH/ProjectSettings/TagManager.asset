@@ -18,6 +18,7 @@ TagManager:
   - Ladder
   - LadderEndpoint
   - GameEnd
+  - Spawner
   layers:
   - Default
   - TransparentFX

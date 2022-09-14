@@ -10,7 +10,7 @@ public class MCCollisionManager : MonoBehaviour
 
     private MCHealthController MCHealthController;
     [SerializeField]
-    [ReadOnlyInspector] private bool storeNearby = false, checkpointNearby = false, atStore = false, atCheckpoint = false, atLadder = false;
+    [ReadOnlyInspector] private bool storeNearby = false, checkpointNearby = false, atStore = false, atCheckpoint = false, atLadder = false, atSpawner = false;
 
     private void Awake()
     {
@@ -71,6 +71,12 @@ public class MCCollisionManager : MonoBehaviour
             case "LadderEndpoint":
                 atLadder = true;
                 OnProximity?.Invoke(ProximityObject.Ladder, ProximityInfo.Memo);
+
+                break;
+
+            case "Spawner":
+                atSpawner = true;
+                OnProximity?.Invoke(ProximityObject.Spawner, ProximityInfo.Memo);
 
                 break;
 
@@ -136,6 +142,12 @@ public class MCCollisionManager : MonoBehaviour
 
                 break;
 
+            case "Spawner":
+                atSpawner = false;
+                OnProximity?.Invoke(ProximityObject.Spawner, ProximityInfo.None);
+
+                break;
+
             case "Coccodrillo":
                 transform.SetParent(null);
                 
@@ -153,6 +165,9 @@ public class MCCollisionManager : MonoBehaviour
 
     public delegate void GameEndEvent();
     public static GameEndEvent OnGameEnd;
+
+    public delegate void SpawnEvent(GameObject target);
+    public static SpawnEvent OnSpawn;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -190,7 +205,15 @@ public class MCCollisionManager : MonoBehaviour
 
         if(atLadder && flag)
         {
-            OnTeleport(transform);
+            OnTeleport?.Invoke(transform);
+        }
+
+        if(atSpawner && flag)
+        {
+            OnSpawn?.Invoke(gameObject);
+
+            atSpawner = false;
+            OnProximity?.Invoke(ProximityObject.Spawner, ProximityInfo.None);
         }
     }
 
