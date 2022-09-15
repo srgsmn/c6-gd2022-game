@@ -78,7 +78,7 @@ public class SettingsMenu : Menu
         });
     }
 
-    public delegate void SettingsChangeEvent(SettingsValue value);
+    public delegate void SettingsChangeEvent(SettingsOption option, object value);
     public static SettingsChangeEvent OnSettingsChanged;
 
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
@@ -109,23 +109,23 @@ public class SettingsMenu : Menu
 
     private void InvertYAxisToggleChanged(Toggle tglValue)
     {
-        DataManager.Instance.settingsData.invertYAxis = !DataManager.Instance.settingsData.invertYAxis;
+        //DataManager.Instance.settingsData.invertYAxis = !DataManager.Instance.settingsData.invertYAxis;
 
-        OnSettingsChanged?.Invoke(SettingsValue.invertYAxis);
+        OnSettingsChanged?.Invoke(SettingsOption.invertYAxis, tglValue.isOn);
     }
 
     private void InvertXAxisToggleChanged(Toggle tglValue)
     {
-        DataManager.Instance.settingsData.invertXAxis = !DataManager.Instance.settingsData.invertXAxis;
+        //DataManager.Instance.settingsData.invertXAxis = !DataManager.Instance.settingsData.invertXAxis;
 
-        OnSettingsChanged?.Invoke(SettingsValue.invertXAxis);
+        OnSettingsChanged?.Invoke(SettingsOption.invertXAxis, tglValue.isOn);
     }
 
     private void MouseSliderChanged(Slider slider)
     {
-        DataManager.Instance.settingsData.mouseSensitivity = slider.value;
+        //DataManager.Instance.settingsData.mouseSensitivity = slider.value;
 
-        OnSettingsChanged?.Invoke(SettingsValue.mouseSensitivity);
+        OnSettingsChanged?.Invoke(SettingsOption.mouseSensitivity, slider.value);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

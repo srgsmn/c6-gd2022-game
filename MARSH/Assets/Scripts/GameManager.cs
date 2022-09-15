@@ -485,7 +485,7 @@ public class GameManager : MonoBehaviour
         {
             DisplayScreen(GameScreen.PlayScreen);
 
-            DataManager.Instance.LoadSettingsData();
+            DataManager.Instance.ResetSettingsData();
         }
     }
 

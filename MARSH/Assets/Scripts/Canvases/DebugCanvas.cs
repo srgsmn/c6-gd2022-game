@@ -36,13 +36,13 @@ public class DebugCanvas : MonoBehaviour
             // Debug inputs
             DataManager.OnValueUpdate += UpdateText;
 
-            DataManager.OnSavedData += UpdateSavedData;
+            DataManager.OnDataSaved += UpdateSavedData;
         }
         else
         {
             DataManager.OnValueUpdate -= UpdateText;
 
-            DataManager.OnSavedData -= UpdateSavedData;
+            DataManager.OnDataSaved -= UpdateSavedData;
         }
     }
 

@@ -367,7 +367,7 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator StartTimer(TutorialPhase next)
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2.5f);
 
         panels[panelIndex].SetActive(true);
         Freeze();

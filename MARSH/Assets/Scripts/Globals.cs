@@ -144,7 +144,7 @@ namespace Globals
         SL, CC
     }
 
-    public enum SettingsValue
+    public enum SettingsOption
     {
         invertXAxis, invertYAxis, mouseSensitivity
     }
@@ -349,6 +349,7 @@ namespace Globals
     {
         public PlayerData player;
         public EnvironmentData environment;
+        public SettingsData settings;
 
         public GameData()
         {
@@ -391,6 +392,7 @@ namespace Globals
         {
             player = new PlayerData(data.player);
             environment = new EnvironmentData(data.environment);
+            settings = new SettingsData(data.settings);
         }
     }
 
@@ -406,6 +408,13 @@ namespace Globals
             invertYAxis = false;
             invertXAxis = false;
             mouseSensitivity = 0f;
+        }
+
+        public SettingsData(SettingsData data)
+        {
+            invertXAxis = data.invertXAxis;
+            invertYAxis = data.invertYAxis;
+            mouseSensitivity = data.mouseSensitivity;
         }
     }
 

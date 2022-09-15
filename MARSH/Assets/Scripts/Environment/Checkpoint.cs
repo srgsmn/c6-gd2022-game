@@ -56,13 +56,6 @@ public class Checkpoint : MonoBehaviour
         if (other.CompareTag("Player") && !isActive)
         {
             inPlace = true;
-            /*
-            OnCheckpoint?.Invoke(id);
-
-            instance = Instantiate(animatedTxtPrefab, targetCanvas.transform);
-
-            Destroy(instance, 2.75f);
-            */
         }
     }
 

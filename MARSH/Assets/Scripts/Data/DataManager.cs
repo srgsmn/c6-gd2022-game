@@ -13,9 +13,14 @@ public class DataManager : MonoBehaviour
 
     [SerializeField] private PlayerData currentPlayerData;
     [SerializeField] private EnvironmentData currentEnvironmentData;
+    [SerializeField] private SettingsData _settingsData;
     [SerializeField] private GameData currentGameData, loadedGameData;
 
-    public SettingsData settingsData;
+    public SettingsData settingsData
+    {
+        get { return _settingsData; }
+        set { _settingsData = new SettingsData(value);}
+    }
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -42,9 +47,9 @@ public class DataManager : MonoBehaviour
 
         currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
 
-        if (GameManager.Instance.GetSceneIndex() != 0)
+        if (settingsData==null)
         {
-            LoadSettingsData();
+            ResetSettingsData();
         }
 
         if (currentEnvironmentData.lastCheckpointID != null)
@@ -58,11 +63,6 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-
-    }
-
     private void OnDestroy()
     {
         EventSubscriber(false);
@@ -70,27 +70,27 @@ public class DataManager : MonoBehaviour
 
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
 
-    public void LoadSettingsData()
+    public void ResetSettingsData()
     {
-        if(settingsData == null)
+
+        settingsData = new SettingsData();
+
+        CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
+
+        if (cfl != null)
         {
-            settingsData = new SettingsData();
+            cfl.m_YAxis.m_InvertInput = false;
+            cfl.m_XAxis.m_InvertInput = false;
 
-            CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
+            settingsData.invertYAxis = cfl.m_YAxis.m_InvertInput;
+            settingsData.invertXAxis = cfl.m_XAxis.m_InvertInput;
 
-            if (cfl != null)
-            {
-                cfl.m_YAxis.m_InvertInput = false;
-                cfl.m_XAxis.m_InvertInput = false;
+            cfl.m_YAxis.m_MaxSpeed = 1f;
+            cfl.m_XAxis.m_MaxSpeed = 100f;
 
-                settingsData.invertYAxis = cfl.m_YAxis.m_InvertInput;
-                settingsData.invertXAxis = cfl.m_XAxis.m_InvertInput;
+            settingsData.mouseSensitivity = 0f;
 
-                cfl.m_YAxis.m_MaxSpeed = 1f;
-                cfl.m_XAxis.m_MaxSpeed = 100f;
-
-                settingsData.mouseSensitivity = 0f;
-            }
+            currentGameData.settings = settingsData;
         }
     }
 
@@ -139,8 +139,8 @@ public class DataManager : MonoBehaviour
     public delegate void ColelctionLoadEvent(List<string> ids);
     public static ColelctionLoadEvent OnCollectionLoad;
 
-    public delegate void SavedDataDebugEvent(GameData data);
-    public static SavedDataDebugEvent OnSavedData;
+    public delegate void DataSavedEvent(GameData data);
+    public static DataSavedEvent OnDataSaved;
 
     public delegate void GameLoadingEvent(PlayerData data);
     public static GameLoadingEvent OnGameLoading;
@@ -159,6 +159,8 @@ public class DataManager : MonoBehaviour
             Collectable.OnCollection += OnNewCollection;
 
             GameManager.OnParamsReset += OnParamsReset;
+
+            SettingsMenu.OnSettingsChanged += OnSettingsChanged;
         }
         else
         {
@@ -170,6 +172,8 @@ public class DataManager : MonoBehaviour
             Collectable.OnCollection -= OnNewCollection;
 
             GameManager.OnParamsReset -= OnParamsReset;
+
+            SettingsMenu.OnSettingsChanged -= OnSettingsChanged;
         }
     }
 
@@ -184,6 +188,30 @@ public class DataManager : MonoBehaviour
     private void OnNewCollection(CollectableType type, string id)
     {
         currentEnvironmentData.collectablesIDs.Add(id);
+    }
+
+    private void OnSettingsChanged(SettingsOption option, object value)
+    {
+        switch (option)
+        {
+            case SettingsOption.invertXAxis:
+                settingsData.invertXAxis = (bool)value;
+                currentGameData.settings.invertXAxis = (bool)value;
+
+                break;
+
+            case SettingsOption.invertYAxis:
+                settingsData.invertYAxis = (bool)value;
+                currentGameData.settings.invertYAxis = (bool)value;
+
+                break;
+
+            case SettingsOption.mouseSensitivity:
+                settingsData.mouseSensitivity = (float)value;
+                currentGameData.settings.mouseSensitivity = (float)value;
+
+                break;
+        }
     }
 
     private void OnValueChanged(ChParam param, object value)
@@ -260,7 +288,7 @@ public class DataManager : MonoBehaviour
         //TODO
         loadedGameData = new GameData(currentGameData);
 
-        OnSavedData?.Invoke(loadedGameData);
+        OnDataSaved?.Invoke(loadedGameData);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

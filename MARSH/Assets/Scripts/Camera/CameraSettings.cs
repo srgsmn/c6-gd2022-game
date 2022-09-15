@@ -33,35 +33,35 @@ public class CameraSettings : MonoBehaviour
         if (subscribing)
         {
             SettingsMenu.OnSettingsChanged += ChangeValue;
-
+            DataManager.OnDataSaved += LoadData;
         }
         else
         {
             SettingsMenu.OnSettingsChanged -= ChangeValue;
-
+            DataManager.OnDataSaved -= LoadData;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
 
-    private void ChangeValue(SettingsValue value)
+    private void ChangeValue(SettingsOption option, object value)
     {
         if (CFL != null)
         {
-            switch (value)
+            switch (option)
             {
-                case SettingsValue.invertXAxis:
-                    CFL.m_XAxis.m_InvertInput = !CFL.m_XAxis.m_InvertInput;
+                case SettingsOption.invertXAxis:
+                    CFL.m_XAxis.m_InvertInput = (bool)value;
 
                     break;
 
-                case SettingsValue.invertYAxis:
-                    CFL.m_YAxis.m_InvertInput = !CFL.m_YAxis.m_InvertInput;
+                case SettingsOption.invertYAxis:
+                    CFL.m_YAxis.m_InvertInput = (bool)value;
 
                     break;
 
-                case SettingsValue.mouseSensitivity:
-                    float sensitivityValue = DataManager.Instance.settingsData.mouseSensitivity;
+                case SettingsOption.mouseSensitivity:
+                    float sensitivityValue = (float)value;
 
                     CFL.m_YAxis.m_MaxSpeed = Mathf.Pow(2f, sensitivityValue) * 1f;
                     CFL.m_XAxis.m_MaxSpeed = Mathf.Pow(2f, sensitivityValue) * 100f;
@@ -69,6 +69,13 @@ public class CameraSettings : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void LoadData(GameData data)
+    {
+        ChangeValue(SettingsOption.invertXAxis, data.settings.invertXAxis);
+        ChangeValue(SettingsOption.invertYAxis, data.settings.invertYAxis);
+        ChangeValue(SettingsOption.mouseSensitivity, data.settings.mouseSensitivity);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
