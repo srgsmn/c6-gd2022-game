@@ -101,6 +101,8 @@ public class Spawner : MonoBehaviour
             }
 
             Deb("OnSpawn(): Spawn completed, destroying spawner...");
+
+            isNearby = false;
             Destroy(gameObject);
         }
     }
