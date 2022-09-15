@@ -17,21 +17,24 @@ public class Spawner : MonoBehaviour
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
+    /*
     private void Awake()
     {
-        EventSubscriber();
+        
     }
 
     private void OnDestroy()
     {
-        EventSubscriber(false);
+        
     }
+    */
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             isNearby = true;
+            EventSubscriber(isNearby);
         }
     }
 
@@ -40,6 +43,7 @@ public class Spawner : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isNearby = false;
+            EventSubscriber(isNearby);
         }
     }
 
@@ -61,42 +65,51 @@ public class Spawner : MonoBehaviour
 
     private void OnSpawn(GameObject target)
     {
-        int go = 0;
-
-        if (isRandom)
+        if (isNearby)
         {
-            int i = Random.Range(1, totalQuantity);
+            int go = 0;
 
-            for(int a=0; a<totalQuantity; a++)
+            if (isRandom)
             {
-                Deb("Instantiation of a " + rewards[go].prefab.name + " ("+ a +")");
+                int i = Random.Range(0, totalQuantity);
+                Deb("### Random value is " + i + " => " + i + " of " + rewards[0].prefab.name + " and " + (totalQuantity - i) + " of " + rewards[1].prefab.name);
 
-                Generate(rewards[go].prefab, target);
+                for (int count = 0; count < totalQuantity; count++)
+                {
+                    if (count == i) go++;
 
-                if (a == i - 1) go++;
+                    Deb("OnSpawn(): Instantiation of a " + rewards[go].prefab.name + " (" + count + ")");
+
+
+                    Generate(rewards[go].prefab, target);
+                }
             }
-        }
-        else
-        {
-            do
+            else
             {
-                for (int a = 0; a < rewards[go].quantity; a++)
-                    Deb("Instantiation of a " + rewards[go].prefab.name + " (" + a + ")");
+                do
+                {
+                    for (int a = 0; a < rewards[go].quantity; a++)
+                    {
+                        Deb("OnSpawn(): Instantiation of a " + rewards[go].prefab.name + " (" + a + ")");
 
-                Generate(rewards[go].prefab, target);
+                        Generate(rewards[go].prefab, target);
+                    }
 
-                go++;
-            } while (go < rewards.Length);
+                    go++;
+
+                } while (go < rewards.Length);
+            }
+
+            Deb("OnSpawn(): Spawn completed, destroying spawner...");
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 
     private void Generate(GameObject prefab, GameObject target)
     {
-        Deb("Generating object " + prefab.name);
+        //Deb("Generating object " + prefab.name);
 
-        GameObject instance = Instantiate(prefab, target.transform.position + new Vector3(0f,5f,0f), transform.rotation);
+        GameObject instance = Instantiate(prefab, target.transform.position + new Vector3(Random.Range(0f, .5f),5f, Random.Range(0f, .5f)), Quaternion.identity);
 
         instance.GetComponent<Collectable>().NeedsID(false);
     }

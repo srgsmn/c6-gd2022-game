@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Globals;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
@@ -15,6 +16,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField][ReadOnlyInspector] private TutorialPhase phase;
     [SerializeField][ReadOnlyInspector] private bool awaiting = false;
     [SerializeField][ReadOnlyInspector][Tooltip("Only eventually true if tutorial phase is Sprint")] private bool moving = false;
+    [SerializeField][ReadOnlyInspector] private Globals.Timer timer;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -23,9 +25,19 @@ public class Tutorial : MonoBehaviour
         EventSubscriber();
     }
 
-    void Start()
+    private void Start()
     {
         StartTutorial();
+    }
+
+    private void Update()
+    {
+        if (timer.isRunning)
+        {
+            timer.time -= Time.deltaTime;
+
+            if (timer.time <= 0) timer.Stop();
+        }
     }
 
     private void OnEnable()
@@ -66,16 +78,28 @@ public class Tutorial : MonoBehaviour
         if (subscribing)
         {
             InputManager.OnEnter += OnEnter;
+            InputManager.OnPause += OnEsc;
             GameManager.OnStartTutorial += StartTutorial;
         }
         else
         {
             InputManager.OnEnter -= OnEnter;
+            InputManager.OnPause -= OnEsc;
             GameManager.OnStartTutorial -= StartTutorial;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
+
+    private void OnEsc()
+    {
+        if (phase == TutorialPhase.Welcome)
+        {
+            phase = TutorialPhase.Final;
+
+            OnEnter();
+        }
+    }
 
     private void OnEnter()
     {
@@ -126,7 +150,7 @@ public class Tutorial : MonoBehaviour
 
                 break;
 
-            case TutorialPhase.Attack:
+            case TutorialPhase.Action:
                 if (!awaiting)
                 {
                     panels[panelIndex++].SetActive(false);
@@ -140,9 +164,20 @@ public class Tutorial : MonoBehaviour
                 break;
 
             case TutorialPhase.Collectables:
-                panels[panelIndex++].SetActive(false);
+                if (!awaiting)
+                {
+                    panels[panelIndex++].SetActive(false);
+                    MCCollectionManager.OnValueChanged += OnCollection;
+
+                    Freeze(false);
+
+                    awaiting = true;
+                }
+
+                /*
                 phase = TutorialPhase.Places;
                 panels[panelIndex].SetActive(true);
+                */
 
                 break;
 
@@ -182,6 +217,25 @@ public class Tutorial : MonoBehaviour
         }
     }
 
+    private void OnCollection(ChParam parameter, object value)
+    {
+        if (awaiting && phase == TutorialPhase.Collectables)
+        {
+            MCCollectionManager.OnValueChanged -= OnCollection;
+
+            awaiting = false;
+
+            StartCoroutine(StartTimer(TutorialPhase.Places));
+
+            /*
+            panels[panelIndex].SetActive(true);
+            Freeze();
+
+            phase = TutorialPhase.Jump;
+            */
+        }
+    }
+
     private void OnMovementInput(Vector2 input)
     {
         if (input != Vector2.zero && !awaiting && phase == TutorialPhase.Movement)
@@ -215,16 +269,20 @@ public class Tutorial : MonoBehaviour
     {
         Deb("OnAttackInput(): flag =" + flag + ", awaiting =: " + awaiting + ", phase = " + phase);
 
-        if(awaiting && phase == TutorialPhase.Attack && flag)
+        if(awaiting && phase == TutorialPhase.Action && flag)
         {
             InputManager.OnAttackInput -= OnAttackInput;
 
             awaiting = false;
 
+            StartCoroutine(StartTimer(TutorialPhase.Collectables));
+
+            /*
             panels[panelIndex].SetActive(true);
             Freeze();
 
             phase = TutorialPhase.Collectables;
+            */
         }
     }
 
@@ -232,14 +290,18 @@ public class Tutorial : MonoBehaviour
     {
         if(awaiting && phase == TutorialPhase.Movement && !flag)
         {
-            MCMovementController.OnMove += OnMoveDone;
+            MCMovementController.OnMove -= OnMoveDone;
 
             awaiting = false;
 
+            StartCoroutine(StartTimer(TutorialPhase.Jump));
+
+            /*
             panels[panelIndex].SetActive(true);
             Freeze();
 
             phase = TutorialPhase.Jump;
+            */
         }
     }
 
@@ -260,10 +322,15 @@ public class Tutorial : MonoBehaviour
             MCMovementController.OnJumpFlag -= OnJumpDone;
 
             awaiting = false;
+
+            StartCoroutine(StartTimer(TutorialPhase.Sprint));
+
+            /*
             panels[panelIndex].SetActive(true);
             Freeze();
 
             phase = TutorialPhase.Sprint;
+            */
         }
     }
 
@@ -287,11 +354,25 @@ public class Tutorial : MonoBehaviour
 
             awaiting = false;
 
+            StartCoroutine(StartTimer(TutorialPhase.Action));
+
+            /*
             panels[panelIndex].SetActive(true);
             Freeze();
 
-            phase = TutorialPhase.Attack;
+            phase = TutorialPhase.Action;
+            */
         }
+    }
+
+    IEnumerator StartTimer(TutorialPhase next)
+    {
+        yield return new WaitForSeconds(5f);
+
+        panels[panelIndex].SetActive(true);
+        Freeze();
+
+        phase = next;
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

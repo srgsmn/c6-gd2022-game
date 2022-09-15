@@ -188,7 +188,7 @@ namespace Globals
 
     public enum TutorialPhase
     {
-        Welcome, View, Movement, Jump, Sprint, Attack, Collectables, Places, Pause, Final, None
+        Welcome, View, Movement, Jump, Sprint, Action, Collectables, Places, Pause, Final, None
     }
 
     public enum ProximityObject
@@ -384,6 +384,53 @@ namespace Globals
             this.armor = armor;
             this.defHFactor = defHFactor;
             this.defAFactor = defAFactor;
+        }
+    }
+
+    [Serializable]
+    public class Timer
+    {
+        private float amount;
+        public float time;
+        public bool isRunning;
+
+        public Timer()
+        {
+            amount = Consts.SHOW_TIME;
+            time = amount;
+        }
+
+        public Timer(float amount)
+        {
+            this.amount = amount;
+            time = this.amount;
+        }
+
+        public void Reset()
+        {
+            time = amount;
+            Pause();
+        }
+
+        public void Pause()
+        {
+            if (isRunning) isRunning = false;
+        }
+
+        public void Start()
+        {
+            if (!isRunning && time == amount) isRunning = true;
+            else if(!isRunning && time != amount)
+            {
+                Reset();
+                Start();
+            }
+        }
+
+        public void Stop()
+        {
+            Pause();
+            Reset();
         }
     }
 }

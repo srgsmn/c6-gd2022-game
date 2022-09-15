@@ -156,6 +156,7 @@ MonoBehaviour:
   currentScreen: 0
   _isDebugMode: 0
   _isTutorialOn: 0
+  isTutorialDone: 0
 --- !u!4 &26189134
 Transform:
   m_ObjectHideFlags: 0
@@ -660,6 +661,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasesContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 8459906068965372982, guid: 0844ffc58ba7c427d82f4ebdd02dfe59, type: 3}
+      propertyPath: tutorialCanvasP
+      value: 
+      objectReference: {fileID: 8912345507687943332, guid: e3ab24ab084754ad4baa5a1603f7fdc5, type: 3}
     - target: {fileID: 8459906068965372983, guid: 0844ffc58ba7c427d82f4ebdd02dfe59, type: 3}
       propertyPath: m_RootOrder
       value: 3

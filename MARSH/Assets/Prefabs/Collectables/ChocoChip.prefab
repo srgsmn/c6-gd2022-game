@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5588124513073939877}
   - component: {fileID: 3721341685371830401}
   - component: {fileID: 2231502991975948196}
+  - component: {fileID: 7005157663339347440}
   m_Layer: 0
   m_Name: ChocoChip
   m_TagString: Untagged
@@ -93,10 +94,24 @@ SphereCollider:
   m_GameObject: {fileID: 5588124513073939876}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!136 &7005157663339347440
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5588124513073939876}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!1 &5588124513853612726
 GameObject:
   m_ObjectHideFlags: 0

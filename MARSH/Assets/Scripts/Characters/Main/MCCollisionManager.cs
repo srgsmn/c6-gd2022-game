@@ -210,7 +210,11 @@ public class MCCollisionManager : MonoBehaviour
 
         if(atSpawner && flag)
         {
+            Deb("OnAction(): Event call");
+
             OnSpawn?.Invoke(gameObject);
+
+            flag = false;
 
             atSpawner = false;
             OnProximity?.Invoke(ProximityObject.Spawner, ProximityInfo.None);

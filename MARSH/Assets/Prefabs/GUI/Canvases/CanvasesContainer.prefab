@@ -55,7 +55,7 @@ MonoBehaviour:
   creditsCanvasP: {fileID: 3958032354415952439, guid: f7255afe2d2e749a5b660f276367a03c, type: 3}
   gameoverCanvasP: {fileID: 7878553101473102679, guid: dd991e8ba4ad54d48a87704f417acbd7, type: 3}
   debugCanvasP: {fileID: 8967334536515828845, guid: 495d79373f42647b4bc4a3912e747af3, type: 3}
-  tutorialCanvasP: {fileID: 9113848223110186409, guid: 3901410034c894de0b3f7ddde422c82a, type: 3}
+  tutorialCanvasP: {fileID: 8912345507687943332, guid: e3ab24ab084754ad4baa5a1603f7fdc5, type: 3}
   backgroundInstance: {fileID: 0}
   startMenuInstance: {fileID: 0}
   HUDInstance: {fileID: 0}
