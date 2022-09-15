@@ -154,7 +154,7 @@ public class Tutorial : MonoBehaviour
                 if (!awaiting)
                 {
                     panels[panelIndex++].SetActive(false);
-                    InputManager.OnAttackInput += OnAttackInput;
+                    InputManager.OnActionInput += OnAttackInput;
 
                     Freeze(false);
 
@@ -271,7 +271,7 @@ public class Tutorial : MonoBehaviour
 
         if(awaiting && phase == TutorialPhase.Action && flag)
         {
-            InputManager.OnAttackInput -= OnAttackInput;
+            InputManager.OnActionInput -= OnAttackInput;
 
             awaiting = false;
 

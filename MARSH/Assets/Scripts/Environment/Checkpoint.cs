@@ -18,7 +18,9 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private Canvas targetCanvas;
 
     private GameObject instance;
-    private bool isActive = false;
+    [SerializeField][ReadOnlyInspector] private bool isActive = false;
+    [SerializeField][ReadOnlyInspector] private bool inPlace = false;
+
 
     // CONTEXT MENU FUNCTIONS __________________________________________________ CONTEXT MENU FUNCTIONS
     [ContextMenu("Generate guid for ID")]
@@ -53,11 +55,22 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isActive)
         {
-            OnCheckpoint(id);
+            inPlace = true;
+            /*
+            OnCheckpoint?.Invoke(id);
 
             instance = Instantiate(animatedTxtPrefab, targetCanvas.transform);
 
             Destroy(instance, 2.75f);
+            */
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && !isActive)
+        {
+            inPlace = false;
         }
     }
 
@@ -78,11 +91,13 @@ public class Checkpoint : MonoBehaviour
         {
             OnCheckpoint += CPCheck;
             DataManager.OnCPLoad += CPCheck;
+            InputManager.OnActionInput += StartAnimation;
         }
         else
         {
             OnCheckpoint -= CPCheck;
             DataManager.OnCPLoad -= CPCheck;
+            InputManager.OnActionInput -= StartAnimation;
         }
     }
 
@@ -95,6 +110,18 @@ public class Checkpoint : MonoBehaviour
             isActive = true;
         else
             isActive = false;
+    }
+
+    private void StartAnimation(bool flag)
+    {
+        if(inPlace && flag)
+        {
+            OnCheckpoint?.Invoke(id);
+
+            instance = Instantiate(animatedTxtPrefab, targetCanvas.transform);
+
+            Destroy(instance, 2.75f);
+        }
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

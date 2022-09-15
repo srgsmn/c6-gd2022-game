@@ -195,7 +195,7 @@ public class MCMovementController : MonoBehaviour
             InputManager.OnMovementInput += OnMovementInput;
             InputManager.OnJumpInput += OnJumpInput;
             InputManager.OnRunInput += OnRunInput;
-            InputManager.OnAttackInput += OnAttackInput;
+            InputManager.OnActionInput += OnAttackInput;
 
             GameManager.OnNewState += OnNewState;
         }
@@ -204,7 +204,7 @@ public class MCMovementController : MonoBehaviour
             InputManager.OnMovementInput -= OnMovementInput;
             InputManager.OnJumpInput -= OnJumpInput;
             InputManager.OnRunInput -= OnRunInput;
-            InputManager.OnAttackInput -= OnAttackInput;
+            InputManager.OnActionInput -= OnAttackInput;
 
             GameManager.OnNewState -= OnNewState;
         }

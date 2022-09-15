@@ -155,7 +155,7 @@ public class DataManager : MonoBehaviour
             MCHealthController.OnValueChanged += OnValueChanged;
             MCCollectionManager.OnValueChanged += OnValueChanged;
 
-            Checkpoint.OnCheckpoint += SaveGameData;
+            Checkpoint.OnCheckpoint += UpdateLastCP;
             Collectable.OnCollection += OnNewCollection;
 
             GameManager.OnParamsReset += OnParamsReset;
@@ -166,7 +166,7 @@ public class DataManager : MonoBehaviour
             MCHealthController.OnValueChanged -= OnValueChanged;
             MCCollectionManager.OnValueChanged -= OnValueChanged;
 
-            Checkpoint.OnCheckpoint -= SaveGameData;
+            Checkpoint.OnCheckpoint -= UpdateLastCP;
             Collectable.OnCollection -= OnNewCollection;
 
             GameManager.OnParamsReset -= OnParamsReset;
@@ -250,12 +250,15 @@ public class DataManager : MonoBehaviour
         OnValueUpdate?.Invoke(false, param, value);
     }
 
-    private void SaveGameData(string id)
+    private void UpdateLastCP(string id)
     {
-        
         currentGameData.environment.lastCheckpointID = id;
+    }
+
+    public void SaveGameData()
+    {
         //TODO
-        loadedGameData = new GameData(currentGameData); //FIXME
+        loadedGameData = new GameData(currentGameData);
 
         OnSavedData?.Invoke(loadedGameData);
     }

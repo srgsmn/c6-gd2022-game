@@ -175,11 +175,11 @@ public class MCCollisionManager : MonoBehaviour
     {
         if (subscribing)
         {
-            InputManager.OnAttackInput += OnAction;
+            InputManager.OnActionInput += OnAction;
         }
         else
         {
-            InputManager.OnAttackInput -= OnAction;
+            InputManager.OnActionInput -= OnAction;
         }
     }
 

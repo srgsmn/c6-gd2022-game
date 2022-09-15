@@ -128,8 +128,8 @@ public class InputManager : MonoBehaviour
     public static JumpInputEvent OnJumpInput;
     public delegate void RunInputEvent(bool isPressed);
     public static RunInputEvent OnRunInput;
-    public delegate void AttackInputEvent(bool isPressed);
-    public static AttackInputEvent OnAttackInput;
+    public delegate void ActionInputEvent(bool isPressed);
+    public static ActionInputEvent OnActionInput;
 
     // GameState and UI
     public delegate void PauseInputEvent();
@@ -487,7 +487,7 @@ public class InputManager : MonoBehaviour
         {
             attackInput = context.ReadValueAsButton();
 
-            OnAttackInput?.Invoke(attackInput);
+            OnActionInput?.Invoke(attackInput);
         }
     }
 

@@ -392,7 +392,8 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         Deb("SaveGame(): saving game (TODO)");
-        //TODO
+
+        DataManager.Instance.SaveGameData();
     }
 
     public void ShowStartMenu()

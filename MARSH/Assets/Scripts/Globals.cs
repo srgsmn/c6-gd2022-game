@@ -294,6 +294,31 @@ namespace Globals
             sl = 0;
             cc = 0;
         }
+
+        public PlayerData(PlayerData data)
+        {
+            Debug.Log("CREATING PLAYER DATA FROM PLAYER DATA");
+
+            level = data.level;
+
+            camPos = data.camPos;
+            camRot = data.camRot;
+
+            position = data.position;
+            rotation = data.rotation;
+
+            health = data.health;
+            maxHealth = data.maxHealth;
+            armor = data.armor;
+            maxArmor = data.maxArmor;
+            defHFactor = data.defHFactor;
+            defAFactor = data.defAFactor;
+
+            sl = data.sl;
+            cc = data.cc;
+
+            Debug.Log("END OF CREATING PLAYER DATA FROM PLAYER DATA");
+        }
     }
 
     [Serializable]
@@ -306,6 +331,16 @@ namespace Globals
         {
             collectablesIDs = new List<string>();
             lastCheckpointID = null;
+        }
+
+        public EnvironmentData(EnvironmentData data)
+        {
+            Debug.Log("CREATING ENVIRONMENTAL DATA FROM ENVIRONMENTAL DATA");
+
+            collectablesIDs = new List<string>(data.collectablesIDs);
+            lastCheckpointID = data.lastCheckpointID;
+
+            Debug.Log("END OF CREATING ENVIRONMENTAL DATA FROM ENVIRONMENTAL DATA");
         }
     }
 
@@ -327,6 +362,7 @@ namespace Globals
             this.environment = environment;
         }
 
+        /*
         public GameData(GameData data)
         {
             player = new PlayerData();
@@ -349,6 +385,12 @@ namespace Globals
             environment = new EnvironmentData();
             environment.collectablesIDs = new List<string>(data.environment.collectablesIDs);
             environment.lastCheckpointID = data.environment.lastCheckpointID;
+        }*/
+
+        public GameData(GameData data)
+        {
+            player = new PlayerData(data.player);
+            environment = new EnvironmentData(data.environment);
         }
     }
 
