@@ -51,12 +51,16 @@ public class CollectablesGUIManager : MonoBehaviour
 
     // COMPONENT ATTRIBUTES ____________________________________________________ COMPONENT ATTRIBUTES
 
+    [Header("Coins:")]
     [SerializeField] private GameObject SLCounter;
     [SerializeField] private TextMeshProUGUI SLText;
     [SerializeField] private Animator SLIcon;
     [SerializeField] private GameObject CCCounter;
     [SerializeField] private TextMeshProUGUI CCText;
     [SerializeField] private Animator CCIcon;
+    [Header("Objects:")]
+    [SerializeField] private Animator KeyIcon;
+    [SerializeField] private Animator WheelIcon;
 
     [SerializeField]
     [ReadOnlyInspector] private bool keep = false;
@@ -195,14 +199,14 @@ public class CollectablesGUIManager : MonoBehaviour
     {
         if (subscribing)
         {
-            MCCollectionManager.OnValueChanged += UpdateValue;
+            MCCollectionManager.OnInventoryChanged += UpdateValue;
             InputManager.OnInfo += ShowAll;
 
             GameManager.OnNewScreen += ShowInfoOnPause;
         }
         else
         {
-            MCCollectionManager.OnValueChanged -= UpdateValue;
+            MCCollectionManager.OnInventoryChanged -= UpdateValue;
             InputManager.OnInfo -= ShowAll;
 
             GameManager.OnNewScreen -= ShowInfoOnPause;
@@ -223,17 +227,28 @@ public class CollectablesGUIManager : MonoBehaviour
         }
     }
 
-    private void UpdateValue(ChParam param, object value)
+    private void UpdateValue(CollectableType param, object value)
     {
         CollectableType? type = null;
 
-        if (param == ChParam.SL)
+        switch (param)
         {
-            type = CollectableType.SL;
-        }
-        else if (param == ChParam.CC)
-        {
-            type = CollectableType.CC;
+            case CollectableType.SL:
+                type = CollectableType.SL;
+
+                break;
+
+            case CollectableType.CC:
+                type = CollectableType.CC;
+                break;
+
+            case CollectableType.Key:
+                //TODO
+                break;
+
+            case CollectableType.Wheel:
+                //TODO
+                break;
         }
 
         if (type != null)

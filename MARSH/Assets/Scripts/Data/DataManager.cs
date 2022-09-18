@@ -153,7 +153,7 @@ public class DataManager : MonoBehaviour
         {
             MCMovementController.OnTransformChanged += OnValueChanged;
             MCHealthController.OnValueChanged += OnValueChanged;
-            MCCollectionManager.OnValueChanged += OnValueChanged;
+            MCCollectionManager.OnInventoryChanged += OnValueChanged;
 
             Checkpoint.OnCheckpoint += UpdateLastCP;
             Collectable.OnCollection += OnNewCollection;
@@ -166,7 +166,7 @@ public class DataManager : MonoBehaviour
         {
             MCMovementController.OnTransformChanged -= OnValueChanged;
             MCHealthController.OnValueChanged -= OnValueChanged;
-            MCCollectionManager.OnValueChanged -= OnValueChanged;
+            MCCollectionManager.OnInventoryChanged -= OnValueChanged;
 
             Checkpoint.OnCheckpoint -= UpdateLastCP;
             Collectable.OnCollection -= OnNewCollection;
@@ -209,6 +209,22 @@ public class DataManager : MonoBehaviour
             case SettingsOption.mouseSensitivity:
                 settingsData.mouseSensitivity = (float)value;
                 currentGameData.settings.mouseSensitivity = (float)value;
+
+                break;
+        }
+    }
+
+    private void OnValueChanged(CollectableType param, object value)
+    {
+        switch (param)
+        {
+            case CollectableType.SL:
+                OnValueChanged(ChParam.SL, value);
+
+                break;
+
+            case CollectableType.CC:
+                OnValueChanged(ChParam.CC, value);
 
                 break;
         }

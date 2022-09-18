@@ -167,7 +167,7 @@ public class Tutorial : MonoBehaviour
                 if (!awaiting)
                 {
                     panels[panelIndex++].SetActive(false);
-                    MCCollectionManager.OnValueChanged += OnCollection;
+                    MCCollectionManager.OnInventoryChanged += OnCollection;
 
                     Freeze(false);
 
@@ -217,11 +217,11 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    private void OnCollection(ChParam parameter, object value)
+    private void OnCollection(CollectableType parameter, object value)
     {
         if (awaiting && phase == TutorialPhase.Collectables)
         {
-            MCCollectionManager.OnValueChanged -= OnCollection;
+            MCCollectionManager.OnInventoryChanged -= OnCollection;
 
             awaiting = false;
 

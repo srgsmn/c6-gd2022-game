@@ -1,7 +1,7 @@
 /* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
  * 
  *  TODO:
- *      -
+ *      - Save ID of Key and Wheel and keep state from destination object somehow
  */
 
 using System.Collections;
@@ -11,11 +11,24 @@ using UnityEngine;
 
 public class MCCollectionManager : MonoBehaviour
 {
+    private struct Item
+    {
+        CollectableType type;
+        object value;
+        string id;
+    }
+
     // COMPONENT ATTRIBUTES ____________________________________________________ COMPONENT ATTRIBUTES
     [SerializeField]
     [ReadOnlyInspector] private int _sugarLumps;
     [SerializeField]
     [ReadOnlyInspector] private int _chocoChips;
+    [SerializeField]
+    [ReadOnlyInspector] private bool _gateKey;
+    [SerializeField]
+    [ReadOnlyInspector] private bool _storeWheel;
+
+    private List<Item> otherItems;
 
     public int sugarLumps
     {
@@ -39,6 +52,24 @@ public class MCCollectionManager : MonoBehaviour
         get { return _chocoChips; }
     }
 
+    public bool gateKey
+    {
+        private set
+        {
+            _gateKey = value;
+        }
+        get { return _gateKey; }
+    }
+
+    public bool storeWheel
+    {
+        private set
+        {
+            _storeWheel = value;
+        }
+        get { return _storeWheel; }
+    }
+
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
@@ -50,9 +81,13 @@ public class MCCollectionManager : MonoBehaviour
     {
         sugarLumps = 0;
         chocoChips = 0;
+        storeWheel = false;
+        gateKey = false;
 
-        OnValueChanged?.Invoke(ChParam.SL, sugarLumps);
-        OnValueChanged?.Invoke(ChParam.CC, chocoChips);
+        OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
+        OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
+
+        otherItems = new List<Item>();
     }
 
     private void Update()
@@ -72,13 +107,13 @@ public class MCCollectionManager : MonoBehaviour
         {
             case ChParam.SL:
                 sugarLumps = Consts.COLLECTABLE_MAX;
-                OnValueChanged?.Invoke(parameter, sugarLumps);
+                OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
 
                 break;
 
             case ChParam.CC:
                 chocoChips = Consts.COLLECTABLE_MAX;
-                OnValueChanged?.Invoke(parameter, chocoChips);
+                OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
 
                 break;
         }
@@ -90,13 +125,13 @@ public class MCCollectionManager : MonoBehaviour
         {
             case ChParam.SL:
                 sugarLumps = 0;
-                OnValueChanged?.Invoke(parameter, sugarLumps);
+                OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
 
                 break;
 
             case ChParam.CC:
                 chocoChips = 0;
-                OnValueChanged?.Invoke(parameter, chocoChips);
+                OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
 
                 break;
         }
@@ -108,13 +143,13 @@ public class MCCollectionManager : MonoBehaviour
         {
             case ChParam.SL:
                 sugarLumps += value;
-                OnValueChanged?.Invoke(parameter, sugarLumps);
+                OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
 
                 break;
 
             case ChParam.CC:
                 chocoChips += value;
-                OnValueChanged?.Invoke(parameter, chocoChips);
+                OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
 
                 break;
         }
@@ -126,13 +161,13 @@ public class MCCollectionManager : MonoBehaviour
         {
             case ChParam.SL:
                 sugarLumps -= value;
-                OnValueChanged?.Invoke(parameter, sugarLumps);
+                OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
 
                 break;
 
             case ChParam.CC:
                 chocoChips -= value;
-                OnValueChanged?.Invoke(parameter, chocoChips);
+                OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
 
                 break;
         }
@@ -144,13 +179,13 @@ public class MCCollectionManager : MonoBehaviour
         {
             case ChParam.SL:
                 sugarLumps++;
-                OnValueChanged?.Invoke(parameter, sugarLumps);
+                OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
 
                 break;
 
             case ChParam.CC:
                 chocoChips++;
-                OnValueChanged?.Invoke(parameter, chocoChips);
+                OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
 
                 break;
         }
@@ -162,13 +197,13 @@ public class MCCollectionManager : MonoBehaviour
         {
             case ChParam.SL:
                 sugarLumps--;
-                OnValueChanged?.Invoke(parameter, sugarLumps);
+                OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
 
                 break;
 
             case ChParam.CC:
                 chocoChips--;
-                OnValueChanged?.Invoke(parameter, chocoChips);
+                OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
 
                 break;
         }
@@ -180,21 +215,22 @@ public class MCCollectionManager : MonoBehaviour
         {
             case ChParam.SL:
                 sugarLumps = value;
-                OnValueChanged?.Invoke(parameter, sugarLumps);
+                OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
 
                 break;
 
             case ChParam.CC:
                 chocoChips = value;
-                OnValueChanged?.Invoke(parameter, chocoChips);
+                OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
 
                 break;
         }
     }
 
+
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
-    public delegate void CollectionChangedEvent(ChParam parameter, object value);
-    public static CollectionChangedEvent OnValueChanged;
+    public delegate void InventoryChangedEvent(CollectableType parameter, object value);
+    public static InventoryChangedEvent OnInventoryChanged;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -232,8 +268,8 @@ public class MCCollectionManager : MonoBehaviour
 
     private void ReplyWithData()
     {
-        OnValueChanged?.Invoke(ChParam.SL, sugarLumps);
-        OnValueChanged?.Invoke(ChParam.CC, chocoChips);
+        OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
+        OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
     }
 
     private void LoadData(PlayerData data)
@@ -249,22 +285,30 @@ public class MCCollectionManager : MonoBehaviour
 
     private void OnCollection(CollectableType type, string id)
     {
-        ChParam? param = null;
-
         switch (type)
         {
             case CollectableType.SL:
-                param = ChParam.SL;
+                IncValue(ChParam.SL);
 
                 break;
 
             case CollectableType.CC:
-                param = ChParam.CC;
+                IncValue(ChParam.CC);
+
+                break;
+
+            case CollectableType.Key:
+                gateKey = true;
+                OnInventoryChanged?.Invoke(CollectableType.Key, gateKey);
+
+                break;
+
+            case CollectableType.Wheel:
+                storeWheel = true;
+                OnInventoryChanged?.Invoke(CollectableType.Wheel, storeWheel);
 
                 break;
         }
-
-        if(param != null)   IncValue((ChParam)param);
     }
 
     private void OnDebugValueUpdate(DebValue value, DebAction action)
@@ -335,6 +379,24 @@ public class MCCollectionManager : MonoBehaviour
         SubValue(ChParam.SL, transaction.SL);
         SubValue(ChParam.CC, transaction.CC);
 
+    }
+
+    public void UseItem(CollectableType type)
+    {
+        switch (type)
+        {
+            case CollectableType.Key:
+                gateKey = false;
+                OnInventoryChanged?.Invoke(CollectableType.Key, gateKey);
+
+                break;
+
+            case CollectableType.Wheel:
+                storeWheel = false;
+                OnInventoryChanged?.Invoke(CollectableType.Wheel, storeWheel);
+
+                break;
+        }
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

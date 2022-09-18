@@ -16,6 +16,11 @@ namespace Globals
         public const float TIME_TO_CURSOR = 3.5f;
         public const float TIME_TO_TUTORIAL = 2.5f;
         public const int SCREEN_HISTORY_LENGTH = 5;
+
+        public static Color unarmored = Color.white;
+        //public static Color armored = Color.black;
+        //public static Color unarmored = new Color(241, 248, 255);
+        public static Color armored = new Color(106, 34, 0);
     }
 
     // CONSTS __________________________________________________________________ CONSTS
@@ -136,12 +141,12 @@ namespace Globals
     public enum ChParam
     {
         Pos, Rot, Health, MaxHealth, DefHFact, Armor, MaxArmor, DefAFact,
-        SL, CC
+        SL, CC, Key, Wheel
     }
 
     public enum CollectableType
     {
-        SL, CC
+        SL, CC, Key, Wheel
     }
 
     public enum SettingsOption
