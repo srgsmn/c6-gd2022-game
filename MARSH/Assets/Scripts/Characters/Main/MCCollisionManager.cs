@@ -10,7 +10,7 @@ public class MCCollisionManager : MonoBehaviour
 
     private MCHealthController MCHealthController;
     [SerializeField]
-    [ReadOnlyInspector] private bool storeNearby = false, checkpointNearby = false, atStore = false, atCheckpoint = false, atLadder = false, atSpawner = false;
+    [ReadOnlyInspector] private bool storeNearby = false, checkpointNearby = false, atStore = false, atCheckpoint = false, atLadder = false, atSpawner = false, atGate=false, objIsInteractable=false;
 
     private void Awake()
     {
@@ -71,6 +71,22 @@ public class MCCollisionManager : MonoBehaviour
             case "LadderEndpoint":
                 atLadder = true;
                 OnProximity?.Invoke(ProximityObject.Ladder, ProximityInfo.Memo);
+
+                break;
+
+            case "Gate":
+                atGate = true;
+
+                if (other.gameObject.GetComponent<Gate>().keyCollected)
+                {
+                    objIsInteractable = true;
+
+                    OnProximity?.Invoke(ProximityObject.GateYesKey, ProximityInfo.Memo);
+                }
+                else
+                {
+                    OnProximity?.Invoke(ProximityObject.GateNoKey, ProximityInfo.Memo);
+                }
 
                 break;
 
@@ -148,6 +164,21 @@ public class MCCollisionManager : MonoBehaviour
 
                 break;
 
+            case "Gate":
+                atGate = false;
+
+                if (other.gameObject.GetComponent<Gate>().keyCollected)
+                {
+                    objIsInteractable = false;
+                    OnProximity?.Invoke(ProximityObject.GateYesKey, ProximityInfo.None);
+                }
+                else
+                {
+                    OnProximity?.Invoke(ProximityObject.GateNoKey, ProximityInfo.None);
+                }
+
+                break;
+
             case "Coccodrillo":
                 transform.SetParent(null);
                 
@@ -168,6 +199,9 @@ public class MCCollisionManager : MonoBehaviour
 
     public delegate void SpawnEvent(GameObject target);
     public static SpawnEvent OnSpawn;
+
+    public delegate void OpenGateEvent();
+    public static OpenGateEvent OnOpenGate;
 
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
@@ -217,6 +251,16 @@ public class MCCollisionManager : MonoBehaviour
             flag = false;
 
             atSpawner = false;
+            OnProximity?.Invoke(ProximityObject.Spawner, ProximityInfo.None);
+        }
+
+        if(atGate && flag && objIsInteractable)
+        {
+            OnOpenGate?.Invoke();
+
+            flag = false;
+            atGate = false;
+
             OnProximity?.Invoke(ProximityObject.Spawner, ProximityInfo.None);
         }
     }

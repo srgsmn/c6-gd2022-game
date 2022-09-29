@@ -19,6 +19,7 @@ TagManager:
   - LadderEndpoint
   - GameEnd
   - Spawner
+  - Gate
   layers:
   - Default
   - TransparentFX

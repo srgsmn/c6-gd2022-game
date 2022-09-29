@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Globals;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
@@ -45,12 +46,14 @@ public class DataManager : MonoBehaviour
 
         currentEnvironmentData = new EnvironmentData();
 
-        currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
+        //currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
 
         if (settingsData==null)
         {
             ResetSettingsData();
         }
+
+        currentGameData = new GameData(currentPlayerData, currentEnvironmentData, settingsData);
 
         if (currentEnvironmentData.lastCheckpointID != null)
         {
@@ -75,6 +78,11 @@ public class DataManager : MonoBehaviour
 
         settingsData = new SettingsData();
 
+        settingsData.invertYAxis = false;
+        settingsData.invertXAxis = false;
+        settingsData.mouseSensitivity = 0f;
+
+        /*
         CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
 
         if (cfl != null)
@@ -89,9 +97,8 @@ public class DataManager : MonoBehaviour
             cfl.m_XAxis.m_MaxSpeed = 100f;
 
             settingsData.mouseSensitivity = 0f;
-
-            currentGameData.settings = settingsData;
         }
+        */
     }
 
     public int GetCurrentLevel()
@@ -125,7 +132,9 @@ public class DataManager : MonoBehaviour
         currentEnvironmentData = new EnvironmentData();
         currentPlayerData = new PlayerData();
 
-        currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
+        //currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
+        currentGameData.player = currentPlayerData;
+        currentGameData.environment = currentEnvironmentData;
 
         loadedGameData = null;
     }
@@ -161,6 +170,8 @@ public class DataManager : MonoBehaviour
             GameManager.OnParamsReset += OnParamsReset;
 
             SettingsMenu.OnSettingsChanged += OnSettingsChanged;
+
+            SceneManager.sceneLoaded += OnLoadScene;
         }
         else
         {
@@ -174,6 +185,8 @@ public class DataManager : MonoBehaviour
             GameManager.OnParamsReset -= OnParamsReset;
 
             SettingsMenu.OnSettingsChanged -= OnSettingsChanged;
+
+            SceneManager.sceneLoaded -= OnLoadScene;
         }
     }
 
@@ -183,6 +196,16 @@ public class DataManager : MonoBehaviour
     {
         EventSubscriber(false);
         EventSubscriber(true);
+    }
+
+    private void OnLoadScene(Scene scene, LoadSceneMode mode)
+    {
+        //CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
+
+        if (GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>() != null)
+        {
+            OnDataSaved?.Invoke(loadedGameData);
+        }
     }
 
     private void OnNewCollection(CollectableType type, string id)
@@ -196,19 +219,19 @@ public class DataManager : MonoBehaviour
         {
             case SettingsOption.invertXAxis:
                 settingsData.invertXAxis = (bool)value;
-                currentGameData.settings.invertXAxis = (bool)value;
+                //currentGameData.settings.invertXAxis = (bool)value;
 
                 break;
 
             case SettingsOption.invertYAxis:
                 settingsData.invertYAxis = (bool)value;
-                currentGameData.settings.invertYAxis = (bool)value;
+                //currentGameData.settings.invertYAxis = (bool)value;
 
                 break;
 
             case SettingsOption.mouseSensitivity:
                 settingsData.mouseSensitivity = (float)value;
-                currentGameData.settings.mouseSensitivity = (float)value;
+                //currentGameData.settings.mouseSensitivity = (float)value;
 
                 break;
         }

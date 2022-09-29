@@ -11,8 +11,7 @@ public class Collectable : MonoBehaviour
     // COMPONENT ATTRIBUTES ____________________________________________________ COMPONENT ATTRIBUTES
 
     [SerializeField] private bool needsID = true;
-    [SerializeField]
-    [ReadOnlyInspector] private string id = null;
+    [SerializeField] private string id = null;
     [SerializeField] private CollectableType type;
 
     [Header("Model movement parameters:")]
@@ -27,13 +26,13 @@ public class Collectable : MonoBehaviour
     [ContextMenu("Generate guid for ID")]
     private void GenerateGUID()
     {
-        id = Guid.NewGuid().ToString().Substring(0,8);
+        id = Guid.NewGuid().ToString()[..8];
     }
 
     [ContextMenu("Reset ID")]
     private void ResetID()
     {
-        id = null; ;
+        id = null;
     }
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
@@ -85,6 +84,16 @@ public class Collectable : MonoBehaviour
     public void NeedsID(bool flag)
     {
         needsID = flag;
+    }
+
+    public string GetID()
+    {
+        return id;
+    }
+
+    public void SetID(string id)
+    {
+        this.id = id;
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS

@@ -4,6 +4,7 @@
  *      - Save ID of Key and Wheel and keep state from destination object somehow
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Globals;
@@ -11,11 +12,19 @@ using UnityEngine;
 
 public class MCCollectionManager : MonoBehaviour
 {
-    private struct Item
+    [Serializable]
+    public class Item
     {
-        CollectableType type;
-        object value;
-        string id;
+        public CollectableType type;
+        public object value;
+        public string id;
+
+        public Item(CollectableType type, object value, string id)
+        {
+            this.type = type;
+            this.value = value;
+            this.id = id;
+        }
     }
 
     // COMPONENT ATTRIBUTES ____________________________________________________ COMPONENT ATTRIBUTES
@@ -28,7 +37,7 @@ public class MCCollectionManager : MonoBehaviour
     [SerializeField]
     [ReadOnlyInspector] private bool _storeWheel;
 
-    private List<Item> otherItems;
+    public List<Item> otherItems;
 
     public int sugarLumps
     {
@@ -248,6 +257,8 @@ public class MCCollectionManager : MonoBehaviour
             DataManager.OnGameLoading += LoadData;
 
             CollectablesGUIManager.OnGUIStartup += ReplyWithData;
+
+            MCCollisionManager.OnOpenGate += OnOpen;
         }
         else
         {
@@ -261,6 +272,8 @@ public class MCCollectionManager : MonoBehaviour
             DataManager.OnGameLoading -= LoadData;
 
             CollectablesGUIManager.OnGUIStartup -= ReplyWithData;
+
+            MCCollisionManager.OnOpenGate -= OnOpen;
         }
     }
 
@@ -301,11 +314,15 @@ public class MCCollectionManager : MonoBehaviour
                 gateKey = true;
                 OnInventoryChanged?.Invoke(CollectableType.Key, gateKey);
 
+                otherItems.Add(new Item(type, (int)1, id));
+
                 break;
 
             case CollectableType.Wheel:
                 storeWheel = true;
                 OnInventoryChanged?.Invoke(CollectableType.Wheel, storeWheel);
+
+                otherItems.Add(new Item(type, (int)1, id));
 
                 break;
         }
@@ -372,6 +389,11 @@ public class MCCollectionManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void OnOpen()
+    {
+        gateKey = false;
     }
 
     private void Purchase(StoreTransaction transaction)

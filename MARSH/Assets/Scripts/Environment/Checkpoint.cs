@@ -18,7 +18,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private Canvas targetCanvas;
 
     private GameObject instance;
-    [SerializeField][ReadOnlyInspector] private bool isActive = false;
+    [SerializeField][ReadOnlyInspector] private bool isActive = true;
     [SerializeField][ReadOnlyInspector] private bool inPlace = false;
 
 
@@ -107,7 +107,7 @@ public class Checkpoint : MonoBehaviour
 
     private void StartAnimation(bool flag)
     {
-        if(inPlace && flag)
+        if(inPlace && flag && isActive)
         {
             OnCheckpoint?.Invoke(id);
 

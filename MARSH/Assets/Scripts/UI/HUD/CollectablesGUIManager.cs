@@ -59,7 +59,13 @@ public class CollectablesGUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI CCText;
     [SerializeField] private Animator CCIcon;
     [Header("Objects:")]
+    [SerializeField]
+    [ReadOnlyInspector] private bool hasKey;
+    [SerializeField] private GameObject KeyContainer;
     [SerializeField] private Animator KeyIcon;
+    [SerializeField]
+    [ReadOnlyInspector] private bool hasWheel;
+    [SerializeField] private GameObject WheelContainer;
     [SerializeField] private Animator WheelIcon;
 
     [SerializeField]
@@ -77,6 +83,8 @@ public class CollectablesGUIManager : MonoBehaviour
     {
         items.Add(CollectableType.SL, new UIElement(SLCounter, SLText, SLIcon));
         items.Add(CollectableType.CC, new UIElement(CCCounter, CCText, CCIcon));
+        items.Add(CollectableType.Key, new UIElement(KeyContainer, null, KeyIcon));
+        items.Add(CollectableType.Wheel, new UIElement(WheelContainer, null, WheelIcon));
 
         EventSubscriber();
     }
@@ -180,12 +188,17 @@ public class CollectablesGUIManager : MonoBehaviour
     {
         ShowText(CollectableType.SL);
         ShowText(CollectableType.CC);
+        if (hasKey) ShowText(CollectableType.Key);
+        if (hasWheel) ShowText(CollectableType.Wheel);
     }
 
     private void HideAll()
     {
         HideText(CollectableType.SL);
         HideText(CollectableType.CC);
+
+        if (hasKey) HideText(CollectableType.Key);
+        if (hasWheel) HideText(CollectableType.Wheel);
     }
 
     // PROVIDED EVENTS _________________________________________________________ PROVIDED EVENTS
@@ -243,11 +256,14 @@ public class CollectablesGUIManager : MonoBehaviour
                 break;
 
             case CollectableType.Key:
-                //TODO
+                hasKey = true;
+                //items[CollectableType.Key].
+
                 break;
 
             case CollectableType.Wheel:
-                //TODO
+                hasWheel = true;
+
                 break;
         }
 

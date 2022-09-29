@@ -1,30 +1,35 @@
 /* Simone Siragusa 306067 @ PoliTO | Game Design & Gamification
- *  TODO:
- *      - Trigger from here sh the gate opening
- *      - Also see Generic Canvas pop ups
  */
-
 using System.Collections;
 using System.Collections.Generic;
 using Globals;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+public class KeyLocator : MonoBehaviour
 {
-
-    // COMPONENT ATTRIBUTES ____________________________________________________ COMPONENT ATTRIBUTES
-    [Header("Key properties")]
-    [SerializeField] private string keyID;
-    public bool keyCollected = false;
-    [Header("State:")]
+    [SerializeField] private GameObject keyObject;
+    [SerializeField] private string id;
+    public Spawner[] spawnSpots;
     [SerializeField]
-    [ReadOnlyInspector] private bool isOpen = false;
+    [ReadOnlyInspector] private int index;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
     {
         EventSubscriber();
+
+        keyObject.GetComponent<Collectable>().SetID(id);
+    }
+
+    private void Start()
+    {
+        if (spawnSpots.Length != 0)
+        {
+            index = Random.Range(1, spawnSpots.Length);
+
+            spawnSpots[index-1].SetKey(keyObject);
+        }
     }
 
     private void OnDestroy()
@@ -46,31 +51,15 @@ public class Gate : MonoBehaviour
     {
         if (subscribing)
         {
-            Collectable.OnCollection += OnCollection;
-            MCCollisionManager.OnOpenGate += OnOpen;
+
         }
         else
         {
-            Collectable.OnCollection -= OnCollection;
-            MCCollisionManager.OnOpenGate -= OnOpen;
+
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
-
-    private void OnCollection(CollectableType parameter, string id)
-    {
-        if (parameter == CollectableType.Key && keyID==id)
-        {
-            keyCollected = true;
-        }
-    }
-
-    private void OnOpen()
-    {
-        isOpen = true;
-    }
-
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
 
     private void Deb(string msg, DebMsgType type = DebMsgType.log)

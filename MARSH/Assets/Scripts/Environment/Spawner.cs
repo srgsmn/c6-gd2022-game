@@ -15,6 +15,11 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     [ReadOnlyInspector] private bool isNearby = false;
 
+    [Header("Key:")]
+    [SerializeField][ReadOnlyInspector] private bool hasKey;
+    [SerializeField][ReadOnlyInspector] private GameObject keyObject;
+    [SerializeField][ReadOnlyInspector] private string keyID;
+
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     /*
@@ -47,6 +52,13 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public void SetKey(GameObject obj)
+    {
+        hasKey = true;
+        keyObject = obj;
+        keyID = keyObject.GetComponent<Collectable>().GetID();
+    }
+
     // EVENT SUBSCRIBER ________________________________________________________ EVENT SUBSCRIBER
 
     private void EventSubscriber(bool subscribing = true)
@@ -67,6 +79,11 @@ public class Spawner : MonoBehaviour
     {
         if (isNearby)
         {
+            if (hasKey)
+            {
+                Generate(keyObject, target);
+            }
+
             int go = 0;
 
             if (isRandom)

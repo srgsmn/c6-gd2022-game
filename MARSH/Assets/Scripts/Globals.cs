@@ -198,7 +198,7 @@ namespace Globals
 
     public enum ProximityObject
     {
-        Checkpoint, Store, Ladder, Spawner, None
+        Checkpoint, Store, Ladder, Spawner, GateNoKey, GateYesKey, None
     }
 
     public enum ProximityInfo
@@ -366,6 +366,13 @@ namespace Globals
         {
             this.player = player;
             this.environment = environment;
+        }
+
+        public GameData(PlayerData player, EnvironmentData environment, SettingsData settings)
+        {
+            this.player = player;
+            this.environment = environment;
+            this.settings = settings;
         }
 
         /*

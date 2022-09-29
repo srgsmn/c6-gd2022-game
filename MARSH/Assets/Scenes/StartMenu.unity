@@ -457,6 +457,10 @@ MonoBehaviour:
   currentEnvironmentData:
     collectablesIDs: []
     lastCheckpointID: 
+  _settingsData:
+    invertYAxis: 0
+    invertXAxis: 0
+    mouseSensitivity: 0
   currentGameData:
     player:
       level: 0
@@ -475,6 +479,10 @@ MonoBehaviour:
     environment:
       collectablesIDs: []
       lastCheckpointID: 
+    settings:
+      invertYAxis: 0
+      invertXAxis: 0
+      mouseSensitivity: 0
   loadedGameData:
     player:
       level: 0
@@ -493,10 +501,10 @@ MonoBehaviour:
     environment:
       collectablesIDs: []
       lastCheckpointID: 
-  settingsData:
-    invertYAxis: 0
-    invertXAxis: 0
-    mouseSensitivity: 1
+    settings:
+      invertYAxis: 0
+      invertXAxis: 0
+      mouseSensitivity: 0
 --- !u!4 &1419704976
 Transform:
   m_ObjectHideFlags: 0

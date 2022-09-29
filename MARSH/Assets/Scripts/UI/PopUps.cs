@@ -11,6 +11,10 @@ public class PopUps : MonoBehaviour
     [SerializeField] private GameObject store;
     [SerializeField] private GameObject ladder;
     [SerializeField] private GameObject spawner;
+    [SerializeField] private GameObject gateNKey;
+    [SerializeField] private GameObject gateYKey;
+    [SerializeField] private GameObject merchantNWheel;
+    [SerializeField] private GameObject merchantYWheel;
 
     private void Awake()
     {
@@ -67,6 +71,16 @@ public class PopUps : MonoBehaviour
                     spawner.SetActive(true);
 
                     break;
+
+                case ProximityObject.GateNoKey:
+                    gateNKey.SetActive(true);
+
+                    break;
+
+                case ProximityObject.GateYesKey:
+                    gateYKey.SetActive(true);
+
+                    break;
             }
         }
         else if (info == ProximityInfo.None || info == ProximityInfo.Tutorial)
@@ -75,6 +89,8 @@ public class PopUps : MonoBehaviour
             store.SetActive(false);
             ladder.SetActive(false);
             spawner.SetActive(false);
+            gateNKey.SetActive(false);
+            gateYKey.SetActive(false);
         }
     }
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
