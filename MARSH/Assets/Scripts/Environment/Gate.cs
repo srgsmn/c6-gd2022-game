@@ -19,6 +19,7 @@ public class Gate : MonoBehaviour
     [Header("State:")]
     [SerializeField]
     [ReadOnlyInspector] private bool isOpen = false;
+    private Animator animator;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -30,6 +31,10 @@ public class Gate : MonoBehaviour
     private void OnDestroy()
     {
         EventSubscriber(false);
+    }
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
     }
 
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
@@ -69,6 +74,7 @@ public class Gate : MonoBehaviour
     private void OnOpen()
     {
         isOpen = true;
+        animator.SetTrigger("opencancello");
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

@@ -7,8 +7,10 @@ public class CoccodrilloMovement : MonoBehaviour
 
     [SerializeField] GameObject[] waypoints;
     int currentWaypointIndex = 0;
-    [SerializeField] float speed = 3f;
+    [SerializeField] float speedVerde = 2f;
+    [SerializeField] float speedGiallo = 4f;
     public float smooth = 2f;
+    [SerializeField] bool giallo = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,16 +21,27 @@ public class CoccodrilloMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         if(Vector3.Distance(transform.position, waypoints [currentWaypointIndex].transform.position) < .1f)
-         {
-            currentWaypointIndex++;
-            if (currentWaypointIndex >= waypoints.Length)
+        if(giallo) {
+            if(Vector3.Distance(transform.position, waypoints [currentWaypointIndex].transform.position) < .1f)
             {
-            currentWaypointIndex = 0;
+                currentWaypointIndex++;
+                if (currentWaypointIndex >= waypoints.Length)
+                {
+                currentWaypointIndex = 0;
+                }
             }
-         }
-
-        transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speedGiallo * Time.deltaTime);
+        } else {
+            if(Vector3.Distance(transform.position, waypoints [currentWaypointIndex].transform.position) < .1f)
+            {
+                currentWaypointIndex++;
+                if (currentWaypointIndex >= waypoints.Length)
+                {
+                currentWaypointIndex = 0;
+                }
+            }
+            transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speedVerde * Time.deltaTime);
+        }
     
     }
 /*
