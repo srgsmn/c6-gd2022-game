@@ -354,7 +354,7 @@ namespace Globals
     {
         public PlayerData player;
         public EnvironmentData environment;
-        public SettingsData settings;
+        //public SettingsData settings;
 
         public GameData()
         {
@@ -372,7 +372,7 @@ namespace Globals
         {
             this.player = player;
             this.environment = environment;
-            this.settings = settings;
+            //this.settings = settings;
         }
 
         /*
@@ -404,7 +404,7 @@ namespace Globals
         {
             player = new PlayerData(data.player);
             environment = new EnvironmentData(data.environment);
-            settings = new SettingsData(data.settings);
+            //settings = new SettingsData(data.settings);
         }
     }
 

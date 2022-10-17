@@ -49,10 +49,10 @@ public class SettingsMenu : Menu
         debugToggle.isOn = GameManager.Instance.isDebugMode;
         Deb("Start(): Toggle value is now " + debugToggle.isOn);
 
-        invertXAxisToggle.isOn = DataManager.Instance.settingsData.invertXAxis;
-        invertYAxisToggle.isOn = DataManager.Instance.settingsData.invertYAxis;
+        invertXAxisToggle.isOn = CameraManager.Instance.settingsData.invertXAxis;
+        invertYAxisToggle.isOn = CameraManager.Instance.settingsData.invertYAxis;
 
-        mouseSlider.value = DataManager.Instance.settingsData.mouseSensitivity;
+        mouseSlider.value = CameraManager.Instance.settingsData.mouseSensitivity;
     }
 
     private void OnDestroy()

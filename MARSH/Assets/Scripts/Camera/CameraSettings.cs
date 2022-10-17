@@ -10,7 +10,7 @@ using Cinemachine;
 public class CameraSettings : MonoBehaviour
 {
 
-    CinemachineFreeLook CFL;
+    private CinemachineFreeLook CFL;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -19,6 +19,18 @@ public class CameraSettings : MonoBehaviour
         EventSubscriber();
 
         CFL = GetComponent<CinemachineFreeLook>();
+    }
+
+    private void Start()
+    {
+        CFL.m_XAxis.m_InvertInput = CameraManager.Instance.settingsData.invertXAxis;
+        CFL.m_YAxis.m_InvertInput = CameraManager.Instance.settingsData.invertYAxis;
+
+        float sensitivityValue = CameraManager.Instance.settingsData.mouseSensitivity;
+
+        CFL.m_YAxis.m_MaxSpeed = Mathf.Pow(2f, sensitivityValue) * 1f;
+        CFL.m_XAxis.m_MaxSpeed = Mathf.Pow(2f, sensitivityValue) * 100f;
+
     }
 
     private void OnDestroy()
@@ -32,36 +44,34 @@ public class CameraSettings : MonoBehaviour
     {
         if (subscribing)
         {
-            SettingsMenu.OnSettingsChanged += ChangeValue;
-            DataManager.OnDataSaved += LoadData;
+            CameraManager.OnCameraSettsUpdate += UpdateValues;
         }
         else
         {
-            SettingsMenu.OnSettingsChanged -= ChangeValue;
-            DataManager.OnDataSaved -= LoadData;
+            CameraManager.OnCameraSettsUpdate -= UpdateValues;
         }
     }
 
     // EVENT CALLBACKS _________________________________________________________ EVENT CALLBACKS
 
-    private void ChangeValue(SettingsOption option, object value)
+    private void UpdateValues(SettingsOption option)
     {
         if (CFL != null)
         {
             switch (option)
             {
                 case SettingsOption.invertXAxis:
-                    CFL.m_XAxis.m_InvertInput = (bool)value;
+                    CFL.m_XAxis.m_InvertInput = CameraManager.Instance.settingsData.invertXAxis;
 
                     break;
 
                 case SettingsOption.invertYAxis:
-                    CFL.m_YAxis.m_InvertInput = (bool)value;
+                    CFL.m_YAxis.m_InvertInput = CameraManager.Instance.settingsData.invertYAxis;
 
                     break;
 
                 case SettingsOption.mouseSensitivity:
-                    float sensitivityValue = (float)value;
+                    float sensitivityValue = CameraManager.Instance.settingsData.mouseSensitivity;
 
                     CFL.m_YAxis.m_MaxSpeed = Mathf.Pow(2f, sensitivityValue) * 1f;
                     CFL.m_XAxis.m_MaxSpeed = Mathf.Pow(2f, sensitivityValue) * 100f;
@@ -69,13 +79,6 @@ public class CameraSettings : MonoBehaviour
                     break;
             }
         }
-    }
-
-    private void LoadData(GameData data)
-    {
-        ChangeValue(SettingsOption.invertXAxis, data.settings.invertXAxis);
-        ChangeValue(SettingsOption.invertYAxis, data.settings.invertYAxis);
-        ChangeValue(SettingsOption.mouseSensitivity, data.settings.mouseSensitivity);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

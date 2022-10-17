@@ -14,14 +14,16 @@ public class DataManager : MonoBehaviour
 
     [SerializeField] private PlayerData currentPlayerData;
     [SerializeField] private EnvironmentData currentEnvironmentData;
-    [SerializeField] private SettingsData _settingsData;
+    //[SerializeField] private SettingsData _settingsData;
     [SerializeField] private GameData currentGameData, loadedGameData;
 
+    /*
     public SettingsData settingsData
     {
         get { return _settingsData; }
         set { _settingsData = new SettingsData(value);}
     }
+    */
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
@@ -48,12 +50,14 @@ public class DataManager : MonoBehaviour
 
         //currentGameData = new GameData(currentPlayerData, currentEnvironmentData);
 
+        /*
         if (settingsData==null)
         {
             ResetSettingsData();
         }
+        */
 
-        currentGameData = new GameData(currentPlayerData, currentEnvironmentData, settingsData);
+        currentGameData = new GameData(currentPlayerData, currentEnvironmentData /*, settingsData*/);
 
         if (currentEnvironmentData.lastCheckpointID != null)
         {
@@ -75,12 +79,13 @@ public class DataManager : MonoBehaviour
 
     public void ResetSettingsData()
     {
-
+        /*
         settingsData = new SettingsData();
 
         settingsData.invertYAxis = false;
         settingsData.invertXAxis = false;
         settingsData.mouseSensitivity = 0f;
+        */
 
         /*
         CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
@@ -169,7 +174,7 @@ public class DataManager : MonoBehaviour
 
             GameManager.OnParamsReset += OnParamsReset;
 
-            SettingsMenu.OnSettingsChanged += OnSettingsChanged;
+            //SettingsMenu.OnSettingsChanged += OnSettingsChanged;
 
             SceneManager.sceneLoaded += OnLoadScene;
         }
@@ -184,7 +189,7 @@ public class DataManager : MonoBehaviour
 
             GameManager.OnParamsReset -= OnParamsReset;
 
-            SettingsMenu.OnSettingsChanged -= OnSettingsChanged;
+            //SettingsMenu.OnSettingsChanged -= OnSettingsChanged;
 
             SceneManager.sceneLoaded -= OnLoadScene;
         }
@@ -213,6 +218,7 @@ public class DataManager : MonoBehaviour
         currentEnvironmentData.collectablesIDs.Add(id);
     }
 
+    /*
     private void OnSettingsChanged(SettingsOption option, object value)
     {
         switch (option)
@@ -236,6 +242,7 @@ public class DataManager : MonoBehaviour
                 break;
         }
     }
+    */
 
     private void OnValueChanged(CollectableType param, object value)
     {
