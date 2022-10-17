@@ -283,6 +283,8 @@ public class MCCollectionManager : MonoBehaviour
     {
         OnInventoryChanged?.Invoke(CollectableType.SL, sugarLumps);
         OnInventoryChanged?.Invoke(CollectableType.CC, chocoChips);
+        OnInventoryChanged?.Invoke(CollectableType.Key, gateKey);
+        OnInventoryChanged?.Invoke(CollectableType.Wheel, storeWheel);
     }
 
     private void LoadData(PlayerData data)

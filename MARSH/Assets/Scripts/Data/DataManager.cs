@@ -176,7 +176,7 @@ public class DataManager : MonoBehaviour
 
             //SettingsMenu.OnSettingsChanged += OnSettingsChanged;
 
-            SceneManager.sceneLoaded += OnLoadScene;
+            //SceneManager.sceneLoaded += OnLoadScene;
         }
         else
         {
@@ -191,7 +191,7 @@ public class DataManager : MonoBehaviour
 
             //SettingsMenu.OnSettingsChanged -= OnSettingsChanged;
 
-            SceneManager.sceneLoaded -= OnLoadScene;
+            //SceneManager.sceneLoaded -= OnLoadScene;
         }
     }
 
@@ -203,15 +203,17 @@ public class DataManager : MonoBehaviour
         EventSubscriber(true);
     }
 
+    /*
     private void OnLoadScene(Scene scene, LoadSceneMode mode)
     {
         //CinemachineFreeLook cfl = GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>();
-
+        /*
         if (GameObject.Find("ThirdPersonCamera").GetComponent<CinemachineFreeLook>() != null)
         {
             OnDataSaved?.Invoke(loadedGameData);
         }
-    }
+        */
+    //}
 
     private void OnNewCollection(CollectableType type, string id)
     {

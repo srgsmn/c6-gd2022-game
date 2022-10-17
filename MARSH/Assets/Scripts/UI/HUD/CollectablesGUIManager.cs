@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Globals;
 using TMPro;
-using System;
 
 public class CollectablesGUIManager : MonoBehaviour
 {
+    /// <summary>
+    /// Class that manages the displaying of collected collectables info, such as type and timer.
+    /// </summary>
     private class Indicator
     {
         public CollectableType collectableType { private set; get; }
@@ -30,8 +32,16 @@ public class CollectablesGUIManager : MonoBehaviour
         {
             timer = 0f;
         }
+
+        public override string ToString()
+        {
+            return "[type: " + collectableType + ", timer: " + timer + "]";
+        }
     }
 
+    /// <summary>
+    /// Class that manages the actual gameobject related to the indicator
+    /// </summary>
     private class UIElement
     {
         public GameObject gameObject { private set; get; }
@@ -46,6 +56,11 @@ public class CollectablesGUIManager : MonoBehaviour
             this.transform = gameObject.GetComponent<Transform>();
             this.count = count;
             this.icon = icon;
+        }
+
+        public override string ToString()
+        {
+            return "[pos: "+transform.position+"]";
         }
     }
 
@@ -81,10 +96,13 @@ public class CollectablesGUIManager : MonoBehaviour
 
     private void Awake()
     {
+        Deb("Awake(): Filling the dictionary");
         items.Add(CollectableType.SL, new UIElement(SLCounter, SLText, SLIcon));
         items.Add(CollectableType.CC, new UIElement(CCCounter, CCText, CCIcon));
-        items.Add(CollectableType.Key, new UIElement(KeyContainer, null, KeyIcon));
-        items.Add(CollectableType.Wheel, new UIElement(WheelContainer, null, WheelIcon));
+        //items.Add(CollectableType.Key, new UIElement(KeyContainer, null, KeyIcon));
+        //items.Add(CollectableType.Wheel, new UIElement(WheelContainer, null, WheelIcon));
+
+        Deb("Awake(): Dictionary is: " + items);
 
         EventSubscriber();
     }
@@ -119,6 +137,10 @@ public class CollectablesGUIManager : MonoBehaviour
 
     // COMPONENT METHODS _______________________________________________________ COMPONENT METHODS
 
+    /// <summary>
+    /// It shows the inventory object of the passed type.
+    /// </summary>
+    /// <param name="collectableType">Collectable type that it's wanted to be shown.</param>
     private void ShowText(CollectableType collectableType)
     {
         int index;
@@ -256,13 +278,26 @@ public class CollectablesGUIManager : MonoBehaviour
                 break;
 
             case CollectableType.Key:
-                hasKey = true;
-                //items[CollectableType.Key].
+                hasKey = (bool)value;
+
+                if (hasKey)
+                {
+                    items.Add(CollectableType.Key, new UIElement(KeyContainer, null, KeyIcon));
+
+                    type = CollectableType.Key;
+                }
 
                 break;
 
             case CollectableType.Wheel:
-                hasWheel = true;
+                hasWheel = (bool)value;
+
+                if (hasWheel)
+                {
+                    items.Add(CollectableType.Wheel, new UIElement(WheelContainer, null, WheelIcon));
+
+                    type = CollectableType.Wheel;
+                }
 
                 break;
         }
@@ -270,7 +305,11 @@ public class CollectablesGUIManager : MonoBehaviour
         if (type != null)
         {
             ShowText((CollectableType)type);
-            items[(CollectableType)type].count.text = value.ToString();
+
+            if(items[(CollectableType)type].count.text != null)
+            {
+                items[(CollectableType)type].count.text = value.ToString();
+            }
         }
     }
 
