@@ -282,7 +282,10 @@ public class CollectablesGUIManager : MonoBehaviour
 
                 if (hasKey)
                 {
+                    Deb("UpdateValue(): items doesn't contain key \"Key\", making it");
                     items.Add(CollectableType.Key, new UIElement(KeyContainer, null, KeyIcon));
+
+                    Deb("UpdateValue(): items now contains key \"Key\": " + items[CollectableType.Key]);
 
                     type = CollectableType.Key;
                 }
@@ -294,7 +297,10 @@ public class CollectablesGUIManager : MonoBehaviour
 
                 if (hasWheel)
                 {
+                    Deb("UpdateValue(): items doesn't contain key \"Wheel\", making it");
                     items.Add(CollectableType.Wheel, new UIElement(WheelContainer, null, WheelIcon));
+
+                    Deb("UpdateValue(): items now contains key \"Wheel\": " + items[CollectableType.Wheel]);
 
                     type = CollectableType.Wheel;
                 }
@@ -306,7 +312,7 @@ public class CollectablesGUIManager : MonoBehaviour
         {
             ShowText((CollectableType)type);
 
-            if(items[(CollectableType)type].count.text != null)
+            if(items[(CollectableType)type].count != null)
             {
                 items[(CollectableType)type].count.text = value.ToString();
             }
