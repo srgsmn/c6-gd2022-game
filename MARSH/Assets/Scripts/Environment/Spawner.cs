@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int totalQuantity;
     [SerializeField][Tooltip("If true, any value of quantity below will be ignored, if false, totalQuantity will be ignored")] private bool isRandom = false;
     [SerializeField] private Reward[] rewards;
+    [SerializeField] private float radius = 1.5f;
 
     [SerializeField]
     [ReadOnlyInspector] private bool isNearby = false;
@@ -89,6 +90,8 @@ public class Spawner : MonoBehaviour
             if (isRandom)
             {
                 int i = Random.Range(0, totalQuantity);
+                float angle = 360 / totalQuantity;
+
                 Deb("### Random value is " + i + " => " + i + " of " + rewards[0].prefab.name + " and " + (totalQuantity - i) + " of " + rewards[1].prefab.name);
 
                 for (int count = 0; count < totalQuantity; count++)
@@ -97,8 +100,7 @@ public class Spawner : MonoBehaviour
 
                     Deb("OnSpawn(): Instantiation of a " + rewards[go].prefab.name + " (" + count + ")");
 
-
-                    Generate(rewards[go].prefab, target);
+                    Generate(rewards[go].prefab, target, new Vector3(radius*Mathf.Cos(count*angle), 0, radius*Mathf.Sin(count*angle)));
                 }
             }
             else
@@ -124,13 +126,25 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private void Generate(GameObject prefab, GameObject target)
+    private void Generate(GameObject prefab, GameObject target, object offset = null)
     {
         //Deb("Generating object " + prefab.name);
+        GameObject instance = null;
 
-        GameObject instance = Instantiate(prefab, target.transform.position + new Vector3(Random.Range(0f, .5f),5f, Random.Range(0f, .5f)), Quaternion.identity);
+        if (offset == null)
+        {
+            instance = Instantiate(prefab, target.transform.position + new Vector3(Random.Range(0f, .5f), 5f, Random.Range(0f, .5f)), Quaternion.identity);
+        }
+        else
+        {
+            instance = Instantiate(prefab, target.transform.position + (Vector3)offset, Quaternion.identity);
 
-        instance.GetComponent<Collectable>().NeedsID(false);
+        }
+
+        if (instance != null)
+        {
+            instance.GetComponent<Collectable>().NeedsID(false);
+        }
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER
