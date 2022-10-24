@@ -107,13 +107,15 @@ public class Checkpoint : MonoBehaviour
 
     private void StartAnimation(bool flag)
     {
-        if(inPlace && flag && isActive)
+        if(inPlace && flag)
         {
             OnCheckpoint?.Invoke(id);
 
             instance = Instantiate(animatedTxtPrefab, targetCanvas.transform);
 
             Destroy(instance, 2.75f);
+
+            inPlace = false;
         }
     }
 

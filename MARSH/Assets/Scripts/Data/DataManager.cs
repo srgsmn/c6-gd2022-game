@@ -333,9 +333,10 @@ public class DataManager : MonoBehaviour
 
     public void SaveGameData()
     {
-        //TODO
         loadedGameData = new GameData(currentGameData);
+        Deb("SaveGameData(): data saved");
 
+        //TODO
         OnDataSaved?.Invoke(loadedGameData);
     }
 

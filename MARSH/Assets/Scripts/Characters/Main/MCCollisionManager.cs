@@ -235,6 +235,8 @@ public class MCCollisionManager : MonoBehaviour
             GameManager.Instance.SaveGame();
 
             flag = false;
+
+            OnProximity?.Invoke(ProximityObject.Checkpoint, ProximityInfo.None);
         }
 
         if(atLadder && flag)
