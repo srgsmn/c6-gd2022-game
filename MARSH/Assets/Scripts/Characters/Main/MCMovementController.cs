@@ -41,6 +41,8 @@ public class MCMovementController : MonoBehaviour
 
     [Header("Camera:")]
     [SerializeField]
+    [ReadOnlyInspector] private bool isInteractive = false;
+    [SerializeField]
     [ReadOnlyInspector] private Vector3 camFw;
     [SerializeField]
     [ReadOnlyInspector] private Vector3 camRt;
