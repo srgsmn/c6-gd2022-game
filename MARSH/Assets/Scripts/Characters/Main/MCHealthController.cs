@@ -11,6 +11,11 @@ using UnityEngine;
 
 public class MCHealthController : HealthController
 {
+
+    [Header("Text instantiation parameter:")]
+    [SerializeField] private GameObject panelPrefab;
+    [SerializeField] private Canvas targetCanvas;
+
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
@@ -180,6 +185,8 @@ public class MCHealthController : HealthController
             DataManager.OnGameLoading += LoadData;
 
             HealthBarGUIManager.OnGUIStartup += ReplyWithData;
+
+            OnDamage += StartAnimation;
         }
         else
         {
@@ -191,6 +198,8 @@ public class MCHealthController : HealthController
             DataManager.OnGameLoading -= LoadData;
 
             HealthBarGUIManager.OnGUIStartup -= ReplyWithData;
+
+            OnDamage -= StartAnimation;
         }
     }
 
@@ -303,6 +312,15 @@ public class MCHealthController : HealthController
     private void ReplyWithData()
     {
         NotifyAll();
+    }
+
+    private void StartAnimation()
+    {
+        GameObject instance = Instantiate(panelPrefab, targetCanvas.transform);
+
+        Deb("###", DebMsgType.warn);
+
+        Destroy(instance, .5f);
     }
 
     // DEBUG PRINTER ___________________________________________________________ DEBUG PRINTER

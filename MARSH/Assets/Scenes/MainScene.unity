@@ -11148,7 +11148,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7775081, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -11164,7 +11164,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390091084}
-  m_LocalRotation: {x: 0.056526843, y: 0.4144491, z: -0.025802664, w: 0.90794873}
+  m_LocalRotation: {x: 0.056526843, y: 0.4144489, z: -0.025802651, w: 0.90794885}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18637,7 +18637,7 @@ RectTransform:
   - {fileID: 441617484}
   - {fileID: 2031902720}
   m_Father: {fileID: 2064110860}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20110,6 +20110,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3522581126294912811, guid: a6585df7b7d1046e7a794b262a7da6d3, type: 3}
+      propertyPath: panelPrefab
+      value: 
+      objectReference: {fileID: 7208092195597735571, guid: 00e08af78a418497eb4db25ca780f83b, type: 3}
+    - target: {fileID: 3522581126294912811, guid: a6585df7b7d1046e7a794b262a7da6d3, type: 3}
+      propertyPath: targetCanvas
+      value: 
+      objectReference: {fileID: 2064110857}
     - target: {fileID: 3522581126294912982, guid: a6585df7b7d1046e7a794b262a7da6d3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -26513,7 +26521,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7775081, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -26595,7 +26603,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944584249}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43.700283, y: 2.35, z: 88.12736}
+  m_LocalPosition: {x: -43.70028, y: 2.35, z: 88.12735}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27153,8 +27161,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.04000237, y: 0.41484988, z: -0.018259782, w: 0.9088267}
-  m_LocalPosition: {x: -43.700283, y: 2.35, z: 88.12736}
+  m_LocalRotation: {x: 0.04000236, y: 0.4148497, z: -0.018259771, w: 0.9088268}
+  m_LocalPosition: {x: -43.70028, y: 2.35, z: 88.12735}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43452,7 +43460,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7775081, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -43468,7 +43476,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630989800}
-  m_LocalRotation: {x: 0.02350835, y: 0.41511282, z: -0.010730798, w: 0.9094029}
+  m_LocalRotation: {x: 0.023508348, y: 0.4151127, z: -0.010730792, w: 0.90940297}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -50729,7 +50737,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7775081, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -50745,7 +50753,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927946286}
-  m_LocalRotation: {x: 0.04000237, y: 0.41484988, z: -0.018259782, w: 0.9088267}
+  m_LocalRotation: {x: 0.040002365, y: 0.41484973, z: -0.018259771, w: 0.90882677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -70613,6 +70621,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4432474964434449192, guid: 0844ffc58ba7c427d82f4ebdd02dfe59, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8459906068965372977, guid: 0844ffc58ba7c427d82f4ebdd02dfe59, type: 3}
       propertyPath: m_Name
       value: CanvasesContainer
