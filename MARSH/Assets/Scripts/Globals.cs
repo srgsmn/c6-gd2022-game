@@ -324,6 +324,11 @@ namespace Globals
 
             Debug.Log("END OF CREATING PLAYER DATA FROM PLAYER DATA");
         }
+
+        public override string ToString()
+        {
+            return "Player data is: [lv: " + level + "; sl: " + sl + "; cc: " + cc + "]";
+        }
     }
 
     [Serializable]

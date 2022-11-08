@@ -33,7 +33,7 @@ public class StoreItem : MonoBehaviour
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
-    private void OnEnable()
+    private void OnEnable() // before it was an OnEnable
     {
         CheckAvailability();
     }
@@ -60,10 +60,12 @@ public class StoreItem : MonoBehaviour
     {
         PlayerData current = DataManager.Instance.GetCurrentPlayerData();
 
+        Debug.Log("Checking for availability: " + current);
+
         bool? flag = false;
 
 
-        if (SLPrice < current.sl && CCPrice < current.cc && levelAvailability <= current.level)
+        if (SLPrice <= current.sl && CCPrice <= current.cc && levelAvailability <= current.level)
         {
 
             if (health != 0 && armor == 0 && current.health < current.maxHealth)
