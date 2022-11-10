@@ -26,9 +26,10 @@ public class KeyLocator : MonoBehaviour
     {
         if (spawnSpots.Length != 0)
         {
-            index = Random.Range(1, spawnSpots.Length);
+            //index = Random.Range(1, spawnSpots.Length);
+            //spawnSpots[index-1].SetKey(keyObject);
 
-            spawnSpots[index-1].SetKey(keyObject);
+            spawnSpots[1].SetKey(keyObject);
         }
     }
 
