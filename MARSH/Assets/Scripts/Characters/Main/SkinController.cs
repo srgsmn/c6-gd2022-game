@@ -9,12 +9,21 @@ using Globals;
 public class SkinController : MonoBehaviour
 {
     [SerializeField] private MeshRenderer[] bodyParts;
+    [SerializeField] private Material unarmored_mat, armored_mat;
 
     // COMPONENT LIFECYCLE METHODS _____________________________________________ COMPONENT LIFECYCLE METHODS
 
     private void Awake()
     {
         EventSubscriber();
+    }
+
+    private void Start()
+    {
+        foreach (MeshRenderer part in bodyParts)
+        {
+            part.material = unarmored_mat;
+        }
     }
 
     private void OnDestroy()
@@ -42,10 +51,13 @@ public class SkinController : MonoBehaviour
     {
         if (parameter == ChParam.Armor)
         {
-            foreach(MeshRenderer part in bodyParts)
+            Color nextColor = Color.Lerp(unarmored_mat.color, armored_mat.color, (float)value / 100);
+            Deb("SetSkinColor(): Color lerp value is " + nextColor + " (with t=" + (float)value / 100 + ")");
+
+            foreach (MeshRenderer part in bodyParts)
             {
-                Deb("## Color lerp value is "+ Color.Lerp(Consts.unarmored, Consts.armored, (float)value / 100) + " (with t="+ (float)value / 100 + ")");
-                part.material.SetColor("_Color", Color.Lerp(Consts.unarmored, Consts.armored, (float)value/100));
+                //part.material.SetColor("_Color", Color.Lerp(Consts.unarmored, Consts.armored, (float)value/100));
+                part.material.color = nextColor;
             }
         }
     }
